@@ -149,8 +149,11 @@ skills/
     references/asm-diff.md       generating and reading asm; common Rust surprises
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
-article/
-  x-article.md                   the long-form writeup with the real run
+presentation/
+  talk-outline.md                talk script built on the presentation rules
+  census.html                    animated closure census for live demos
+  cards/                         code and evidence cards, SVG plus PNG
+  generate-cards.mjs             regenerate the cards from source snippets
 assets/
   logo.svg, logo-mark.svg, logo.png, logo-mark.png
 ```
