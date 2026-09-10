@@ -1,0 +1,39 @@
+/* your overrides */
+
+.reveal pre {
+	box-shadow: none !important;
+	width: 100% !important;
+	line-height: 1.5 !important;
+	font-size: 13px !important;
+}
+
+.reveal pre.code-sm {
+	font-size: 12px !important;
+}
+
+.reveal pre.code-lg {
+	font-size: 16px !important;
+}
+
+.reveal pre.code-xl {
+	font-size: 20px !important;
+}
+
+.reveal pre code {
+	max-height: none !important;
+	padding: 0 !important;
+	overflow: visible !important;
+}
+
+.reveal code {
+	font-family: 'Monaspace Neon', ui-monospace, monospace;
+}
+
+.recorder {
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.recorder:hover {
+	opacity: 1;
+}

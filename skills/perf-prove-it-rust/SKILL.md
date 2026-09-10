@@ -1,7 +1,7 @@
 ---
 name: perf-prove-it-rust
 description: "Make Rust fast on the machine it will actually run on, with proof instead of profiles. Use when asked to optimize Rust, parallelize it, cut allocations or cache misses, or verify what the compiler emitted: ideal instruction-sequence design, asm diffs (cargo asm / objdump / Godbolt), deterministic instruction counts (iai-callgrind), perf counters, bounds-check and allocation removal, SIMD/target features, thread scaling, false sharing, and NUMA. Triggers: optimize this Rust, make this loop faster, check the assembly, asm diff, why is this slow, benchmark this, criterion, parallelize this, rayon, cache misses, false sharing, thread scaling."
-license: MIT
+license: Apache-2.0
 ---
 
 # Perf prove it: Rust on your machine

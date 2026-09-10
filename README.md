@@ -150,9 +150,10 @@ skills/
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
 presentation/
-  README.md                      what the captures show
-  gifs/                          output GIFs, Vesper theme
-  bytecode/                      full raw dumps the GIFs are cut from
+  README.md                      how to run and record the deck
+  src/routes/+page.svelte        Animotion slides: code, bytecode, opt, deopt
+  src/lib/data.ts                imports the raw captures
+  bytecode/                      full raw dumps the slides use
 assets/
   logo.svg, logo-mark.svg, logo.png, logo-mark.png
 ```
@@ -165,4 +166,4 @@ Three questions explain most machine behavior: where the data moves, how instruc
 
 ## License
 
-MIT
+Apache-2.0

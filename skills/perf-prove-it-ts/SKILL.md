@@ -1,7 +1,7 @@
 ---
 name: perf-prove-it-ts
 description: "Make TypeScript and JavaScript faster with V8's own evidence instead of profiles and guesses. Use when code must get measurably faster, allocate less, or stop leaking: closure/allocation censuses from Ignition bytecode (--print-bytecode), Maglev to TurboFan tier-up verification (--trace-opt), deopt diagnosis (--trace-deopt: wrong map, insufficient type feedback), a CJS harness with V8 natives, and leak audits. Triggers: optimize this TypeScript, why is this slow, make it faster, check the bytecode, run V8 on it, too many closures, GC pressure, memory leak, microbenchmark, is it deoptimizing."
-license: MIT
+license: Apache-2.0
 ---
 
 # Perf prove it: TypeScript on V8
