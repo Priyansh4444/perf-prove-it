@@ -10,6 +10,22 @@ Write down the minimum work the function must do. Then make V8 show what it actu
 
 Profiles find local minima. Counting operations per call finds the floor. A hot function is a small instruction stream, and you can read it.
 
+## The general method
+
+This is the skill behind the skill, and it works the same in every language:
+
+1. Establish the floor. For the function, write down the minimum the machine must do: bytes moved, loads, stores, arithmetic, branches per element, allocations per call. That number is the target, not a guess.
+2. Make the source read like those operations. If the code hides work (a callback that allocates, a spread that copies), the machine still pays for it, and you cannot see it without the compiler's output.
+3. Get the compiler's real output and diff it against the floor. Every extra instruction gets an explanation or gets removed.
+4. Close what the design allows, document the rest. Some distance from the floor is physics (cache, bandwidth, latency), some is the compiler, some is structure. Naming which is which is part of the job.
+5. Treat measurement as a habit, not a phase. Keep a count visible while you work. Optimizing once a quarter from memory is a different, weaker skill.
+
+When reading the machine, three questions explain most results:
+
+- Data movement. Does the working set fit L1/L2/L3 or stream from memory? Are the accesses contiguous?
+- Instruction flow. How many branches per element, are they predictable, does the hot loop stay in the instruction cache?
+- Execution throughput. Which units run the operations, and is the bottleneck arithmetic, load/store, or branches?
+
 ## Step 0: pick the function and write the ideal
 
 Take one hot function at a time. State the ideal in operations, not vibes:
@@ -20,8 +36,6 @@ Take one hot function at a time. State the ideal in operations, not vibes:
 - Static data: can anything be computed once at module load instead of per call?
 
 Example target: "rerank over 200 candidates: one pass, one output array, zero per-candidate closures, three maxima computed inline, no intermediate arrays."
-
-For a whole codebase, fan this out: one subagent per hot function, each returning ideal operation count, the actual bytecode/asm evidence, the gap, and a verdict. Do not let a subagent "optimize" without the evidence attached.
 
 ## Step 1: build the harness
 
@@ -116,6 +130,19 @@ Closures only leak when they escape and retain:
 - unbounded module-level `Map`/`Set`
 
 Grep `addEventListener|setInterval|setTimeout` and module-level caches, then state a verdict per site in the report.
+
+## Work in verified units
+
+Never optimize a codebase in one diff. Optimize one unit at a time: one function, one loop, one pass. Each unit gets a sandbox, a behavior lock, and its own evidence.
+
+1. Slice. Pick one hot function. If it is too tangled to sandbox in isolation, that tangle is the first finding.
+2. Sandbox it. Bundle the unit plus its real dependencies into a scratch module. Keep the old and new versions as separate bundles (`engine-old.mjs`, `engine.mjs`) and run each arm in its own process, because loading both in one process deoptimizes them.
+3. Write the ideal sibling. In the same sandbox, write a small standalone function that does the job with the fewest operations. It is the reference you compare both the old and the new code against. Designing the sibling is usually where the real insight lands.
+4. Lock behavior first. Capture golden outputs for the unit, or property-test it, before editing anything. After every change the sandbox must produce identical outputs on identical inputs, and the repo tests and goldens must stay green. Same results, same ordering, same errors, same wire shape.
+5. Verify incrementally. One change, one evidence run, one ledger row: function, before and after counts, behavior check, verdict. Do not stack three changes and then try to explain the result.
+6. Fan out with subagents. For a codebase, one subagent per unit. Each subagent gets the function and its callers, the sandbox contract (inputs, invariants, edge cases), and must return: ideal operation count, actual bytecode, the gap, a patch, and the pasted evidence. A subagent that cannot show the evidence returns "needs review", not "done".
+7. Add a verifier. One subagent produces the patch with evidence. A second subagent reruns the sandbox and the full suite to confirm the claimed counts and the identical behavior. The verifier does not edit code.
+8. Integrate in order. Land verified units one at a time, rerun the full suite after each, so any regression points at exactly one unit.
 
 ## Non-negotiables
 

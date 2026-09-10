@@ -10,6 +10,22 @@ A good optimizer does not stare at profiles. They work out the shortest instruct
 
 Rust makes this easy: the assembly is one command away. Twenty-ish instructions cover most function bodies. Stop being scared of it.
 
+## The general method
+
+This is the skill behind the skill, and it works the same in every language:
+
+1. Establish the floor. For the function, write down the minimum the machine must do: bytes moved, loads, stores, arithmetic, branches per element, allocations per call. That number is the target, not a guess.
+2. Make the source read like those operations. If the code hides work (a clone, an allocation, an iterator chain with side effects), the machine still pays for it, and you cannot see it without the assembly.
+3. Get the compiler's real output and diff it against the floor. Every extra instruction gets an explanation or gets removed.
+4. Close what the design allows, document the rest. Some distance from the floor is physics (cache, memory bandwidth, latency), some is the compiler, some is structure. Naming which is which is part of the job.
+5. Treat measurement as a habit, not a phase. Keep a count visible while you work. Optimizing once a quarter from memory is a different, weaker skill.
+
+When reading the machine, three questions explain most results:
+
+- Data movement. Does the working set fit L1/L2/L3 or stream from DRAM? Are the accesses contiguous?
+- Instruction flow. How many branches per element, are they predictable, does the hot loop stay in the instruction cache?
+- Execution throughput. Which units run the operations, and is the bottleneck arithmetic, load/store, or branches?
+
 ## Step 0: profile the machine before the code
 
 Performance claims are machine claims. Run `scripts/machine.sh` (or the same commands) and keep the output for the final report:
@@ -34,8 +50,6 @@ For one function at a time, state the target in instructions and memory traffic 
 - Where does the parallelism live? What fraction is serial (Amdahl), and what is the unit of work per thread?
 
 Example: "sum of squares over `&[f64]`: 1 load, 1 fmul, 1 fadd, 1 compare, 1 branch per element; 4 lanes with AVX2; no allocation." That is the thing you verify against, not `perf top`.
-
-For a whole codebase, fan it out: one subagent per hot function returns (ideal op count, real asm, gap, verdict). Subagents do not get to "improve" anything without the asm or counter attached.
 
 ## Step 2: generate the real assembly
 
@@ -100,6 +114,19 @@ Parallelism is a design decision, not a `rayon::par_iter()` decoration.
 - Rejected experiments listed with their numbers. "Tried X, it was slower because Y" is a valid and useful result.
 - No `unsafe` for speed unless the invariant is written next to the block and tested.
 - Leave the remaining spikes documented in code comments or a perf record file, on purpose, for the next engineer.
+
+## Work in verified units
+
+Never optimize a codebase in one diff. Optimize one unit at a time: one function, one loop, one pass. Each unit gets a sandbox, a behavior lock, and its own evidence.
+
+1. Slice. Pick one hot function. If it is too tangled to sandbox in isolation, that tangle is the first finding.
+2. Sandbox it. Put the unit in a bench or a scratch binary with a shared input generator. Keep the old and new versions as separate functions in separate binaries when codegen or cache state matters, and never let a neighboring test contaminate the A/B.
+3. Write the ideal sibling. In the same sandbox, write a small standalone function that does the job with the fewest operations. It is the reference you compare both the old and the new code against. Designing the sibling is usually where the real insight lands.
+4. Lock behavior first. Capture golden outputs for the unit, or property-test it, before editing anything. After every change the sandbox must produce identical outputs on identical inputs, and the repo tests must stay green. Same results, same ordering, same errors, same wire shape.
+5. Verify incrementally. One change, one evidence run, one ledger row: function, before and after counts, behavior check, verdict. Do not stack three changes and then try to explain the result.
+6. Fan out with subagents. For a codebase, one subagent per unit. Each subagent gets the function and its callers, the sandbox contract (inputs, invariants, edge cases), and must return: ideal op count, real assembly, the gap, a patch, and the pasted evidence. A subagent that cannot show the evidence returns "needs review", not "done".
+7. Add a verifier. One subagent produces the patch with evidence. A second subagent reruns the sandbox, the counters, and the full test suite to confirm the claimed numbers and the identical behavior. The verifier does not edit code.
+8. Integrate in order. Land verified units one at a time, rerun the full suite after each, so any regression points at exactly one unit.
 
 ## Non-negotiables
 

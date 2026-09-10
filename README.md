@@ -39,11 +39,12 @@ The descriptions are written as triggers, so the agent picks the skill up when y
 
 Then it does the boring, provable version:
 
-1. Count the minimum operations the function must perform. That is the target.
-2. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt`, `cargo asm` / `objdump` / `iai-callgrind`).
-3. Show equal outputs on equal inputs before showing any delta.
-4. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
-5. Leave the remaining spikes documented for the next person instead of pretending they don't exist.
+1. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
+2. Work one unit at a time, one function in one sandbox with a behavior lock, so a regression can only come from one change.
+3. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt`, `cargo asm` / `objdump` / `iai-callgrind`).
+4. Show equal outputs on equal inputs before showing any delta.
+5. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
+6. Leave the remaining spikes documented for the next person instead of pretending they don't exist.
 
 ## What's inside
 
@@ -66,6 +67,8 @@ article/
 ## Philosophy
 
 You do not need to write assembly. You need to read about twenty instructions and stop being scared of the truth. A function body is small. The compiler already knows what it did. Ask it.
+
+Three questions explain most machine behavior: where the data moves, how instructions flow through the branch predictor, and which execution units do the work. Answer those before opening a profiler, and most optimizations stop being mysteries.
 
 ## License
 
