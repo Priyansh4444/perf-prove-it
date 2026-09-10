@@ -154,6 +154,8 @@ presentation/
   src/routes/+page.svelte        Animotion slides: code, bytecode, opt, deopt
   src/lib/data.ts                imports the raw captures
   bytecode/                      full raw dumps the slides use
+  record.mjs                     records each slide to MP4 and GIF
+  animations/                    the recorded clips
 assets/
   logo.svg, logo-mark.svg, logo.png, logo-mark.png
 ```

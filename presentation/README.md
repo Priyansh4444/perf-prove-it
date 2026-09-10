@@ -17,13 +17,24 @@ Open http://localhost:5173. Arrow keys move between slides. Five slides, no capt
 - `--trace-opt` and `--trace-deopt` side by side, with their lines selected
 - the output metrics: closures 7 to 1, temporaries 204 to 3, bytecode 476 to 1856 bytes, 26 to 2 across six functions
 
-## Record
-
-The layout mounts `<Recorder />`, hidden until hover. Press `Shift+R` to start (screen share permission, then `F11` for fullscreen) and `Shift+S` to stop. It records MP4 with system audio. To turn a recording into a GIF:
+## Record the animations
 
 ```sh
-ffmpeg -i recording.mp4 -vf "fps=15,scale=1280:-1:flags=lanczos,split[a][b];[a]palettegen[p];[b][p]paletteuse" out.gif
+node record.mjs
 ```
+
+The script builds the deck, serves it with `vite preview`, and records one clip per slide with Playwright's `recordVideo`. That is the same CDP screencast approach as `puppeteer-screen-recorder` and `playwright-screen-recorder`, without the extra dependency. It drives the deck the way a presenter does, pressing the next key to trigger each Animotion action, then converts every clip to MP4 and GIF with ffmpeg.
+
+Outputs land in `animations/`:
+
+- `01-code.mp4` / `.gif`: the before code morphing into the after version.
+- `02-bytecode-before`, `03-bytecode-after`: the dump scrolling and the `CreateClosure` lines lighting up.
+- `04-opt-deopt`: the two traces selecting their lines.
+- `05-metrics`: the metric numbers.
+
+`CHROME_PATH` overrides the browser, which defaults to `/usr/bin/chromium`.
+
+The interactive `<Recorder />` in the layout is still there for live screen recordings (`Shift+R`).
 
 ## Real data
 
