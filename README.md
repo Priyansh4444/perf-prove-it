@@ -150,6 +150,7 @@ skills/
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
 presentation/
+  README.md                      how to run the demo and regenerate the cards
   talk-outline.md                talk script built on the presentation rules
   census.html                    animated closure census for live demos
   cards/                         code and evidence cards, SVG plus PNG
