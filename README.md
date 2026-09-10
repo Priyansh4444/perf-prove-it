@@ -84,16 +84,18 @@ Exact final video order asserted on every run. And the experiments that lost, on
 
 A perf record that only contains wins is marketing.
 
-## What this can find in yours
+## What it tends to find
 
-Every pattern below is the kind of thing the census or the asm diff surfaces immediately. Your numbers will differ. That is the point: the skill measures your code, on your machine, and shows you the receipts.
+The census and the asm diff do not care how clever the code looks. These are the patterns they surface most often, and roughly what fixing them tends to buy. Every number is still yours to measure, and some of these come back as zero, which the report says out loud.
 
-- A `.map((row) => ...)` inside a per-request path over 10,000 rows is 10,000 closure allocations per request. At 500 requests per second that is 5 million function objects per second for the garbage collector to walk. One `CreateClosure` line in the bytecode tells you.
-- `Math.max(...values)` copies the entire array before doing any math. On 100,000 numbers that is a 100,000-element allocation to discard one value. A fused loop removes it.
-- A `Vec` that `push`es in a loop reallocates repeatedly. `with_capacity` or a reused buffer removes the `grow` calls you can literally see in the assembly.
-- Indexing in a tight numeric loop pays a compare and a panic branch per element. Slice iterators or `chunks_exact` can turn a scalar loop into 8 lanes of AVX2.
-- Eight threads that give 2x speedup are usually paying for false sharing or a serial stage. Padded per-thread accumulators and bigger work units often recover it.
-- A listener attached per render or a cache with no bound leaks memory that no profiler attributes cleanly. The leak audit catches it by reading the code.
+- Per-row closures in request paths. A `.map((row) => ...)` over a few thousand rows allocates one closure per row, and a single `CreateClosure` line in the bytecode shows it. The fix is mechanical. The payoff is usually smoother GC behavior and a better p99, not a dramatic average latency win.
+- Spread-based max or min. `Math.max(...values)` copies the array before comparing anything. On large arrays the copy can dominate. On a few hundred elements it may not be measurable at all.
+- Vec growth in a hot loop. Repeated `push` without capacity shows up as `grow` calls in the asm. `with_capacity` or reusing the buffer is a small, safe change, and the win scales with how often the loop runs and how big the elements are.
+- Bounds checks in numeric loops. One compare and panic branch per element. Removing them can let autovectorization kick in, which is where the real gain lives, but only when the loop is compute-bound. Memory-bound loops barely notice.
+- Thread scaling that flattens early. Eight threads giving 2x usually means false sharing or a serial stage. Fixing it brings you closer to linear, and the ceiling after that is memory bandwidth, not the thread library.
+- Retention bugs. A listener attached per render or a cache with no bound leaks memory that no profiler attributes cleanly. Finding one is worth more than most micro-optimizations in the same file.
+
+Expect uneven results. Occasionally a function gives a clean 2x, like the Rust probe above. Most functions give nothing, and proving the nothing is worth having: it removes a theory from the list and leaves a documented floor for the next person.
 
 ## Install
 
