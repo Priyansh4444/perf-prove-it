@@ -53,3 +53,15 @@ export const metrics = {
 	temporariesBefore: 204,
 	temporariesAfter: 3
 };
+
+// Measured with the bench harness on 2026-09-10, Intel Core Ultra 7 255H,
+// load ~2.5, 5 alternating reps of 100k rerank calls, each process verified
+// at %GetOptimizationStatus 41 with TurboFan. Medians below.
+export const measured = {
+	speedBefore: 42.8,
+	speedAfter: 38.9,
+	rssBefore: 154,
+	rssAfter: 122,
+	gcBefore: 58.2,
+	gcAfter: 58.1
+};

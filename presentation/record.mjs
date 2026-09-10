@@ -64,7 +64,7 @@ const scenarios = [
 	{ name: '02-bytecode-before', slide: 1, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
 	{ name: '03-bytecode-after', slide: 2, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
 	{ name: '04-opt-deopt', slide: 3, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
-	{ name: '05-metrics', slide: 4, selector: '.present .text-7xl', steps: [{ pause: SETTLE_MS + 3200 }] }
+	{ name: '05-metrics', slide: 4, selector: '.present .text-6xl', steps: [{ pause: SETTLE_MS + 3200 }] }
 ];
 
 console.log('building...');

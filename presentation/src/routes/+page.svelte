@@ -11,7 +11,8 @@
 		firstBeforeClosure,
 		firstAfterClosure,
 		deoptWrongMap,
-		metrics
+		metrics,
+		measured
 	} from '$lib/data';
 
 	let code: Code;
@@ -104,22 +105,31 @@
 	</Slide>
 
 	<Slide>
-		<div class="grid h-full grid-cols-2 content-center gap-x-16 gap-y-14 px-20 font-mono">
+		<div class="grid h-[820px] grid-cols-2 content-center gap-x-16 gap-y-10 px-20 font-mono">
 			<div>
-				<div class="text-7xl text-[#ffc799]">{metrics.closuresBefore} &rarr; {metrics.closuresAfter}</div>
-				<div class="mt-3 text-xl text-zinc-500">closures per rerank call</div>
+				<div class="text-6xl text-[#ffc799]">{metrics.closuresBefore} &rarr; {metrics.closuresAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">closures per rerank call</div>
 			</div>
 			<div>
-				<div class="text-7xl text-[#ffc799]">{metrics.temporariesBefore} &rarr; {metrics.temporariesAfter}</div>
-				<div class="mt-3 text-xl text-zinc-500">temporaries per rerank call</div>
+				<div class="text-6xl text-[#ffc799]">{metrics.temporariesBefore} &rarr; {metrics.temporariesAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">temporaries per rerank call</div>
 			</div>
 			<div>
-				<div class="text-7xl text-[#ffc799]">{metrics.bytecodeBefore} &rarr; {metrics.bytecodeAfter}</div>
-				<div class="mt-3 text-xl text-zinc-500">rerank bytecode, callbacks inlined</div>
+				<div class="text-6xl text-[#ffc799]">{metrics.censusBefore} &rarr; {metrics.censusAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">closures across six functions</div>
 			</div>
 			<div>
-				<div class="text-7xl text-[#ffc799]">{metrics.censusBefore} &rarr; {metrics.censusAfter}</div>
-				<div class="mt-3 text-xl text-zinc-500">closures across six functions</div>
+				<div class="text-6xl text-[#ffc799]">{metrics.bytecodeBefore} &rarr; {metrics.bytecodeAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">rerank bytecode, callbacks inlined</div>
+				<div class="mt-1 text-sm text-[#99ffe4]">paid once at compile time, not per call</div>
+			</div>
+			<div>
+				<div class="text-6xl text-[#ffc799]">{measured.speedBefore} &rarr; {measured.speedAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">µs per rerank call, TurboFan</div>
+			</div>
+			<div>
+				<div class="text-6xl text-[#ffc799]">{measured.rssBefore} &rarr; {measured.rssAfter}</div>
+				<div class="mt-2 text-lg text-zinc-500">peak RSS, MB per 100k calls</div>
 			</div>
 		</div>
 	</Slide>

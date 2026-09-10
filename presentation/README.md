@@ -15,7 +15,7 @@ Open http://localhost:5173. Arrow keys move between slides. Five slides, no capt
 - the before bytecode, scrolled to the closures, click to select every `CreateClosure` line
 - the after bytecode, with the single remaining closure selected
 - `--trace-opt` and `--trace-deopt` side by side, with their lines selected
-- the output metrics: closures 7 to 1, temporaries 204 to 3, bytecode 476 to 1856 bytes, 26 to 2 across six functions
+- the output metrics: closures 7 to 1, temporaries 204 to 3, 26 to 2 across six functions, bytecode 476 to 1856 (inlined callbacks, a compile-time cost), 42.8 to 38.9 µs per cold-start warm rerank call on TurboFan, and peak RSS 154 to 122 MB per 100k calls
 
 ## Record the animations
 
