@@ -141,6 +141,7 @@ Then it works one verified unit at a time:
 skills/
   perf-prove-it-ts/
     SKILL.md                     the workflow, in order
+    references/discovery.md      the work ledger: hidden-work passes, probes, identity domains
     references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons
     references/patterns.md       before/after patterns with real census numbers
     references/memory-and-heap.md  heap snapshots, GC traces, leak proof
@@ -151,6 +152,10 @@ skills/
     references/asm-diff.md       generating and reading asm; common Rust surprises
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
+study/
+  PROTOCOL.md                    the four-case study frame and rubric
+  RESULTS.md                     verified results, corrections, and skill changes
+  reports/                       raw worker, verifier, and judge reports
 presentation/
   README.md                      how to run and record the deck
   src/routes/+page.svelte        Animotion slides: code, bytecode, opt, deopt

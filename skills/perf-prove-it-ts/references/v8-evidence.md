@@ -23,11 +23,11 @@ Error: Function 0x... <JSFunction f (sfi = 0x...)> should be prepared for optimi
 Trace/breakpoint trap (core dumped)
 ```
 
-**Forced does not mean production.** `%OptimizeFunctionOnNextCall` logs `manually marking ... TURBOFAN_JS`, which proves the harness can reach the tier. A production claim needs an unforced run of the same function showing `reason: hot and stable` for the exact SFI in the timed loop.
+**Forced does not mean production.** `%OptimizeFunctionOnNextCall` logs `manually marking ... TURBOFAN_JS`, which proves a compile request, not that the tier is active. Require a `completed optimizing ... (target TURBOFAN_JS)` line or `%ActiveTierIsTurbofan`, and for a production claim an unforced run of the same function with a tier-up line for the exact SFI in the timed loop.
 
-**Never decode `%GetOptimizationStatus` from memory.** The integer is a version-defined bit set. In the original run the old arm reported `41` and the new arm `131073`, and the difference was not self-explanatory. On V8 14.6: `41` = optimized, TurboFanned, is function; `25` = optimized, Maglevved, is function; `65` = interpreted, is function; `131073` = lazy, is function. Those values will move. Use `--trace-opt` as the authority, use the integer only as a sanity check, and when it puzzles you open the source that defines the bits.
+**Never decode `%GetOptimizationStatus` from memory.** The integer is a version-defined bit set. In the original run the old arm reported `41` and the new arm `131073`, and the difference was not self-explanatory. The bit meanings live in `src/runtime/runtime.h` in the V8 tree; read them there, because the enum has shifted between releases. Use `--trace-opt` as the authority, use the integer only as a sanity check, and when it puzzles you open the source that defines the bits.
 
-**One function per bytecode filter.** `--print-bytecode-filter='rerank|tokenize'` matches nothing. Loop:
+**One function per bytecode filter.** `--print-bytecode-filter='rerank|tokenize'` matches nothing on current builds. Loop:
 
 ```sh
 for f in rerank tokenize mapAspects; do

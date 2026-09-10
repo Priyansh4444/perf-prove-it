@@ -65,12 +65,19 @@ const knownTotal = totals.closures + totals.contexts;
 if (asJson) {
   console.log(
     JSON.stringify(
-      { functions: rows, totals, closureContextSites: knownTotal, unmappedOps: [...unmapped] },
+      {
+        functions: rows,
+        totals,
+        closureContextSites: knownTotal,
+        unmappedOps: [...unmapped],
+        v8: process.versions.v8,
+        node: process.version
+      },
       null,
       2
     )
   );
-  process.exit(0);
+  process.exit(knownTotal === 0 && unmapped.size > 0 ? 1 : 0);
 }
 
 const header = ["function", "len", ...COLUMNS.map(([label]) => label)];
@@ -83,6 +90,11 @@ for (const row of data) console.log(line(row));
 
 console.log(`\n${rows.length} function(s), ${knownTotal} closure/context construction sites`);
 console.log("static sites per function body, not dynamic counts: a guarded site may never execute");
+console.log(`v8 ${process.versions.v8}, node ${process.version}`);
 if (unmapped.size > 0) {
   console.log(`unmapped Create ops (not in any column): ${[...unmapped].join(", ")}`);
+}
+if (knownTotal === 0 && unmapped.size > 0) {
+  console.error("census: no closures or contexts found while unmapped Create ops exist; opcode names may have changed");
+  process.exitCode = 1;
 }

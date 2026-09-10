@@ -110,9 +110,10 @@ Grep for these as triage, then prove each with the protocol above. "Looks bounde
 new Array(3) filled with doubles  -> FixedDoubleArray[3]  HOLEY_DOUBLE_ELEMENTS
 [] with push                      -> FixedDoubleArray[n]  PACKED_DOUBLE_ELEMENTS (geometric capacity)
 new Float64Array(3) filled        -> FLOAT64ELEMENTS
+arr.length = 3 then fill           -> HOLEY_SMI to HOLEY_DOUBLE, same backing-store transition as new Array(3)
 ```
 
-Preallocation avoids growth copies but starts holey and pays a backing-store allocation when the kind transitions from Smi to Double while filling. For internal numeric scratch where churn matters, `Float64Array` avoids both. `--trace-elements-transitions` prints transitions but is noisy; prefer `%DebugPrint` on a known object.
+Preallocation avoids growth copies but starts holey and pays a backing-store allocation when the kind transitions from Smi to Double while filling. For internal numeric scratch where churn matters, `Float64Array` avoids both. `arr.length = n` is chosen for lint compatibility, not speed. `--trace-elements-transitions` prints transitions but is noisy; prefer `%DebugPrint` on a known object.
 
 ## Do not measure with instruments attached
 
