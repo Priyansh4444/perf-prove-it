@@ -1,4 +1,4 @@
-# Judge study — report scores
+# Judge study - report scores
 
 Rubric (0 = missing, 1 = partial, 2 = complete): **1** floor derivation, **2** evidence correctness, **3** impact honesty, **4** trade-off and revert, **5** teaching, **6** friction and correction. Total out of 12.
 
@@ -13,17 +13,17 @@ Rubric (0 = missing, 1 = partial, 2 = complete): **1** floor derivation, **2** e
 
 ## Strongest
 
-1. **report-2.md (12)** — the only report complete on every criterion. What separates it: criterion 2 (tier lines show natural `reason: hot and stable` tiering, timing medians come from separate processes with load 6.8–13.5 recorded, scavenge counts are reproducible) and criterion 6 (the checkout drift and the discarded switch variant are both documented as corrections, not just obstacles).
-2. **report-4.md (11)** — second on the strength of criterion 6: its first fuzz run found six real mismatches and the fix is shown. It ties reports 5 and 6 on total; it wins the tiebreak because 5 and 6 have no found-and-fixed bug, while report 4 also quantifies the full arm comparison (switch/Set/Map/object) and labels scavenges as a proxy rather than exact bytes. Reports 5 and 6 are one point back at 11, held back only by criterion 6.
+1. **report-2.md (12)** - the only report complete on every criterion. What separates it: criterion 2 (tier lines show natural `reason: hot and stable` tiering, timing medians come from separate processes with load 6.8-13.5 recorded, scavenge counts are reproducible) and criterion 6 (the checkout drift and the discarded switch variant are both documented as corrections, not just obstacles).
+2. **report-4.md (11)** - second on the strength of criterion 6: its first fuzz run found six real mismatches and the fix is shown. It ties reports 5 and 6 on total; it wins the tiebreak because 5 and 6 have no found-and-fixed bug, while report 4 also quantifies the full arm comparison (switch/Set/Map/object) and labels scavenges as a proxy rather than exact bytes. Reports 5 and 6 are one point back at 11, held back only by criterion 6.
 
 ## Weakest
 
-1. **report-1.md (9)** — separated from the pack by criteria 2 and 4: no tier lines at all and no load recorded in the evidence, and the trade-off section omits module state and cold-start/init cost. It shares criterion 6 weakness (no bug found or fixed) with reports 5 and 6, but those reports make up the points on evidence and trade-off.
-2. **report-3.md (10)** — separated by criteria 2 and 3: no load recorded, tier lines paraphrased rather than quoted (forced versus natural not distinguished), and the arithmetic error below docked impact honesty. Its criterion 6 is among the best (two trie bugs found and fixed), which keeps it above report 1.
+1. **report-1.md (9)** - separated from the pack by criteria 2 and 4: no tier lines at all and no load recorded in the evidence, and the trade-off section omits module state and cold-start/init cost. It shares criterion 6 weakness (no bug found or fixed) with reports 5 and 6, but those reports make up the points on evidence and trade-off.
+2. **report-3.md (10)** - separated by criteria 2 and 3: no load recorded, tier lines paraphrased rather than quoted (forced versus natural not distinguished), and the arithmetic error below docked impact honesty. Its criterion 6 is among the best (two trie bugs found and fixed), which keeps it above report 1.
 
 ## Flags: claims not supported by the report's own evidence
 
 - **report-3.md (flagged):** "At 3,000 messages/min that is 180,000 regex-alternation scans/hour" is inconsistent with its own description of `scanEmotes` running 3 matchers per message (3,000 × 60 × 3 = 540,000/hour). This is an unmeasured scale-up claim and the basis for the criterion 3 deduction. Its measured counts (32,087 fuzz checks, 64,768 fold checks, 66,361 spans both arms) and timing medians are internally consistent. The "both arms emitted the same `spans_check 66361`" statement is made in prose; the quoted optimized JSON does not show that field (raw file is referenced).
-- **report-1.md (minor flag):** "both the repo's own test file and a shadow run of the patched file green" overstates what ran — the repo test file ran against the unpatched checkout; only the shadow suite imported the patched file. The later section clarifies this, so it is a framing issue, not a fabricated result.
+- **report-1.md (minor flag):** "both the repo's own test file and a shadow run of the patched file green" overstates what ran - the repo test file ran against the unpatched checkout; only the shadow suite imported the patched file. The later section clarifies this, so it is a framing issue, not a fabricated result.
 - **report-5.md (minor flag):** "the only allocation removed is the per-call regex" is inferred from bytecode, not measured, and is not labeled static; the report itself says byte size was not measured. The 74x/83x headline is produced under explicitly labeled forced (manual) TurboFan marking, so the ratio is comparable across arms but is not a natural-tiering claim.
 - No unsupported claims found in **report-2.md**, **report-4.md**, or **report-6.md**; each discloses its weak spots (current-HEAD parity, scavenge proxy, load spike) rather than hiding them.
