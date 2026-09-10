@@ -33,7 +33,7 @@
 	}}
 >
 	<Slide>
-		<div class="flex h-full min-h-0 flex-col">
+		<div class="flex h-[820px] flex-col">
 			<Code
 				bind:this={code}
 				lang="ts"
@@ -47,7 +47,7 @@
 	</Slide>
 
 	<Slide>
-		<div class="flex h-full min-h-0 flex-col">
+		<div class="flex h-[820px] flex-col">
 			<Code
 				bind:this={bytecodeBefore}
 				lang="text"
@@ -62,7 +62,7 @@
 	</Slide>
 
 	<Slide>
-		<div class="flex h-full min-h-0 flex-col">
+		<div class="flex h-[820px] flex-col">
 			<Code
 				bind:this={bytecodeAfter}
 				lang="text"
@@ -77,7 +77,7 @@
 	</Slide>
 
 	<Slide>
-		<div class="grid h-full min-h-0 grid-cols-2 gap-4">
+		<div class="grid h-[820px] grid-cols-2 gap-4">
 			<div class="flex min-h-0 flex-col">
 				<Code
 					bind:this={opt}
@@ -115,7 +115,7 @@
 			</div>
 			<div>
 				<div class="text-7xl text-[#ffc799]">{metrics.bytecodeBefore} &rarr; {metrics.bytecodeAfter}</div>
-				<div class="mt-3 text-xl text-zinc-500">bytecode bytes</div>
+				<div class="mt-3 text-xl text-zinc-500">rerank bytecode, callbacks inlined</div>
 			</div>
 			<div>
 				<div class="text-7xl text-[#ffc799]">{metrics.censusBefore} &rarr; {metrics.censusAfter}</div>

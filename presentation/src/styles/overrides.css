@@ -55,3 +55,11 @@
 .reveal .shiki-magic-move-item.deselected {
 	opacity: 0.35;
 }
+
+.reveal pre {
+	scrollbar-width: none;
+}
+
+.reveal pre::-webkit-scrollbar {
+	display: none;
+}

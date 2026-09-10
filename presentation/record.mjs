@@ -56,12 +56,15 @@ async function waitForServer(url, timeoutMs = 30000) {
 
 // One entry per slide. `steps` pause, then optionally press ArrowRight to
 // trigger the next Animotion action. Durations cover the slide transitions.
+const SETTLE_MS = 2400;
+const TRIM_SECONDS = 2;
+
 const scenarios = [
-	{ name: '01-code', slide: 0, steps: [{ pause: 1400 }, { next: true, pause: 4000 }] },
-	{ name: '02-bytecode-before', slide: 1, steps: [{ pause: 1400 }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
-	{ name: '03-bytecode-after', slide: 2, steps: [{ pause: 1400 }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
-	{ name: '04-opt-deopt', slide: 3, steps: [{ pause: 1400 }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
-	{ name: '05-metrics', slide: 4, selector: '.present .text-7xl', steps: [{ pause: 3200 }] }
+	{ name: '01-code', slide: 0, steps: [{ pause: SETTLE_MS }, { next: true, pause: 4000 }] },
+	{ name: '02-bytecode-before', slide: 1, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
+	{ name: '03-bytecode-after', slide: 2, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
+	{ name: '04-opt-deopt', slide: 3, steps: [{ pause: SETTLE_MS }, { next: true, pause: 1800 }, { next: true, pause: 3600 }] },
+	{ name: '05-metrics', slide: 4, selector: '.present .text-7xl', steps: [{ pause: SETTLE_MS + 3200 }] }
 ];
 
 console.log('building...');
@@ -91,6 +94,10 @@ try {
 		await page.goto(`${base}/#/${scenario.slide}`, { waitUntil: 'networkidle' });
 		await page.waitForSelector(scenario.selector ?? '.present .shiki-magic-move-container');
 		await page.evaluate(() => document.fonts.ready);
+		await page.addStyleTag({
+			content:
+				'.recorder, .reveal .controls, .reveal .progress, .reveal .slide-number { display: none !important; }'
+		});
 		await page.click('body', { position: { x: 8, y: 8 } });
 		const video = page.video();
 
@@ -118,6 +125,8 @@ for (const scenario of scenarios) {
 		'-y',
 		'-i',
 		webm,
+		'-ss',
+		String(TRIM_SECONDS),
 		'-c:v',
 		'libx264',
 		'-pix_fmt',
@@ -132,6 +141,8 @@ for (const scenario of scenarios) {
 		'-y',
 		'-i',
 		webm,
+		'-ss',
+		String(TRIM_SECONDS),
 		'-vf',
 		'fps=12,scale=1000:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160[p];[b][p]paletteuse=dither=bayer:bayer_scale=3',
 		'-loop',
