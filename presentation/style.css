@@ -1,0 +1,47 @@
+:root {
+  --slidev-theme-primary: #34d399;
+}
+
+.slidev-layout {
+  background: #0b1220;
+  color: #e2e8f0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3 {
+  color: #f1f5f9;
+}
+
+.slidev-layout h1 {
+  color: #34d399;
+}
+
+.slidev-layout a {
+  color: #22d3ee;
+}
+
+.slidev-layout code:not(pre code) {
+  color: #22d3ee;
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.slidev-layout pre,
+.slidev-layout .shiki,
+.slidev-layout .shiki-magic-move-container {
+  background: #0f172a !important;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+}
+
+.slidev-layout .shiki-magic-move-container code {
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.slidev-layout::before {
+  display: none;
+}

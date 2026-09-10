@@ -1,49 +1,51 @@
-# Presentation kit
+# Presentation
 
-Props for a talk about the skills, not a deck to read aloud. The principles come from the Death by PowerPoint article: story over progress report, re-entry points, one deliberate surprise, real technical detail, and slides that give the speaker something to do.
+A [Slidev](https://sli.dev) deck. Slidev is the dev-standard slides tool, and it ships Shiki Magic Move, the library behind the click-to-morph code transitions here.
 
-## Files
-
-```
-census.html            one-page live demo, keyboard controlled
-talk-outline.md        a ten minute script with beats and timings
-cards/                 code and evidence cards, SVG and 2x PNG
-generate-cards.mjs     regenerates the cards
-```
-
-## Open the live demo
+## Run it
 
 ```sh
-xdg-open census.html
+cd presentation
+npm install
+npm run dev
 ```
 
-Controls: right arrow or space or click for the next scene, left arrow to go back, Home and End to jump. Append `?scene=3` to the URL to start on a given scene, which is useful when setting up a projector.
+Space or right arrow advances. On "The code" and "Counted before and after", the first click morphs the block: before into after, then the census numbers move.
 
-Scene order: the hook, the before function with its 7 closures, the fused after version, the TurboFan verification, the fake 16x win that the deopt trace killed, and the install line.
+```sh
+npm run build     # static site in dist/
+npm run export    # PDF or PNGs, needs playwright-chromium
+```
 
-## Use the cards
+For export, install the browser once: `npm i -D playwright-chromium`.
 
-The PNGs are rendered at 2x and sized for a 16:9 screen. If the live demo fails, the cards are the fallback and they double as images for a writeup.
+## Slides
 
-- `rerank-before` and `rerank-after`: the core code change, with the closure counts.
-- `census`: all five functions, before and after.
-- `trace-opt`: the tier-up lines and no deopts.
-- `phantom-16x`: the honesty card. Show it after letting the fake win sit.
-- `rust-runs`: the probe change with three runs and the rejected experiments in the talk.
+1. Cover
+2. The code, before. Click morphs it into the after version.
+3. The actual bytecode, trimmed from `--print-bytecode`, with the `CreateClosure` line called out.
+4. The closure census before and after. Click morphs the table.
+5. Opt: `--trace-opt` tiering, Maglev then TurboFan, no deopts.
+6. Deopt: the `wrong map` bailout that killed a fake 16x A/B result.
+7. What it bought, in counts.
+8. Close, with the install line.
 
-## Regenerate
+## Static cards
 
-Edit the snippets and data at the bottom of `generate-cards.mjs`, then:
+`cards/` still holds the code and evidence cards as SVG and 2x PNG, for when you want images instead of a live deck. Regenerate them after editing the snippets:
 
 ```sh
 node generate-cards.mjs
 ```
 
-It writes SVG for every card and shells out to `rsvg-convert -z 2` for PNGs. If `rsvg-convert` is missing, the SVGs still render in any browser.
+## Files
 
-## Design rules
-
-- Same palette as the logo: navy `#0B1220`, cyan for targets, green for proof, slate for the old numbers.
-- Monospace for anything the machine says. The UI font never touches code or counters.
-- One idea per card. If a card needs a caption, the card is wrong.
-- Counts, not confidence: every card carries a number that a reader could reproduce.
+```
+slides.md            the deck source
+package.json         slidev scripts and dependencies
+style.css            dark palette to match the logo
+uno.config.ts        blocklist so bytecode brackets are not parsed as CSS classes
+cards/               generated SVG and PNG cards
+generate-cards.mjs   card generator
+talk-outline.md      a ten minute talk script built on the presentation rules
+```

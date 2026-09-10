@@ -150,9 +150,10 @@ skills/
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
 presentation/
-  README.md                      how to run the demo and regenerate the cards
+  slides.md                      Slidev deck: code, bytecode, opt, deopt
+  package.json                   npm run dev / build / export
+  style.css, uno.config.ts       theme to match the repo
   talk-outline.md                talk script built on the presentation rules
-  census.html                    animated closure census for live demos
   cards/                         code and evidence cards, SVG plus PNG
   generate-cards.mjs             regenerate the cards from source snippets
 assets/
