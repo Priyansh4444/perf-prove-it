@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="perf-prove-it mark">
+  <title>perf-prove-it</title>
+  <rect width="128" height="128" rx="28" fill="#0B1220" stroke="#1E293B" stroke-width="2"/>
+  <polyline points="22,34 40,34 40,50 58,50 58,66 76,66 76,82 94,82 94,98" fill="none" stroke="#475569" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="16" y1="104" x2="112" y2="104" stroke="#22D3EE" stroke-width="5" stroke-linecap="round"/>
+  <path d="M100 66 L108 74 L124 52" fill="none" stroke="#34D399" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

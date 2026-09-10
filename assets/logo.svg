@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 176" width="640" height="176" role="img" aria-label="perf-prove-it">
+  <title>perf-prove-it</title>
+  <rect width="640" height="176" rx="28" fill="#0B1220" stroke="#1E293B" stroke-width="2"/>
+  <g transform="translate(28,24)">
+    <polyline points="22,34 40,34 40,50 58,50 58,66 76,66 76,82 94,82 94,98" fill="none" stroke="#475569" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="16" y1="104" x2="112" y2="104" stroke="#22D3EE" stroke-width="5" stroke-linecap="round"/>
+    <path d="M100 66 L108 74 L124 52" fill="none" stroke="#34D399" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="188" y="96" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="46" font-weight="600" letter-spacing="1">
+    <tspan fill="#F1F5F9">perf</tspan><tspan fill="#64748B">-</tspan><tspan fill="#34D399">prove</tspan><tspan fill="#64748B">-</tspan><tspan fill="#F1F5F9">it</tspan>
+  </text>
+  <text x="190" y="130" font-family="'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" letter-spacing="4" fill="#94A3B8">COUNT IT. COMPILE IT. PROVE IT.</text>
+</svg>
