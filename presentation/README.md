@@ -1,52 +1,21 @@
-# Presentation
+# Real output
 
-Everything here is generated from the real run: the code at PR #10 of the search engine, the bytecode V8 produced for it, and the opt and deopt traces. Code and output use the Vesper theme.
+Captured from the search engine at PR #10 (`11d2ef6` and its parent). No hand-editing.
 
-## Output GIFs
+## GIFs, Vesper theme
 
-`gifs/` holds the animated terminal outputs, all from captured runs:
+- `gifs/rerank-before.gif`: the seven real `CreateClosure` lines in `rerank`, one per callback.
+- `gifs/rerank-after.gif`: the single remaining closure. Callbacks moved inline, so the function's own bytecode grew from 476 to 1856 bytes.
+- `gifs/opt-tier-up.gif`: real `--trace-opt`, Maglev then TurboFan on every hot function, no deopt lines.
+- `gifs/deopt-wrong-map.gif`: real `--trace-deopt` with both bundles in one process. The `wrong map` bailouts are why the first 16x A/B result was thrown out.
 
-- `rerank-before.gif`: the seven `CreateClosure` lines in `rerank`, one per callback.
-- `rerank-after.gif`: the single remaining closure, and the note that the callbacks moved inline.
-- `opt-tier-up.gif`: Maglev then TurboFan on every hot function, no deopt lines.
-- `deopt-wrong-map.gif`: the `wrong map` bailouts from running both bundles in one process, the reason the 16x A/B was thrown out.
+## Raw captures
 
-Regenerate all of them with:
+`bytecode/` holds the full dumps the GIFs are cut from:
 
-```sh
-node make-gifs.mjs
-```
+- `rerank-before.txt`, `rerank-after.txt`: complete Ignition bytecode.
+- `census-before.txt`, `census-after.txt`: closures and contexts per call across six hot functions. 26 to 2.
+- `opt-after.txt`: tier-up trace.
+- `deopt-ab.txt`: deopt trace from the dual-bundle A/B.
 
-Pipeline: Shiki (`vesper`) colors the real text, chromium screenshots each reveal frame, ImageMagick assembles the GIF.
-
-## Real captures
-
-`bytecode/` holds the raw dumps and the harness that produced them, plus reproduction steps in `bytecode/README.md`. The code excerpts in `code/` are extracted verbatim from git at `11d2ef6^` and `11d2ef6`.
-
-## Deck
-
-```sh
-npm install
-npm run dev
-```
-
-Slidev deck. `setup/shiki.ts` pins the code theme to Vesper, and the slides import the capture files directly with `<<< @/bytecode/...`, so the deck cannot drift from the real output. The GIFs are embedded on their own slides.
-
-```sh
-npm run build     # static site in dist/
-npm run export    # PDF or PNGs, needs playwright-chromium
-```
-
-## Files
-
-```
-slides.md            the deck, imports the real captures
-setup/shiki.ts       vesper theme for code
-style.css            slide chrome
-uno.config.ts        blocklist so bytecode brackets are not parsed as CSS
-gifs/                output GIFs
-make-gifs.mjs        regenerates the GIFs
-bytecode/            raw dumps, harness, reproduction notes
-code/                verbatim before/after excerpts from git
-talk-outline.md      a ten minute talk script
-```
+Each dump was produced by bundling the engine at that commit and running `node --allow-natives-syntax --print-bytecode` against the real harness.
