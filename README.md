@@ -143,6 +143,8 @@ skills/
     SKILL.md                     the workflow, in order
     references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons
     references/patterns.md       before/after patterns with real census numbers
+    references/memory-and-heap.md  heap snapshots, GC traces, leak proof
+    references/findings.md       measured results and the surprises
     scripts/census.mjs           parse --print-bytecode output into a closure table
   perf-prove-it-rust/
     SKILL.md                     the workflow, in order

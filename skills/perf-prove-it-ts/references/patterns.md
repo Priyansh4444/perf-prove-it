@@ -28,6 +28,8 @@ escalate           0         0
 
 `--trace-opt` showed Maglev then TurboFan on every function, no deopts, before and after.
 
+Measured outcome on this machine: rerank 42.8 to 38.9 µs per call, peak RSS 154 to 122 MB per 100k calls, GC time flat at about 58 ms, scavenges 687 to 1410 per 100k. The full reading, including why scavenges doubled without a regression, is in `findings.md`.
+
 ## 1. Fuse the passes, delete the per-candidate array
 
 Before: `map` built one object per candidate, then three `Math.max(...rows.map(pick))` calls each built a throwaway array.
@@ -67,6 +69,8 @@ for (let i = 0; i < candidates.length; i++) {
 ```
 
 Per call: 7 closures and a 200-object `raw` array plus four throwaway arrays became 1 closure and 3 output arrays. The three maxima are free because the loop already walked every candidate.
+
+Trade disclosed: `rerank` grew from 476 to 1856 bytes of bytecode because the callback bodies moved inline. Bytecode is the cold tier, so the price is compile time and cold start, not per call. The three preallocated numeric arrays are holey; `Float64Array` is the packed alternative when the values are internal numbers (`memory-and-heap.md` has the measurements).
 
 ## 2. A dedupe helper, used for two different things
 
@@ -111,13 +115,15 @@ Bytecode shows the difference as `CreateClosure`/`CreateObjectLiteral` disappear
 
 ## What the timings actually said
 
-On a box at load ~4, timing was noise. The honest parts that survived:
+Report medians, not the best run. From the verified run, each arm in its own process:
 
-- `escalate` 387 ns/call new vs 443 ns/call old (isolated leg, separate processes).
-- `planL0` at parity, 748 vs 732 ns, inside the noise band. Do not claim that.
+- `rerank`: 42.8 µs/call before, 38.9 µs/call after, TurboFan, median of 5 runs of 100k calls.
+- `planL0` at parity inside the noise band. Do not claim it.
+- `escalate` isolated at 387 ns/call new vs 443 ns/call old in the earlier run.
+- Memory: peak RSS 154 to 122 MB per 100k calls, GC time flat at about 58 ms, scavenges 687 to 1410. Scavenges rose because the new code builds small, short-lived arrays; GC time and RSS are the verdict.
 - The first interleaved old-vs-new run reported a 16x win for the new code. `--trace-deopt` showed `wrong map` bailouts on the old arm: loading both bundles in one process made them deoptimize each other. The 16x was thrown out.
 
-Report example: "closures per call 7 to 1, contexts 1 to 1, 200-object intermediate array gone; timing directionally better but within noise on this machine."
+Report example: "closures per call 7 to 1, contexts 1 to 1, 200-object intermediate array gone; rerank 42.8 to 38.9 µs/call, peak RSS 154 to 122 MB per 100k calls, GC time flat; bytecode 476 to 1856 with the callbacks inlined; remaining cost is bm25 over Map entries, which is the next unit."
 
 ## Leak audit result
 
@@ -127,4 +133,4 @@ One repo-wide pass over `addEventListener|setInterval|setTimeout` and module-lev
 - A per-call sleep closure in the collector was hoisted.
 - Per-request caches are request-scoped and die with the response. Clean.
 
-State one of these verdicts per site, not "memory looks fine".
+State one verdict per site, not "memory looks fine". Grep finds the sites; a heap snapshot comparison after `global.gc()` proves whether each is bounded. Commands in `memory-and-heap.md`.
