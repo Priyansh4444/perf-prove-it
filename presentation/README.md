@@ -1,51 +1,52 @@
 # Presentation
 
-A [Slidev](https://sli.dev) deck. Slidev is the dev-standard slides tool, and it ships Shiki Magic Move, the library behind the click-to-morph code transitions here.
+Everything here is generated from the real run: the code at PR #10 of the search engine, the bytecode V8 produced for it, and the opt and deopt traces. Code and output use the Vesper theme.
 
-## Run it
+## Output GIFs
+
+`gifs/` holds the animated terminal outputs, all from captured runs:
+
+- `rerank-before.gif`: the seven `CreateClosure` lines in `rerank`, one per callback.
+- `rerank-after.gif`: the single remaining closure, and the note that the callbacks moved inline.
+- `opt-tier-up.gif`: Maglev then TurboFan on every hot function, no deopt lines.
+- `deopt-wrong-map.gif`: the `wrong map` bailouts from running both bundles in one process, the reason the 16x A/B was thrown out.
+
+Regenerate all of them with:
 
 ```sh
-cd presentation
+node make-gifs.mjs
+```
+
+Pipeline: Shiki (`vesper`) colors the real text, chromium screenshots each reveal frame, ImageMagick assembles the GIF.
+
+## Real captures
+
+`bytecode/` holds the raw dumps and the harness that produced them, plus reproduction steps in `bytecode/README.md`. The code excerpts in `code/` are extracted verbatim from git at `11d2ef6^` and `11d2ef6`.
+
+## Deck
+
+```sh
 npm install
 npm run dev
 ```
 
-Space or right arrow advances. On "The code" and "Counted before and after", the first click morphs the block: before into after, then the census numbers move.
+Slidev deck. `setup/shiki.ts` pins the code theme to Vesper, and the slides import the capture files directly with `<<< @/bytecode/...`, so the deck cannot drift from the real output. The GIFs are embedded on their own slides.
 
 ```sh
 npm run build     # static site in dist/
 npm run export    # PDF or PNGs, needs playwright-chromium
 ```
 
-For export, install the browser once: `npm i -D playwright-chromium`.
-
-## Slides
-
-1. Cover
-2. The code, before. Click morphs it into the after version.
-3. The actual bytecode, trimmed from `--print-bytecode`, with the `CreateClosure` line called out.
-4. The closure census before and after. Click morphs the table.
-5. Opt: `--trace-opt` tiering, Maglev then TurboFan, no deopts.
-6. Deopt: the `wrong map` bailout that killed a fake 16x A/B result.
-7. What it bought, in counts.
-8. Close, with the install line.
-
-## Static cards
-
-`cards/` still holds the code and evidence cards as SVG and 2x PNG, for when you want images instead of a live deck. Regenerate them after editing the snippets:
-
-```sh
-node generate-cards.mjs
-```
-
 ## Files
 
 ```
-slides.md            the deck source
-package.json         slidev scripts and dependencies
-style.css            dark palette to match the logo
-uno.config.ts        blocklist so bytecode brackets are not parsed as CSS classes
-cards/               generated SVG and PNG cards
-generate-cards.mjs   card generator
-talk-outline.md      a ten minute talk script built on the presentation rules
+slides.md            the deck, imports the real captures
+setup/shiki.ts       vesper theme for code
+style.css            slide chrome
+uno.config.ts        blocklist so bytecode brackets are not parsed as CSS
+gifs/                output GIFs
+make-gifs.mjs        regenerates the GIFs
+bytecode/            raw dumps, harness, reproduction notes
+code/                verbatim before/after excerpts from git
+talk-outline.md      a ten minute talk script
 ```

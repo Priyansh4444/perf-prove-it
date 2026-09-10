@@ -150,12 +150,14 @@ skills/
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
 presentation/
-  slides.md                      Slidev deck: code, bytecode, opt, deopt
+  slides.md                      Slidev deck, imports the real captures
+  setup/shiki.ts                 Vesper theme for code
   package.json                   npm run dev / build / export
-  style.css, uno.config.ts       theme to match the repo
+  gifs/                          output GIFs, Vesper theme
+  bytecode/                      raw dumps, harness, reproduction notes
+  code/                          verbatim before/after excerpts from git
+  make-gifs.mjs                  regenerate the GIFs
   talk-outline.md                talk script built on the presentation rules
-  cards/                         code and evidence cards, SVG plus PNG
-  generate-cards.mjs             regenerate the cards from source snippets
 assets/
   logo.svg, logo-mark.svg, logo.png, logo-mark.png
 ```

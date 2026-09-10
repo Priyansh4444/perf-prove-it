@@ -1,0 +1,10 @@
+function    len  closures contexts arr[] obj{}
+----------- ---- -------- -------- ----- -----
+escalate    569  5        1        0     0    
+mapAspects  560  4        1        0     0    
+planL0      127  1        1        0     1    
+rerank      476  7        1        1     1    
+tokenize    1635 4        1        1     1    
+uniqueTerms 314  0        0        1     0    
+
+6 function(s), 26 closure/context allocations per call

@@ -1,0 +1,6 @@
+same-result YES
+[bailout (kind: deopt-eager, reason: wrong map): begin. deoptimizing 0x1a1a2474ad61 <JSFunction rerank (sfi = 0x1a1a24744a79)>, 0x12d10a5ecab9 <Code TURBOFAN_JS>, opt id 68, bytecode offset 3, deopt exit 52, FP to SP delta 128, caller SP 0x7fff38028cb8, pc 0x7ff868074d84]
+[bailout (kind: deopt-eager, reason: wrong map): begin. deoptimizing 0x28fcd0e40c39 <JSFunction maxSignal (sfi = 0x1a1a24745249)>, 0x12d10a5e8a51 <Code TURBOFAN_JS>, opt id 60, bytecode offset 3, deopt exit 1, FP to SP delta 56, caller SP 0x7fff38028ba8, pc 0x7ff868071391]
+[bailout (kind: deopt-eager, reason: wrong map): begin. deoptimizing 0x209208c13be1 <JSFunction (sfi = 0x2aba5ccbfd61)>, 0x12d10a5e9c01 <Code TURBOFAN_JS>, opt id 55, bytecode offset 7, deopt exit 0, FP to SP delta 112, caller SP 0x7fff38028ae8, pc 0x7ff8680720f2]
+[bailout (kind: deopt-eager, reason: wrong map): begin. deoptimizing 0x1a1a2474ad61 <JSFunction rerank (sfi = 0x1a1a24744a79)>, 0x12d10a5f2cc1 <Code TURBOFAN_JS>, opt id 85, bytecode offset 241, deopt exit 18, FP to SP delta 128, caller SP 0x7fff38028cb8, pc 0x7ff868078a4e]
+acc 1600000
