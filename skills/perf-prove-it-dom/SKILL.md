@@ -81,7 +81,7 @@ Read:
 - `LayoutCount`, `RecalcStyleCount` deltas: how many layout and style passes the interaction caused. One is healthy. A count near the number of loop iterations is thrashing. For containment and invalidation changes, pair the count with the trace's `dirtyObjects` and `totalObjects` args and the stage durations: a pass count can rise while the work per pass falls, and the scope measures are the better headline.
 - `LayoutDuration`, `RecalcStyleDuration` deltas: the time inside those passes.
 - `ScriptDuration`, `TaskDuration`: how much of the work is script versus browser stages. Blink excludes work that runs inside a CDP `Runtime.evaluate` call from `ScriptDuration`, so drive the interaction as a page task (a dispatched event, an in-page `setTimeout`, or real input) before trusting `ScriptDuration`.
-- `Nodes`, `JSEventListeners`, `JSHeapUsedSize` before and after: growth the interaction leaves behind.
+- `Nodes` and `JSEventListeners` before and after: growth the interaction leaves behind. For churn, count `MinorGC` and `MajorGC` events in a trace over one interaction; that is the allocation rate. A `JSHeapUsedSize` delta at one moment depends on when GC ran, so it is context, not a result.
 - Trace events: count `Layout`, `UpdateLayoutTree`, `Paint`, `ParseHTML`, `EventDispatch`, `FunctionCall`. Event names move between versions: on Chromium 152 headless the task event reads `ThreadControllerImpl::RunTask`, the layer-tree stage emits `Layerize`, and `CompositeLayers` does not appear. Read them from the trace, do not assume.
 - Long tasks and INP from `PerformanceObserver` where the interaction is user-facing.
 
@@ -127,7 +127,7 @@ Take every win you can prove and disclose its cost. There is no readability exem
 - Metric parity: paste the counter deltas for both arms from separate pages. Report the Chromium version.
 - Cycle parity: measure the whole interaction cycle, not only initial render. If the fix defers work (containment, virtualization, lazy construction), find where the deferred work is paid: scroll into it, trigger it, and report both halves. A fix that is cheaper at mount and more expensive on first scroll has moved the cost, not removed it.
 - Trace parity: paste the event counts and durations. A layout count that drops from 500 to 2 is a real win regardless of wall clock.
-- Memory parity: `Nodes`, `JSEventListeners`, and `JSHeapUsedSize` must not grow per interaction.
+- Memory parity: `Nodes` and `JSEventListeners` must not grow per interaction. For churn, compare `MinorGC` and `MajorGC` counts per interaction; for retained growth, call `HeapProfiler.collectGarbage` before comparing heap size.
 - Security: `innerHTML` with untrusted data is not an optimization. If the change uses it, prove the input is trusted or sanitized.
 - Report the trade: layer memory, DOM size, framework coupling, accessibility, and the revert.
 

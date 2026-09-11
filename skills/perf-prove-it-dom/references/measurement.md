@@ -33,7 +33,7 @@ Rules:
 - Same Chromium build, viewport, page state, and warmup for both arms. Record `browser.version()`. Discard one warmup round per arm: a fresh browser process pays font shaping and first-layout costs, measured at 2.8x the steady-state layout time.
 - One page per arm. Two versions of the code in one page share style caches, layers, and DOM state.
 - Disable extensions and background tabs. Fresh context per arm.
-- Headless is reliable for `Nodes`, `JSEventListeners`, `LayoutCount`, `RecalcStyleCount`, and heap size, once frames are driven with rAF. Stage durations repeat well enough to compare medians but vary run to run; never compare a single duration. Compositor and raster claims need headed Chromium or explicit flags; say which you used.
+- Headless is reliable for `Nodes`, `JSEventListeners`, `LayoutCount`, and `RecalcStyleCount`, once frames are driven with rAF. Heap size from a single snapshot is not reliable, because it depends on when GC last ran; measure allocation rate instead, and compare heap size only after `HeapProfiler.collectGarbage`. Stage durations repeat well enough to compare medians but vary run to run; never compare a single duration. Compositor and raster claims need headed Chromium or explicit flags; say which you used.
 - Serve the production bundle, or state that numbers come from a dev build. Dev bundles (React StrictMode, Solid dev `flush`, HMR wrappers) can dominate script numbers even when the claim is about Blink.
 - Derive corpus size and caps from the call site, not from the task description. A feed that caps at 80 live messages must be measured at 80, not at a round number.
 - For an async interaction (click, fetch, render), wait for a rendered condition first, then advance the two rAF ticks. The two-tick rule alone only fits synchronous interactions.
@@ -59,7 +59,7 @@ Keys observed on Chromium 152 (not exhaustive):
 | `RecalcStyleDuration` | seconds in style recalculation |
 | `ScriptDuration` | seconds in JavaScript |
 | `TaskDuration` | seconds in main-thread tasks |
-| `JSHeapUsedSize`, `JSHeapTotalSize` | V8 heap bytes |
+| `JSHeapUsedSize`, `JSHeapTotalSize` | V8 heap bytes at the snapshot; depends on GC timing, so not an allocation-rate measure |
 | `Documents`, `Frames` | document and frame counts |
 
 Delta two snapshots around one interaction plus two rAF ticks. Verified on Chromium 152, medians of three rounds, fresh context each round:
@@ -116,6 +116,30 @@ Interaction latency uses the Event Timing API. Observe `event` entries, set a `d
 
 Other useful entry types: `paint` (FP and FCP), `largest-contentful-paint`, `layout-shift`, `element`, `navigation`, `resource`, `mark`, `measure`. `PerformanceObserver.supportedEntryTypes` lists what the current engine supports.
 
+## Allocation rate
+
+`Performance.getMetrics` has no allocation counter, and a `JSHeapUsedSize` delta depends on when GC ran. To compare churn between arms, count collections in a trace over one fixed interaction:
+
+```js
+await client.send("Tracing.start", { categories: "v8", transferMode: "ReportEvents" });
+// run exactly one interaction, then two rAF ticks
+await client.send("Tracing.end");
+// count MinorGC and MajorGC events by name
+```
+
+Chromium 152 emits `MinorGC` and `MajorGC` as top-level events in the `v8` category. Verified: a loop allocating 2 million small objects produced 11 `MinorGC` and 1 `MajorGC`. Scavenges track bytes allocated into young space, so their count per interaction is the allocation rate to compare between arms.
+
+For allocation sites and sampled bytes, use CDP sampling:
+
+```js
+await client.send("HeapProfiler.enable");
+await client.send("HeapProfiler.startSampling", { samplingInterval: 32768 });
+// run the interaction
+const { profile } = await client.send("HeapProfiler.stopSampling");
+```
+
+Sampling slows the page, so use it to find the site and measure the fix without it attached. For retained growth, call `HeapProfiler.collectGarbage` and compare `JSHeapUsedSize` before and after; a delta without that is churn, not retained.
+
 ## Forced reflow detection
 
 Three ways, strongest first:
@@ -130,7 +154,7 @@ Geometry reads include `offsetWidth/Height/Top/Left`, `clientWidth/Height/Top/Le
 
 1. Lock behavior: capture the rendered DOM shape, text, ARIA attributes, and a screenshot for the interaction.
 2. Run three rounds per arm, alternating fresh pages. Report every round and the medians for counters and trace durations.
-3. Compare counters (`Nodes`, `JSEventListeners`, heap), stage counts (`LayoutCount`, `RecalcStyleCount`), and trace event counts and durations for the stages that ran (`Layout`, `UpdateLayoutTree`, `Paint`, layer-stage events). Use medians; durations vary run to run while counters usually repeat exactly.
+3. Compare counters (`Nodes`, `JSEventListeners`), allocation rate (`MinorGC` and `MajorGC` counts per interaction), stage counts (`LayoutCount`, `RecalcStyleCount`), and trace event counts and durations for the stages that ran (`Layout`, `UpdateLayoutTree`, `Paint`, layer-stage events). Use medians; durations vary run to run while counters usually repeat exactly.
 4. Compare the screenshot and a11y tree for parity. Raw PNG hashes differ between identical runs (volatile text, capture timing), so run a real pixel diff against a fixed clip, mask known-volatile regions, and report the bounding box and maximum delta, not just equality. To compare content skipped by containment, force-render the skipped subtree before the diff. Antialias-only differences from text-run merges are expected when a fix changes text node structure; zero geometry change plus a small max delta is parity, a hash mismatch is not automatically a failure.
 5. Report the Chromium version, viewport, and page state. Counters move with viewport size, fonts, and zoom, so a viewport change invalidates a comparison.
 

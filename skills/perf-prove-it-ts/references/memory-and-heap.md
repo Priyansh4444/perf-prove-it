@@ -18,12 +18,23 @@ Scavenging is bad when:
 - Objects that should die young get promoted to old space, causing major GCs later.
 - The count is high only because the code allocates garbage it does not need.
 
-The count of scavenges tracks how many bytes were allocated into the young semi-space, not how healthy the program is. Our own run is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the verdict; mention scavenge count as context.
+The count of scavenges tracks how many bytes were allocated into the young semi-space, not how healthy the program is. Our own run is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the cost, and the scavenge count as the allocation rate, with its unit. A single heap-used reading is not evidence.
+
+## Allocation rate
+
+Allocation rate is bytes allocated per unit of work. The cheap, stable proxy is the young-generation collection count: V8 scavenges when the semi-space fills, so scavenges over a fixed workload track bytes allocated.
+
+Report it as a rate with the unit: scavenges per 1M calls, minor GCs per 160 browser deltas, bytes per request from `--heap-prof`. Compare rates between arms, never raw heap sizes.
+
+`process.memoryUsage().heapUsed` depends on when the last GC ran. Two arms with identical allocation can differ several times over at a random moment, so a heap-used delta before a forced GC is churn, not a result. Heap size only counts after `global.gc()` twice, and only for retained growth.
+
 
 ## Metrics that matter
 
 | Metric | How to read it | Source |
 | --- | --- | --- |
+| Allocation rate | Churn, the number to compare between arms | `--trace-gc` scavenge count and `PerformanceObserver` `kind === 1`, per unit of work |
+| Sampled bytes per site | Who allocates, from a sampled profile | `--heap-prof`, `HeapProfiler.startSampling` in the browser |
 | Total GC time | The real cost of churn | `--trace-gc`, PerformanceObserver |
 | Max pause | Latency risk | `--trace-gc`, PerformanceObserver |
 | Major-GC count and time | Promotion pressure | `--trace-gc` lines tagged `Mark-Compact` |
@@ -38,14 +49,15 @@ node --trace-gc app.mjs
 node --trace-gc-nvp app.mjs   # one JSON object per collection after "GC: "
 ```
 
-Count collections and total pause from the output, and keep the workload fixed between arms. For a process under test, a GC observer gives the same numbers without parsing:
+Count collections by kind: `Scavenge` lines are minor GCs, `Mark-Compact` lines are major. Divide the scavenge count by the workload unit to get the allocation rate. Keep the workload fixed between arms. A GC observer gives the same numbers without parsing:
 
 ```js
 const { PerformanceObserver } = require('node:perf_hooks');
-const gc = { count: 0, ms: 0 };
+const gc = { minor: 0, major: 0, ms: 0 };
 new PerformanceObserver((list) => {
   for (const e of list.getEntries()) {
-    gc.count += 1;
+    gc.minor += e.kind === 1 ? 1 : 0;
+    gc.major += e.kind === 2 ? 1 : 0;
     gc.ms += e.duration;
   }
 }).observe({ entryTypes: ['gc'] });

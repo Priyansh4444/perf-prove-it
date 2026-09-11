@@ -161,7 +161,7 @@ Each gap resolves one way: delete, hoist, replace, or keep and name why (physics
 - Repo goldens and tests must be green. A run against the unpatched checkout is not evidence about the patch.
 - Re-run the census and `--trace-opt` after the change.
 - Speed: at least 5 process runs per arm, one process per arm, same machine. Run an A/A control first (two identical arms); a delta inside the A/A spread is parity. Paste every run with its load; declare the drop rule before running and paste any dropped run. Never A/B two bundles in one process; mixing arms' inputs across bundles causes wrong-map deopts (a 16x phantom win was once observed from exactly this).
-- Memory: peak RSS, total GC time, and max pause are the verdict. Scavenge count is allocation rate, not harm. More scavenges with flat GC time and lower peak RSS is acceptable; a memory win fails when GC time, max pause, or major-GC time rises above the A/A noise. Retained growth needs the A/B/C snapshot protocol after `global.gc()` twice; a no-GC heap delta is churn and cannot be reported as retained.
+- Memory: report allocation rate first, as scavenges or minor GCs per fixed unit of work, with `--heap-prof` sampled bytes when the site matters. Then the cost: total GC time and max pause. Then footprint: peak RSS. More scavenges with flat GC time and lower peak RSS is acceptable; a memory win fails when GC time, max pause, or major-GC time rises above the A/A noise. A heap-used delta before a forced GC depends on when GC ran and is not a result. Retained growth needs the A/B/C snapshot protocol after `global.gc()` twice.
 - No extrapolated scale claim (per hour, per user, per day) without the measured per-unit number and the arithmetic shown; a study report printed 180k scans per hour without the arithmetic, which the per-message rate and 3 matchers make 540k.
 - Escape analysis can delete micro-allocations, so a 0.5% timing "win" may be zero. Count constructions, do not guess.
 - Report what you measured, how, and what confounded it. A noisy win sold as a win is worse than no benchmark.
@@ -216,7 +216,7 @@ Also teach the optimizer, once per report, in plain words and without hand-wavin
 1. The Step 1 ledger rows that moved (operation, source line, per-call count predicted and observed), the target line, the identity envelope with the reachable domain, counts before and after with raw bytecode lines tied to their source expressions, and the sibling delta when a sibling was built.
 2. Backend evidence: tier-up lines and deopt lines, with forced lines labeled capability and natural tiering shown separately, plus the runtime line: harness runtime (Node and V8 versions) and target runtime (browser build, V8 version from `chrome://version`, production or dev bundle) with the tier observed there, or the explicit statement that the browser tier was not measured.
 3. Behavior proof: the exact test command, goldens, the identity claim with its domain and known divergences, and the differential counts.
-4. Speed and memory: medians, machine header, V8 version, load average, GC time, max pause, peak RSS, and whether allocation evidence is static or dynamic. Churn and retained are labeled as what they are.
+4. Speed and memory: medians, machine header, V8 version, load average, allocation rate with its unit, GC time, max pause, peak RSS, and whether allocation evidence is static or dynamic. Churn and retained are labeled as what they are.
 5. The trade: bytecode bytes before and after, source line delta in the hot function, module-level state added, cold-start delta when static data moved to module load, and what was deliberately not optimized.
 6. The revert: the command that restores the old shape, the hash it restores, and the dry-run output.
 7. One machine read: pasted line, plain meaning, what it bought.
@@ -228,7 +228,7 @@ Also teach the optimizer, once per report, in plain words and without hand-wavin
 - No timing claim without process isolation, a load context, and a median.
 - No "optimized" verdict without the before and after evidence pasted in.
 - No win lands without its price and its revert named.
-- No allocation claim without either a static-site label or `--heap-prof` object counts; retained claims need a forced-GC snapshot.
+- No allocation claim without either a static-site label or `--heap-prof` object counts; retained claims need a forced-GC snapshot. No heap-used delta reported as a result; report allocation rate or forced-GC retained size.
 - No identity claim without a named domain and pasted differential counts.
 - No retained-memory claim from a no-GC delta.
 - No extrapolated scale claim without the measured per-unit number and the arithmetic.
