@@ -100,6 +100,14 @@ A gap question ("does the TS skill know how its win behaves in the browser?") pr
 - `SKILL.md` Step 2 now carries the browser harness and says a Node tier line is not a browser tier line.
 - Step 1 gained an avoidance question before the ledger, and the report now requires the target-runtime tier plus a plain-language explanation of the optimizer ladder (Ignition, Sparkplug, Maglev, TurboFan, and deopt as a reset).
 
+## Context-free agent trial (solidjs/solid)
+
+A subagent with no context beyond the skill and a cloned repository was pointed at `solidjs/solid` and its in-repo reactivity benchmark. It derived the floor, built its own harness, changed one representation in `packages/solid/src/reactive/signal.ts` (packed subscription edges), and claimed total median 391 to 339.5 ms with 18 of 20 paired blocks faster.
+
+The verifier rebuilt both bundles in its own session (hashes matched the agent's arms), ran the repo suite (487 + 4 passed), and re-ran the benchmark in 18 interleaved pairs: 17 of 18 favored the patch, paired median -61 ms, totals 392.5 to 326 (-17.0%, sign test p = 7.2e-5). A counterbalanced subset also favored the patch when it ran first, ruling out arm order.
+
+Two things this trial proved about the method: the skill works without prior context, and an effect this size needs at least about ten pairs on this benchmark, because a single run spreads roughly 15%. The verifier's first 5-pair run landed on parity and only the larger series resolved the win. Details in `study/solid-agent/`, including the harness precondition (the 2022 bench needs `%PrepareFunctionForOptimization` on V8 14.6 or it aborts).
+
 ## Paired eval (blinded judge)
 
 Six reports, three baseline (variant A) and three refined (variant B), scored out of 12 on the
