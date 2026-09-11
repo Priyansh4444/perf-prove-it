@@ -2,18 +2,19 @@
   <img src="assets/logo.svg" alt="perf-prove-it" width="560">
 </p>
 
-Two agent skills that make code faster the honest way: write down the ideal work per function, then make the compiler show you what it actually emitted, and close the gap.
+Three agent skills that make code faster the honest way: write down the ideal work per function, then make the compiler show you what it actually emitted, and close the gap.
 
 No profiles to chase, no "should be faster" claims, no microbenchmarks invented after the fact.
 
 - `perf-prove-it-ts`: TypeScript and JavaScript on V8. Ignition bytecode censuses, Maglev and TurboFan tier checks, deopt diagnosis, closure and allocation cuts, leak audits.
 - `perf-prove-it-rust`: Rust on the CPU you actually own. Ideal instruction sequence first, asm diff second, instruction counters and perf counters third, threads and caches treated as part of the design.
+- `perf-prove-it-dom`: Browser UI on Blink. Pipeline stages (DOM, style, layout, paint, composite), CDP counter and trace evidence, forced synchronous layout, INP and long tasks, containment and compositor patterns.
 
-Both come from the same rule, borrowed from Casey Muratori: a good optimizer establishes what the hardware could theoretically do, then does not stop until the gap is closed. Profiles find local minima. Counting what the machine must do finds the floor.
+All three come from the same rule, borrowed from Casey Muratori: a good optimizer establishes what the hardware could theoretically do, then does not stop until the gap is closed. Profiles find local minima. Counting what the machine must do finds the floor.
 
 ## Receipts
 
-These are from two real runs. Same skills, real code, real numbers.
+These are from real runs. Same skills, real code, real numbers.
 
 ### TypeScript: six hot functions, one bytecode dump
 
@@ -84,6 +85,20 @@ Exact final video order asserted on every run. And the experiments that lost, on
 
 A perf record that only contains wins is marketing.
 
+### DOM: three cases, then the verifiers scrolled
+
+Three workers measured real browser interactions with CDP counters and traces: a chat feed render, a transcript expansion, a reply tree mount. The mount wins were real: Nodes 3126 to 1050, LayoutObjects 2197 to 449, LayoutDuration 94.6 to 40.6 ms.
+
+Then the verifiers scrolled, and both containment fixes turned out to defer work rather than remove it: the first revealing scroll re-paid 18 layouts and roughly 46 ms in the transcript case, and 73 ms of layout in the reply tree. Mount plus scroll was worse than the old code in both. The reports now call them mount-scoped wins, and the skill requires a full-cycle measurement:
+
+```text
+mount:      layout 27.4 -> 9.9 ms
+first scroll: re-pays 18 layouts / ~46 ms
+verdict:    deferred, not removed
+```
+
+The same review pass caught three wrong facts in the skill's own references before any case ran: a Blink class that does not exist, stale trace event names, and a ScriptDuration claim that CDP-evaluate work is included when it is excluded. Verifiers are for the skill too. Full evidence: `study/reports/`, runnable in `study/harness/` and `study/dom-primitives/`.
+
 ## What it tends to find
 
 The census and the asm diff do not care how clever the code looks. These are the patterns they surface most often, and roughly what fixing them tends to buy. Every number is still yours to measure, and some of these come back as zero, which the report says out loud.
@@ -110,6 +125,7 @@ Install one of them:
 ```sh
 npx skills add Priyansh4444/perf-prove-it --skill perf-prove-it-ts
 npx skills add Priyansh4444/perf-prove-it --skill perf-prove-it-rust
+npx skills add Priyansh4444/perf-prove-it --skill perf-prove-it-dom
 ```
 
 Or just mention it to your agent:
@@ -124,6 +140,7 @@ The descriptions are written as triggers, so the agent picks the skill up when y
 
 - "make this TypeScript faster", "check the bytecode", "is this deoptimizing", "why is this allocating"
 - "optimize this Rust", "check the assembly", "parallelize this properly", "why is this cache-missing"
+- "why is my UI janky", "check layout thrashing", "read the trace", "is this interaction slow", "why does this reflow"
 
 Then it works one verified unit at a time:
 
@@ -152,10 +169,17 @@ skills/
     references/asm-diff.md       generating and reading asm; common Rust surprises
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
+  perf-prove-it-dom/
+    SKILL.md                     the workflow, in order
+    references/pipeline.md       Blink pipeline stages, triggers, and source map
+    references/measurement.md    CDP commands, metric keys, harness rules, verifier traps
+    references/patterns.md       before/after DOM patterns with measured effects and traps
 study/
-  PROTOCOL.md                    the four-case study frame and rubric
+  PROTOCOL.md                    the study frame and rubric
   RESULTS.md                     verified results, corrections, and skill changes
   reports/                       raw worker, verifier, and judge reports
+  dom-primitives/                runnable CDP primitive proofs with results.json
+  harness/                       the three DOM case harnesses and evidence
 presentation/
   README.md                      how to run and record the deck
   src/routes/+page.svelte        Animotion slides: code, bytecode, opt, deopt

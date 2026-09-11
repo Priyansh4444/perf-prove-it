@@ -1,0 +1,10 @@
+Layout count 2
+  type: n/a durMs 20.558 args {"beginData":{"dirtyObjects":485,"frame":"5F0498B8BEFE9BB3A40546A7E512DAF0","partialLayout":false,"totalObjects":485},"endData":{"layoutRoots":[{"depth":1,"nodeId":2,"nodeName":"#document","quads":[[0,0,1280,0,1280,800,0,800]]}]}}
+  type: n/a durMs 115.104 args {"beginData":{"dirtyObjects":398,"frame":"5F0498B8BEFE9BB3A40546A7E512DAF0","partialLayout":false,"totalObjects":850},"endData":{"layoutRoots":[{"depth":1,"nodeId":2,"nodeName":"#document","quads":[[0,0,1280,0,1280,800,0,800]]}]}}
+UpdateLayoutTree count 2
+  type: n/a durMs 3.358 args {"beginData":{"frame":"5F0498B8BEFE9BB3A40546A7E512DAF0"},"elementCount":522}
+  type: n/a durMs 18.733 args {"beginData":{"frame":"5F0498B8BEFE9BB3A40546A7E512DAF0"},"elementCount":304}
+EventDispatch count 200
+  type: contentvisibilityautostatechange durMs 0.041 args {"data":{"type":"contentvisibilityautostatechange"}}
+  type: contentvisibilityautostatechange durMs 0.009 args {"data":{"type":"contentvisibilityautostatechange"}}
+  type: contentvisibilityautostatechange durMs 0.006 args {"data":{"type":"contentvisibilityautostatechange"}}

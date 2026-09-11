@@ -1,0 +1,109 @@
+{
+  "browser": "152.0.7977.82",
+  "node": "v26.8.2",
+  "nodes": 500,
+  "rounds": 3,
+  "scenarios": {
+    "thrash": {
+      "rounds": [
+        {
+          "LayoutCount": 500,
+          "RecalcStyleCount": 500,
+          "LayoutDurationMs": 57.16,
+          "RecalcStyleDurationMs": 4.39,
+          "Nodes": 1000
+        },
+        {
+          "LayoutCount": 500,
+          "RecalcStyleCount": 500,
+          "LayoutDurationMs": 91.18,
+          "RecalcStyleDurationMs": 11.94,
+          "Nodes": 1000
+        },
+        {
+          "LayoutCount": 500,
+          "RecalcStyleCount": 500,
+          "LayoutDurationMs": 90.5,
+          "RecalcStyleDurationMs": 12.76,
+          "Nodes": 1000
+        }
+      ],
+      "median": {
+        "LayoutCount": 500,
+        "RecalcStyleCount": 500,
+        "LayoutDurationMs": 90.5,
+        "RecalcStyleDurationMs": 11.94,
+        "Nodes": 1000
+      }
+    },
+    "fragmentNoRaf": {
+      "rounds": [
+        {
+          "LayoutCount": 1,
+          "RecalcStyleCount": 1,
+          "LayoutDurationMs": 6.33,
+          "RecalcStyleDurationMs": 1.77,
+          "Nodes": 1001
+        },
+        {
+          "LayoutCount": 1,
+          "RecalcStyleCount": 1,
+          "LayoutDurationMs": 14.73,
+          "RecalcStyleDurationMs": 1.54,
+          "Nodes": 1001
+        },
+        {
+          "LayoutCount": 0,
+          "RecalcStyleCount": 0,
+          "LayoutDurationMs": 0,
+          "RecalcStyleDurationMs": 0,
+          "Nodes": 1001
+        }
+      ],
+      "median": {
+        "LayoutCount": 1,
+        "RecalcStyleCount": 1,
+        "LayoutDurationMs": 6.33,
+        "RecalcStyleDurationMs": 1.54,
+        "Nodes": 1001
+      }
+    },
+    "fragmentRaf": {
+      "rounds": [
+        {
+          "LayoutCount": 1,
+          "RecalcStyleCount": 1,
+          "LayoutDurationMs": 6.17,
+          "RecalcStyleDurationMs": 1.32,
+          "Nodes": 1001
+        },
+        {
+          "LayoutCount": 1,
+          "RecalcStyleCount": 1,
+          "LayoutDurationMs": 13.15,
+          "RecalcStyleDurationMs": 1.1,
+          "Nodes": 1001
+        },
+        {
+          "LayoutCount": 1,
+          "RecalcStyleCount": 1,
+          "LayoutDurationMs": 8.89,
+          "RecalcStyleDurationMs": 1.68,
+          "Nodes": 1001
+        }
+      ],
+      "median": {
+        "LayoutCount": 1,
+        "RecalcStyleCount": 1,
+        "LayoutDurationMs": 8.89,
+        "RecalcStyleDurationMs": 1.32,
+        "Nodes": 1001
+      }
+    }
+  },
+  "evaluateTrap": {
+    "ranAfterString": false,
+    "fnForm": 7,
+    "ranAfterFn": true
+  }
+}

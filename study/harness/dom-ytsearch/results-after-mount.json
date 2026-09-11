@@ -1,0 +1,3526 @@
+{
+  "arm": "after",
+  "interaction": "mount",
+  "baseUrl": "http://localhost:3000",
+  "query": "moment",
+  "browser": "152.0.7977.82",
+  "node": "v26.8.2",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "reducedMotion": "reduce",
+  "metricsMedian": {
+    "Nodes": 5550,
+    "JSEventListeners": 15,
+    "LayoutObjects": 517,
+    "LayoutCount": 4,
+    "RecalcStyleCount": 12,
+    "LayoutDuration": 21.402,
+    "RecalcStyleDuration": 9.577,
+    "ScriptDuration": 100.396,
+    "TaskDuration": 221.493,
+    "JSHeapUsedSize": 4902208,
+    "JSHeapTotalSize": 6352896,
+    "Documents": 8,
+    "Frames": 4
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "wallMs": 284,
+      "counters": {
+        "searchRequests": 1,
+        "expandRequests": 0,
+        "interaction": "mount"
+      },
+      "metrics": {
+        "Nodes": 5550,
+        "JSEventListeners": 15,
+        "LayoutObjects": 517,
+        "LayoutCount": 4,
+        "RecalcStyleCount": 12,
+        "LayoutDuration": 31.786,
+        "RecalcStyleDuration": 9.577,
+        "ScriptDuration": 111.068,
+        "TaskDuration": 253.044,
+        "JSHeapUsedSize": 4929492,
+        "JSHeapTotalSize": 6090752,
+        "Documents": 8,
+        "Frames": 4
+      },
+      "trace": {
+        "thread_name": {
+          "count": 7,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "UpdateLayoutTree": {
+          "count": 14,
+          "durMs": 11.756
+        },
+        "EventDispatch": {
+          "count": 78,
+          "durMs": 50.663
+        },
+        "PrePaint": {
+          "count": 18,
+          "durMs": 3.844
+        },
+        "Paint": {
+          "count": 13,
+          "durMs": 18.266
+        },
+        "Layerize": {
+          "count": 8,
+          "durMs": 1.541
+        },
+        "v8.newInstance": {
+          "count": 10,
+          "durMs": 0.092
+        },
+        "v8.callFunction": {
+          "count": 9,
+          "durMs": 116.932
+        },
+        "FunctionCall": {
+          "count": 9,
+          "durMs": 111.948
+        },
+        "ResourceSendRequest": {
+          "count": 9,
+          "durMs": 0
+        },
+        "FrameStartedLoading": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ParseHTML": {
+          "count": 598,
+          "durMs": 4.544
+        },
+        "Layout": {
+          "count": 12,
+          "durMs": 42.807
+        },
+        "ResourceFinish": {
+          "count": 9,
+          "durMs": 0
+        },
+        "v8.evaluateModule": {
+          "count": 2,
+          "durMs": 0.028
+        },
+        "BackgroundProcessor::MaybeStartProcessingResponse": {
+          "count": 1,
+          "durMs": 0.117
+        },
+        "BackgroundJSStreamManager::TryStartStreamingTask": {
+          "count": 1,
+          "durMs": 0.048
+        },
+        "BackgroundJSStreamManager::RunScriptStreamingTask": {
+          "count": 1,
+          "durMs": 1.101
+        },
+        "v8.parseOnBackground": {
+          "count": 1,
+          "durMs": 1.033
+        },
+        "v8.parseOnBackgroundParsing": {
+          "count": 1,
+          "durMs": 1.021
+        },
+        "BackgroundJSStreamManager::OnFinishStreaming": {
+          "count": 1,
+          "durMs": 0.013
+        },
+        "ResourceReceiveResponse": {
+          "count": 7,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 7,
+          "durMs": 0
+        },
+        "v8.compileModule": {
+          "count": 1,
+          "durMs": 0.06
+        },
+        "v8.produceModuleCache": {
+          "count": 1,
+          "durMs": 0.086
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 2,
+          "durMs": 0
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 1,
+          "durMs": 0.013
+        },
+        "RequestAnimationFrame": {
+          "count": 3,
+          "durMs": 0
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.014
+        },
+        "MinorGC": {
+          "count": 3,
+          "durMs": 11.309
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.016
+        },
+        "V8.GCScavenger": {
+          "count": 3,
+          "durMs": 11.065
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.006
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 3,
+          "durMs": 11.007
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 3,
+          "durMs": 10.887
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 3,
+          "durMs": 0.449
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 3,
+          "durMs": 0.335
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 3,
+          "durMs": 0.031
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 3,
+          "durMs": 9.522
+        },
+        "Parallel scavenge started": {
+          "count": 9,
+          "durMs": 0.006
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 3,
+          "durMs": 0.733
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 8,
+          "durMs": 21.932
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 3,
+          "durMs": 0.28
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.006
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 3,
+          "durMs": 0.18
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 3,
+          "durMs": 0.213
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 3,
+          "durMs": 0.009
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 3,
+          "durMs": 0.155
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 3,
+          "durMs": 0.008
+        },
+        "V8.GC_HEAP_EXTERNAL_WEAK_GLOBAL_HANDLES": {
+          "count": 3,
+          "durMs": 0.011
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.015
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.021
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.01
+        },
+        "V8.GCPhantomHandleProcessingCallback": {
+          "count": 3,
+          "durMs": 0.389
+        },
+        "V8.GC_HEAP_EXTERNAL_SECOND_PASS_CALLBACKS": {
+          "count": 3,
+          "durMs": 0.357
+        },
+        "V8.DeoptimizeCode": {
+          "count": 11,
+          "durMs": 0.241
+        },
+        "FireAnimationFrame": {
+          "count": 3,
+          "durMs": 0.736
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 10,
+          "durMs": 0.489
+        },
+        "navigationStart": {
+          "count": 4,
+          "durMs": 0
+        },
+        "domLoading": {
+          "count": 8,
+          "durMs": 0
+        },
+        "responseEnd": {
+          "count": 4,
+          "durMs": 0
+        },
+        "MetaCharsetCheck": {
+          "count": 12,
+          "durMs": 0
+        },
+        "domInteractive": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domContentLoadedEventStart": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domContentLoadedEventEnd": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domComplete": {
+          "count": 8,
+          "durMs": 0
+        },
+        "MarkDOMContent": {
+          "count": 4,
+          "durMs": 0
+        },
+        "loadEventStart": {
+          "count": 4,
+          "durMs": 0
+        },
+        "loadEventEnd": {
+          "count": 4,
+          "durMs": 0
+        },
+        "MarkLoad": {
+          "count": 4,
+          "durMs": 0
+        },
+        "AnimationFrame": {
+          "count": 28,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 16,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 16,
+          "durMs": 0
+        },
+        "SoftNavigationStart": {
+          "count": 1,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 10,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 4,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 6,
+          "durMs": 0
+        },
+        "SoftNavigationEmitted": {
+          "count": 1,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "keydown": 1,
+        "keypress": 1,
+        "beforeinput": 1,
+        "textInput": 1,
+        "change": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "submit": 1,
+        "keyup": 1,
+        "search": 1,
+        "contentvisibilityautostatechange": 30,
+        "readystatechange": 16,
+        "DOMContentLoaded": 4,
+        "load": 8,
+        "pageshow": 4,
+        "resize": 4
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 9,
+          "durMs": 111.948
+        },
+        "EventDispatch": {
+          "count": 78,
+          "durMs": 50.663
+        },
+        "ParseHTML": {
+          "count": 598,
+          "durMs": 4.544
+        },
+        "UpdateLayoutTree": {
+          "count": 14,
+          "durMs": 11.756
+        },
+        "Layout": {
+          "count": 12,
+          "durMs": 42.807
+        },
+        "Paint": {
+          "count": 13,
+          "durMs": 18.266
+        },
+        "PrePaint": {
+          "count": 18,
+          "durMs": 3.844
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 102.978
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 102.961,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "Layout",
+          "durMs": 25.078,
+          "beginData": {
+            "dirtyObjects": 407,
+            "frame": "F55CE5C29E996D849A14C4AF4120AF9A",
+            "partialLayout": false,
+            "totalObjects": 499
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 11.308,
+          "type": "keypress"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 10.573,
+          "type": "textInput"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 10.512,
+          "type": "click"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 8.918,
+          "type": "DOMActivate"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 8.259,
+          "type": "submit"
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 8.154
+        },
+        {
+          "name": "Paint",
+          "durMs": 7.871
+        },
+        {
+          "name": "Paint",
+          "durMs": 5.388
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 4.854
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 4.773
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 4.751
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 4.687
+        },
+        {
+          "name": "Layout",
+          "durMs": 4.428,
+          "beginData": {
+            "dirtyObjects": 6,
+            "frame": "A3EB740093238425892C6053222B992D",
+            "partialLayout": false,
+            "totalObjects": 6
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 16,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Layout",
+          "durMs": 4.402,
+          "beginData": {
+            "dirtyObjects": 2,
+            "frame": "A3EB740093238425892C6053222B992D",
+            "partialLayout": false,
+            "totalObjects": 6
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 16,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    640,
+                    0,
+                    640,
+                    360,
+                    0,
+                    360
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 4.284
+        },
+        {
+          "name": "UpdateLayoutTree",
+          "durMs": 4.045,
+          "beginData": {
+            "frame": "F55CE5C29E996D849A14C4AF4120AF9A"
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 3.869
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 3.841
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 3.604
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 3.595,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 3.428,
+          "functionName": "",
+          "url": "http://localhost:3000/src/components/search-form.tsx",
+          "lineNumber": 61
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 3.395
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 3.316
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 3.298
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 3.272
+        },
+        {
+          "name": "Layout",
+          "durMs": 3.179,
+          "beginData": {
+            "dirtyObjects": 80,
+            "frame": "F55CE5C29E996D849A14C4AF4120AF9A",
+            "partialLayout": false,
+            "totalObjects": 107
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 3.06
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.976
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.958
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.928
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.809
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.726
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.498
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.477
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.429
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.247
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.205
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.069
+        },
+        {
+          "name": "Paint",
+          "durMs": 2.033
+        }
+      ],
+      "dom": {
+        "digest": "d8156951e3b670feca1f3518fc4bf07651023c9bc195862007ad472006738e03",
+        "elementCount": 2215,
+        "articleCount": 30,
+        "sectionHeaders": [
+          "Videos · 27 on current page",
+          "Videos · 27 on current page",
+          "Shorts · 3 on current page"
+        ],
+        "rowsPerArticle": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 842
+          },
+          {
+            "height": 82,
+            "top": 948
+          },
+          {
+            "height": 98,
+            "top": 1038
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Video result 0: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 1: deterministic corpus row at 0:13",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 2: deterministic corpus row at 0:14",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN videos · N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nVideo result N: deterministic corpus row\n\nCreator N · @creatorN · Jan N, N\n\nNK views · N likes\n\n"
+      },
+      "screenshot": {
+        "digest": "b2c5eaa4d314ff6fab721dfb962e25edc2617f7f44b2e6ae52fea028722e536f",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-mount-r1.png",
+        "bytes": 98158
+      },
+      "visibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-mount-r1.png",
+        "bytes": 75264,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 842,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 843,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 843,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 890.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 948,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 949,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 949,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 989,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1038,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1039,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1039,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1086.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1283.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1284.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1284.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1332,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 1389.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 1390.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 1390.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1430.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "c989d48f8ef7eb63445817dc1585ab02f8d0db3e41291bd74faa6da642ebc0fa",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-mount-r1.png",
+        "bytes": 11658,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-mount-r1.png",
+        "bytes": 75264
+      }
+    },
+    {
+      "round": 2,
+      "wallMs": 243,
+      "counters": {
+        "searchRequests": 1,
+        "expandRequests": 0,
+        "interaction": "mount"
+      },
+      "metrics": {
+        "Nodes": 5550,
+        "JSEventListeners": 15,
+        "LayoutObjects": 517,
+        "LayoutCount": 4,
+        "RecalcStyleCount": 12,
+        "LayoutDuration": 21.402,
+        "RecalcStyleDuration": 8.731,
+        "ScriptDuration": 100.396,
+        "TaskDuration": 221.493,
+        "JSHeapUsedSize": 4902208,
+        "JSHeapTotalSize": 6352896,
+        "Documents": 8,
+        "Frames": 4
+      },
+      "trace": {
+        "thread_name": {
+          "count": 5,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "firstImagePaint": {
+          "count": 1,
+          "durMs": 0
+        },
+        "UpdateLayoutTree": {
+          "count": 16,
+          "durMs": 9.739
+        },
+        "EventDispatch": {
+          "count": 71,
+          "durMs": 56.154
+        },
+        "PrePaint": {
+          "count": 13,
+          "durMs": 3.817
+        },
+        "Paint": {
+          "count": 13,
+          "durMs": 7.693
+        },
+        "Layerize": {
+          "count": 8,
+          "durMs": 1.571
+        },
+        "v8.newInstance": {
+          "count": 10,
+          "durMs": 0.154
+        },
+        "v8.callFunction": {
+          "count": 10,
+          "durMs": 107.504
+        },
+        "FunctionCall": {
+          "count": 10,
+          "durMs": 101.418
+        },
+        "ResourceSendRequest": {
+          "count": 9,
+          "durMs": 0
+        },
+        "FrameStartedLoading": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ParseHTML": {
+          "count": 598,
+          "durMs": 5.633
+        },
+        "Layout": {
+          "count": 10,
+          "durMs": 24.656
+        },
+        "ResourceFinish": {
+          "count": 9,
+          "durMs": 0
+        },
+        "v8.evaluateModule": {
+          "count": 2,
+          "durMs": 0.031
+        },
+        "BackgroundProcessor::MaybeStartProcessingResponse": {
+          "count": 1,
+          "durMs": 0.132
+        },
+        "BackgroundJSStreamManager::TryStartStreamingTask": {
+          "count": 1,
+          "durMs": 0.054
+        },
+        "BackgroundJSStreamManager::RunScriptStreamingTask": {
+          "count": 1,
+          "durMs": 0.968
+        },
+        "v8.parseOnBackground": {
+          "count": 1,
+          "durMs": 0.96
+        },
+        "v8.parseOnBackgroundParsing": {
+          "count": 1,
+          "durMs": 0.952
+        },
+        "BackgroundJSStreamManager::OnFinishStreaming": {
+          "count": 1,
+          "durMs": 0.014
+        },
+        "ResourceReceiveResponse": {
+          "count": 7,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 7,
+          "durMs": 0
+        },
+        "v8.compileModule": {
+          "count": 1,
+          "durMs": 0.051
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 1,
+          "durMs": 0
+        },
+        "v8.produceModuleCache": {
+          "count": 1,
+          "durMs": 0.043
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 2,
+          "durMs": 0.035
+        },
+        "RequestAnimationFrame": {
+          "count": 4,
+          "durMs": 0
+        },
+        "FireAnimationFrame": {
+          "count": 4,
+          "durMs": 0.704
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.02
+        },
+        "MinorGC": {
+          "count": 3,
+          "durMs": 7.688
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.011
+        },
+        "V8.GCScavenger": {
+          "count": 3,
+          "durMs": 7.505
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.007
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 3,
+          "durMs": 7.459
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.006
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 3,
+          "durMs": 7.372
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 3,
+          "durMs": 0.277
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.004
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 3,
+          "durMs": 0.214
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 3,
+          "durMs": 0.021
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 3,
+          "durMs": 6.43
+        },
+        "Parallel scavenge started": {
+          "count": 9,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 3,
+          "durMs": 0.53
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 7,
+          "durMs": 13.925
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 3,
+          "durMs": 0.218
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.008
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 3,
+          "durMs": 0.143
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 3,
+          "durMs": 0.168
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 3,
+          "durMs": 0.007
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 3,
+          "durMs": 0.076
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 3,
+          "durMs": 0.005
+        },
+        "V8.GC_HEAP_EXTERNAL_WEAK_GLOBAL_HANDLES": {
+          "count": 3,
+          "durMs": 0.011
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.015
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.02
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.01
+        },
+        "V8.GCPhantomHandleProcessingCallback": {
+          "count": 3,
+          "durMs": 0.333
+        },
+        "V8.GC_HEAP_EXTERNAL_SECOND_PASS_CALLBACKS": {
+          "count": 3,
+          "durMs": 0.316
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL": {
+          "count": 1,
+          "durMs": 1.78
+        },
+        "V8.DeoptimizeCode": {
+          "count": 11,
+          "durMs": 0.145
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 7,
+          "durMs": 0.344
+        },
+        "navigationStart": {
+          "count": 4,
+          "durMs": 0
+        },
+        "domLoading": {
+          "count": 8,
+          "durMs": 0
+        },
+        "responseEnd": {
+          "count": 4,
+          "durMs": 0
+        },
+        "MetaCharsetCheck": {
+          "count": 12,
+          "durMs": 0
+        },
+        "domInteractive": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domContentLoadedEventStart": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domContentLoadedEventEnd": {
+          "count": 8,
+          "durMs": 0
+        },
+        "domComplete": {
+          "count": 8,
+          "durMs": 0
+        },
+        "MarkDOMContent": {
+          "count": 4,
+          "durMs": 0
+        },
+        "loadEventStart": {
+          "count": 4,
+          "durMs": 0
+        },
+        "loadEventEnd": {
+          "count": 4,
+          "durMs": 0
+        },
+        "MarkLoad": {
+          "count": 4,
+          "durMs": 0
+        },
+        "AnimationFrame": {
+          "count": 28,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 16,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 16,
+          "durMs": 0
+        },
+        "SoftNavigationStart": {
+          "count": 1,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 6,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 4,
+          "durMs": 0
+        },
+        "SoftNavigationEmitted": {
+          "count": 1,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "keydown": 1,
+        "keypress": 1,
+        "beforeinput": 1,
+        "textInput": 1,
+        "change": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "submit": 1,
+        "keyup": 1,
+        "search": 1,
+        "contentvisibilityautostatechange": 30,
+        "readystatechange": 16,
+        "DOMContentLoaded": 4,
+        "load": 5,
+        "pageshow": 4
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 10,
+          "durMs": 101.418
+        },
+        "EventDispatch": {
+          "count": 71,
+          "durMs": 56.154
+        },
+        "ParseHTML": {
+          "count": 598,
+          "durMs": 5.633
+        },
+        "UpdateLayoutTree": {
+          "count": 16,
+          "durMs": 9.739
+        },
+        "Layout": {
+          "count": 10,
+          "durMs": 24.656
+        },
+        "Paint": {
+          "count": 13,
+          "durMs": 7.693
+        },
+        "PrePaint": {
+          "count": 13,
+          "durMs": 3.817
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 91.816
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 91.791,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "Layout",
+          "durMs": 16.58,
+          "beginData": {
+            "dirtyObjects": 407,
+            "frame": "38128A46DA51B75E337647410E73DFC4",
+            "partialLayout": false,
+            "totalObjects": 499
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 12.453,
+          "type": "keypress"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 11.741,
+          "type": "textInput"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 11.681,
+          "type": "click"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 9.959,
+          "type": "DOMActivate"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 9.305,
+          "type": "submit"
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 9.198
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 4.24
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 4.229,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 3.396,
+          "functionName": "",
+          "url": "http://localhost:3000/src/components/search-form.tsx",
+          "lineNumber": 61
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.896
+        },
+        {
+          "name": "Paint",
+          "durMs": 2.874
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.839
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.827
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.802
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.598
+        },
+        {
+          "name": "UpdateLayoutTree",
+          "durMs": 2.535,
+          "beginData": {
+            "frame": "38128A46DA51B75E337647410E73DFC4"
+          }
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.513
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.49
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.486
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.448
+        },
+        {
+          "name": "Layout",
+          "durMs": 2.349,
+          "beginData": {
+            "dirtyObjects": 80,
+            "frame": "38128A46DA51B75E337647410E73DFC4",
+            "partialLayout": false,
+            "totalObjects": 107
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.317
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.288
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.194
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.153
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.142
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.122
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.091
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.046
+        }
+      ],
+      "dom": {
+        "digest": "d8156951e3b670feca1f3518fc4bf07651023c9bc195862007ad472006738e03",
+        "elementCount": 2215,
+        "articleCount": 30,
+        "sectionHeaders": [
+          "Videos · 27 on current page",
+          "Videos · 27 on current page",
+          "Shorts · 3 on current page"
+        ],
+        "rowsPerArticle": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 842
+          },
+          {
+            "height": 82,
+            "top": 948
+          },
+          {
+            "height": 98,
+            "top": 1038
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Video result 0: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 1: deterministic corpus row at 0:13",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 2: deterministic corpus row at 0:14",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN videos · N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nVideo result N: deterministic corpus row\n\nCreator N · @creatorN · Jan N, N\n\nNK views · N likes\n\n"
+      },
+      "screenshot": {
+        "digest": "46a05c6f2431f1bc429fba930d27a0e46db632ba5ce737e280522e219c84dfe9",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-mount-r2.png",
+        "bytes": 98031
+      },
+      "visibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-mount-r2.png",
+        "bytes": 75264,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 842,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 843,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 843,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 890.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 948,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 949,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 949,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 989,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1038,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1039,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1039,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1086.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1283.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1284.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1284.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1332,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 1389.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 1390.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 1390.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1430.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "c989d48f8ef7eb63445817dc1585ab02f8d0db3e41291bd74faa6da642ebc0fa",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-mount-r2.png",
+        "bytes": 11658,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-mount-r2.png",
+        "bytes": 75264
+      }
+    },
+    {
+      "round": 3,
+      "wallMs": 191,
+      "counters": {
+        "searchRequests": 1,
+        "expandRequests": 0,
+        "interaction": "mount"
+      },
+      "metrics": {
+        "Nodes": 5550,
+        "JSEventListeners": 15,
+        "LayoutObjects": 517,
+        "LayoutCount": 4,
+        "RecalcStyleCount": 13,
+        "LayoutDuration": 16.429,
+        "RecalcStyleDuration": 10.618,
+        "ScriptDuration": 75.394,
+        "TaskDuration": 183.557,
+        "JSHeapUsedSize": 4872888,
+        "JSHeapTotalSize": 6352896,
+        "Documents": 8,
+        "Frames": 4
+      },
+      "trace": {
+        "thread_name": {
+          "count": 8,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "firstImagePaint": {
+          "count": 1,
+          "durMs": 0
+        },
+        "UpdateLayoutTree": {
+          "count": 14,
+          "durMs": 11.095
+        },
+        "PrePaint": {
+          "count": 11,
+          "durMs": 2.77
+        },
+        "Paint": {
+          "count": 12,
+          "durMs": 4.829
+        },
+        "Layerize": {
+          "count": 9,
+          "durMs": 1.381
+        },
+        "EventDispatch": {
+          "count": 49,
+          "durMs": 93.729
+        },
+        "v8.newInstance": {
+          "count": 10,
+          "durMs": 0.158
+        },
+        "v8.callFunction": {
+          "count": 9,
+          "durMs": 85.916
+        },
+        "FunctionCall": {
+          "count": 9,
+          "durMs": 76.29
+        },
+        "ResourceSendRequest": {
+          "count": 9,
+          "durMs": 0
+        },
+        "FrameStartedLoading": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ParseHTML": {
+          "count": 595,
+          "durMs": 2.648
+        },
+        "Layout": {
+          "count": 4,
+          "durMs": 16.442
+        },
+        "BackgroundProcessor::MaybeStartProcessingResponse": {
+          "count": 1,
+          "durMs": 0.195
+        },
+        "BackgroundJSStreamManager::TryStartStreamingTask": {
+          "count": 1,
+          "durMs": 0.082
+        },
+        "BackgroundJSStreamManager::RunScriptStreamingTask": {
+          "count": 1,
+          "durMs": 1.557
+        },
+        "v8.parseOnBackground": {
+          "count": 1,
+          "durMs": 1.449
+        },
+        "v8.parseOnBackgroundParsing": {
+          "count": 1,
+          "durMs": 1.418
+        },
+        "BackgroundJSStreamManager::OnFinishStreaming": {
+          "count": 1,
+          "durMs": 0.026
+        },
+        "ResourceFinish": {
+          "count": 6,
+          "durMs": 0
+        },
+        "ResourceReceiveResponse": {
+          "count": 5,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 5,
+          "durMs": 0
+        },
+        "v8.compileModule": {
+          "count": 1,
+          "durMs": 0.099
+        },
+        "v8.evaluateModule": {
+          "count": 2,
+          "durMs": 0.061
+        },
+        "v8.produceModuleCache": {
+          "count": 1,
+          "durMs": 0.086
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 1,
+          "durMs": 0
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 2,
+          "durMs": 0.013
+        },
+        "RequestAnimationFrame": {
+          "count": 3,
+          "durMs": 0
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.012
+        },
+        "MinorGC": {
+          "count": 3,
+          "durMs": 7.454
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 3,
+          "durMs": 0.009
+        },
+        "V8.GCScavenger": {
+          "count": 3,
+          "durMs": 7.286
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.159
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 3,
+          "durMs": 7.09
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 3,
+          "durMs": 7.02
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 3,
+          "durMs": 0.304
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 3,
+          "durMs": 0.243
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 3,
+          "durMs": 0.02
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 3,
+          "durMs": 6.116
+        },
+        "Parallel scavenge started": {
+          "count": 9,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 3,
+          "durMs": 0.471
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 8,
+          "durMs": 14.663
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 3,
+          "durMs": 0.199
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 9,
+          "durMs": 0.007
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 3,
+          "durMs": 0.135
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 3,
+          "durMs": 0.167
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 3,
+          "durMs": 0.006
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 3,
+          "durMs": 0.058
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 3,
+          "durMs": 0.005
+        },
+        "V8.GC_HEAP_EXTERNAL_WEAK_GLOBAL_HANDLES": {
+          "count": 3,
+          "durMs": 0.009
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 3,
+          "durMs": 0.013
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.016
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 3,
+          "durMs": 0.006
+        },
+        "V8.GCPhantomHandleProcessingCallback": {
+          "count": 3,
+          "durMs": 0.275
+        },
+        "V8.GC_HEAP_EXTERNAL_SECOND_PASS_CALLBACKS": {
+          "count": 3,
+          "durMs": 0.261
+        },
+        "V8.GC_BACKGROUND_SAFEPOINT": {
+          "count": 2,
+          "durMs": 5.14
+        },
+        "V8.DeoptimizeCode": {
+          "count": 11,
+          "durMs": 0.141
+        },
+        "FireAnimationFrame": {
+          "count": 3,
+          "durMs": 0.341
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 8,
+          "durMs": 0.154
+        },
+        "navigationStart": {
+          "count": 2,
+          "durMs": 0
+        },
+        "domLoading": {
+          "count": 3,
+          "durMs": 0
+        },
+        "responseEnd": {
+          "count": 2,
+          "durMs": 0
+        },
+        "MetaCharsetCheck": {
+          "count": 4,
+          "durMs": 0
+        },
+        "domInteractive": {
+          "count": 2,
+          "durMs": 0
+        },
+        "domContentLoadedEventStart": {
+          "count": 2,
+          "durMs": 0
+        },
+        "domContentLoadedEventEnd": {
+          "count": 2,
+          "durMs": 0
+        },
+        "domComplete": {
+          "count": 2,
+          "durMs": 0
+        },
+        "MarkDOMContent": {
+          "count": 1,
+          "durMs": 0
+        },
+        "loadEventStart": {
+          "count": 1,
+          "durMs": 0
+        },
+        "loadEventEnd": {
+          "count": 1,
+          "durMs": 0
+        },
+        "MarkLoad": {
+          "count": 1,
+          "durMs": 0
+        },
+        "AnimationFrame": {
+          "count": 30,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 18,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 18,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 6,
+          "durMs": 0
+        },
+        "SoftNavigationStart": {
+          "count": 1,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 4,
+          "durMs": 0
+        },
+        "SoftNavigationEmitted": {
+          "count": 1,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "keydown": 1,
+        "keypress": 1,
+        "beforeinput": 1,
+        "textInput": 1,
+        "change": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "submit": 1,
+        "keyup": 1,
+        "search": 1,
+        "contentvisibilityautostatechange": 30,
+        "readystatechange": 4,
+        "DOMContentLoaded": 1,
+        "load": 1,
+        "pageshow": 1
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 9,
+          "durMs": 76.29
+        },
+        "EventDispatch": {
+          "count": 49,
+          "durMs": 93.729
+        },
+        "ParseHTML": {
+          "count": 595,
+          "durMs": 2.648
+        },
+        "UpdateLayoutTree": {
+          "count": 14,
+          "durMs": 11.095
+        },
+        "Layout": {
+          "count": 4,
+          "durMs": 16.442
+        },
+        "Paint": {
+          "count": 12,
+          "durMs": 4.829
+        },
+        "PrePaint": {
+          "count": 11,
+          "durMs": 2.77
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 60.358
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 60.349,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 20.681,
+          "type": "keypress"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 19.553,
+          "type": "textInput"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 19.43,
+          "type": "click"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 16.825,
+          "type": "DOMActivate"
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 15.733,
+          "type": "submit"
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 15.44
+        },
+        {
+          "name": "Layout",
+          "durMs": 10.904,
+          "beginData": {
+            "dirtyObjects": 407,
+            "frame": "941B454C39F38161A98B702B692DF031",
+            "partialLayout": false,
+            "totalObjects": 499
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 7.419
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 7.397,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 6.055,
+          "functionName": "",
+          "url": "http://localhost:3000/src/components/search-form.tsx",
+          "lineNumber": 61
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.749
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.696
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.685
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.669
+        },
+        {
+          "name": "V8.GC_BACKGROUND_SAFEPOINT",
+          "durMs": 2.586
+        },
+        {
+          "name": "V8.GC_BACKGROUND_SAFEPOINT",
+          "durMs": 2.554
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.506
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.452
+        },
+        {
+          "name": "UpdateLayoutTree",
+          "durMs": 2.39,
+          "beginData": {
+            "frame": "941B454C39F38161A98B702B692DF031"
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.383
+        },
+        {
+          "name": "Layout",
+          "durMs": 2.306,
+          "beginData": {
+            "dirtyObjects": 38,
+            "frame": "941B454C39F38161A98B702B692DF031",
+            "partialLayout": false,
+            "totalObjects": 65
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.286
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.255
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.253
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.247
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.211
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.199
+        },
+        {
+          "name": "Layout",
+          "durMs": 2.149,
+          "beginData": {
+            "dirtyObjects": 80,
+            "frame": "941B454C39F38161A98B702B692DF031",
+            "partialLayout": false,
+            "totalObjects": 107
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.138
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.119
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.096
+        }
+      ],
+      "dom": {
+        "digest": "d8156951e3b670feca1f3518fc4bf07651023c9bc195862007ad472006738e03",
+        "elementCount": 2215,
+        "articleCount": 30,
+        "sectionHeaders": [
+          "Videos · 27 on current page",
+          "Videos · 27 on current page",
+          "Shorts · 3 on current page"
+        ],
+        "rowsPerArticle": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 842
+          },
+          {
+            "height": 82,
+            "top": 948
+          },
+          {
+            "height": 98,
+            "top": 1038
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Video result 0: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 1: deterministic corpus row at 0:13",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ],
+          [
+            [
+              "button",
+              "Play Video result 2: deterministic corpus row at 0:14",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN videos · N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nVideo result N: deterministic corpus row\n\nCreator N · @creatorN · Jan N, N\n\nNK views · N likes\n\n"
+      },
+      "screenshot": {
+        "digest": "2218f1bddda3f048aa47a6475ebfd1f672485a89958a5606609cd956ffb27491",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-mount-r3.png",
+        "bytes": 98159
+      },
+      "visibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-mount-r3.png",
+        "bytes": 75264,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 842,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 843,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 843,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 890.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 948,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 949,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 949,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 989,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1038,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1039,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1039,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1086.5,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1283.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1284.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1284.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1332,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 1389.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 1390.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 1390.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1430.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "c989d48f8ef7eb63445817dc1585ab02f8d0db3e41291bd74faa6da642ebc0fa",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-mount-r3.png",
+        "bytes": 11658,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "f7ed8d3857367dc9b7307be22059ab767ef5ec389345b6a0f3eb0e1078f0fe1a",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-mount-r3.png",
+        "bytes": 75264
+      }
+    }
+  ]
+}

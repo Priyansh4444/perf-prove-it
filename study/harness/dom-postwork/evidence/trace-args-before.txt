@@ -1,0 +1,5 @@
+Layout count 1
+  type: n/a durMs 189.401 args {"beginData":{"dirtyObjects":6808,"frame":"1732A1995745AAB3F92F538F73D15A3D","partialLayout":false,"totalObjects":6808},"endData":{"layoutRoots":[{"depth":1,"nodeId":2,"nodeName":"#document","quads":[[0,0,1280,0,1280,800,0,800]]}]}}
+UpdateLayoutTree count 1
+  type: n/a durMs 48.472 args {"beginData":{"frame":"1732A1995745AAB3F92F538F73D15A3D"},"elementCount":5677}
+EventDispatch count 0

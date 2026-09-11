@@ -1,0 +1,5474 @@
+{
+  "arm": "after",
+  "interaction": "expand",
+  "baseUrl": "http://localhost:3000",
+  "query": "moment",
+  "browser": "152.0.7977.82",
+  "node": "v26.8.2",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "reducedMotion": "reduce",
+  "metricsMedian": {
+    "Nodes": 4296,
+    "JSEventListeners": 0,
+    "LayoutObjects": 449,
+    "LayoutCount": 3,
+    "RecalcStyleCount": 15,
+    "LayoutDuration": 9.914,
+    "RecalcStyleDuration": 7.114,
+    "ScriptDuration": 62.706,
+    "TaskDuration": 124.905,
+    "JSHeapUsedSize": 3207892,
+    "JSHeapTotalSize": 4194304,
+    "Documents": 0,
+    "Frames": 0
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "wallMs": 175,
+      "counters": {
+        "searchRequests": 2,
+        "expandRequests": 1,
+        "interaction": "expand"
+      },
+      "metrics": {
+        "Nodes": 4296,
+        "JSEventListeners": 0,
+        "LayoutObjects": 449,
+        "LayoutCount": 3,
+        "RecalcStyleCount": 13,
+        "LayoutDuration": 9.914,
+        "RecalcStyleDuration": 7.114,
+        "ScriptDuration": 64.436,
+        "TaskDuration": 124.905,
+        "JSHeapUsedSize": 3161664,
+        "JSHeapTotalSize": 3670016,
+        "Documents": 0,
+        "Frames": 0
+      },
+      "trace": {
+        "thread_name": {
+          "count": 5,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 5.226
+        },
+        "RequestAnimationFrame": {
+          "count": 5,
+          "durMs": 0
+        },
+        "FireAnimationFrame": {
+          "count": 5,
+          "durMs": 2.193
+        },
+        "v8.callFunction": {
+          "count": 20,
+          "durMs": 68.777
+        },
+        "FunctionCall": {
+          "count": 20,
+          "durMs": 65.918
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.42
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 16,
+          "durMs": 0.668
+        },
+        "Layerize": {
+          "count": 7,
+          "durMs": 1.247
+        },
+        "HitTest": {
+          "count": 12,
+          "durMs": 0.888
+        },
+        "v8.newInstance": {
+          "count": 6,
+          "durMs": 0.039
+        },
+        "UpdateLayoutTree": {
+          "count": 10,
+          "durMs": 6.198
+        },
+        "Paint": {
+          "count": 7,
+          "durMs": 3.59
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 2.77
+        },
+        "ResourceSendRequest": {
+          "count": 2,
+          "durMs": 0
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 9.846
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceReceiveResponse": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceFinish": {
+          "count": 2,
+          "durMs": 0
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.018
+        },
+        "MinorGC": {
+          "count": 2,
+          "durMs": 5.193
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.009
+        },
+        "V8.GCScavenger": {
+          "count": 2,
+          "durMs": 5.026
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.004
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 2,
+          "durMs": 4.988
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 2,
+          "durMs": 4.937
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 2,
+          "durMs": 0.343
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 2,
+          "durMs": 0.299
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 2,
+          "durMs": 0.015
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 2,
+          "durMs": 3.98
+        },
+        "Parallel scavenge started": {
+          "count": 6,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 2,
+          "durMs": 0.246
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL": {
+          "count": 2,
+          "durMs": 3.386
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 4,
+          "durMs": 6.769
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 2,
+          "durMs": 0.22
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 2,
+          "durMs": 0.168
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 2,
+          "durMs": 0.191
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 2,
+          "durMs": 0.007
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 2,
+          "durMs": 0.057
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 2,
+          "durMs": 0.005
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.011
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.016
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.008
+        },
+        "V8.DeoptimizeCode": {
+          "count": 2,
+          "durMs": 0.08
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 1,
+          "durMs": 0.022
+        },
+        "AnimationFrame": {
+          "count": 22,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 4,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 46,
+          "durMs": 0
+        },
+        "Animation": {
+          "count": 24,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 2,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "pointerover": 2,
+        "mouseover": 2,
+        "pointermove": 1,
+        "mousemove": 1,
+        "pointerdown": 1,
+        "mousedown": 1,
+        "focus": 1,
+        "focusin": 1,
+        "DOMFocusIn": 1,
+        "pointerup": 1,
+        "mouseup": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "blur": 1,
+        "focusout": 1,
+        "DOMFocusOut": 1,
+        "contentvisibilityautostatechange": 100
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 20,
+          "durMs": 65.918
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 5.226
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 2.77
+        },
+        "UpdateLayoutTree": {
+          "count": 10,
+          "durMs": 6.198
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 9.846
+        },
+        "Paint": {
+          "count": 7,
+          "durMs": 3.59
+        },
+        "HitTest": {
+          "count": 12,
+          "durMs": 0.888
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.42
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 61.246
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 61.23,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "Layout",
+          "durMs": 5.802,
+          "beginData": {
+            "dirtyObjects": 360,
+            "frame": "3D4F72AEB867A4221E578EAFFAA4A449",
+            "partialLayout": false,
+            "totalObjects": 539
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 4,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "Layout",
+          "durMs": 3.085,
+          "beginData": {
+            "dirtyObjects": 115,
+            "frame": "3D4F72AEB867A4221E578EAFFAA4A449",
+            "partialLayout": false,
+            "totalObjects": 210
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 4,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.961
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 2.891,
+          "type": "click"
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.879
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.861
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 2.84
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.837
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.305
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.232
+        },
+        {
+          "name": "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL",
+          "durMs": 2.183
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.147
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.127
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.1
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "durMs": 2.077
+        }
+      ],
+      "dom": {
+        "digest": "2b587c5710b5d607a18e56398521c0c436887cf1de5dd743431c4199b45f363b",
+        "elementCount": 1594,
+        "articleCount": 1,
+        "sectionHeaders": [
+          "Videos · 1 on current page",
+          "Videos · 1 on current page"
+        ],
+        "rowsPerArticle": [
+          100
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 702.5
+          },
+          {
+            "height": 98,
+            "top": 808.5
+          },
+          {
+            "height": 98,
+            "top": 914.5
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Expandable result: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN video · N shown of N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nExpandable result: deterministic corpus row\n\nCreator N · @creatorN · Mar N, N\n\nNK view"
+      },
+      "screenshot": {
+        "digest": "7660045de1eeab041492530841cb6bb2954d3b41108386f5a5c804b9add3ec2b",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-expand-r1.png",
+        "bytes": 101971
+      },
+      "visibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-expand-r1.png",
+        "bytes": 79448,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 702.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 703.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 703.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 751,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "oklab(0.86889 0.043008 0.076521 / 0.7)"
+        },
+        {
+          "row": {
+            "top": 808.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 809.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 809.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 857,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 914.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 915.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 915.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 963,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1020.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1021.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1021.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1069,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1126.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1127.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1127.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1175,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "3b711b6f3857037be4494cf920e5dd4af69ae75e193638727d1773eff849e3c6",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-expand-r1.png",
+        "bytes": 14397,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-expand-r1.png",
+        "bytes": 79448
+      }
+    },
+    {
+      "round": 2,
+      "wallMs": 144,
+      "counters": {
+        "searchRequests": 2,
+        "expandRequests": 1,
+        "interaction": "expand"
+      },
+      "metrics": {
+        "Nodes": 4296,
+        "JSEventListeners": 0,
+        "LayoutObjects": 449,
+        "LayoutCount": 3,
+        "RecalcStyleCount": 16,
+        "LayoutDuration": 7.238,
+        "RecalcStyleDuration": 6.373,
+        "ScriptDuration": 44.275,
+        "TaskDuration": 99.924,
+        "JSHeapUsedSize": 3286744,
+        "JSHeapTotalSize": 4194304,
+        "Documents": 0,
+        "Frames": 0
+      },
+      "trace": {
+        "thread_name": {
+          "count": 7,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 7.983
+        },
+        "RequestAnimationFrame": {
+          "count": 4,
+          "durMs": 0
+        },
+        "FireAnimationFrame": {
+          "count": 4,
+          "durMs": 3.116
+        },
+        "v8.callFunction": {
+          "count": 19,
+          "durMs": 50.721
+        },
+        "FunctionCall": {
+          "count": 19,
+          "durMs": 46.799
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.016
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 18,
+          "durMs": 0.698
+        },
+        "Layerize": {
+          "count": 8,
+          "durMs": 1.888
+        },
+        "HitTest": {
+          "count": 11,
+          "durMs": 0.833
+        },
+        "v8.newInstance": {
+          "count": 6,
+          "durMs": 0.077
+        },
+        "UpdateLayoutTree": {
+          "count": 13,
+          "durMs": 5.802
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 1.746
+        },
+        "ResourceSendRequest": {
+          "count": 2,
+          "durMs": 0
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 7.181
+        },
+        "Paint": {
+          "count": 11,
+          "durMs": 4.658
+        },
+        "ResourceReceiveResponse": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 1,
+          "durMs": 0
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 2,
+          "durMs": 0
+        },
+        "ResourceFinish": {
+          "count": 2,
+          "durMs": 0
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.012
+        },
+        "MinorGC": {
+          "count": 2,
+          "durMs": 5.329
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.005
+        },
+        "V8.GCScavenger": {
+          "count": 2,
+          "durMs": 5.215
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.347
+        },
+        "V8.GC_BACKGROUND_SAFEPOINT": {
+          "count": 2,
+          "durMs": 5.911
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 2,
+          "durMs": 4.823
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.004
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 2,
+          "durMs": 4.76
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 2,
+          "durMs": 0.265
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.002
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 2,
+          "durMs": 0.216
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 2,
+          "durMs": 0.014
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 2,
+          "durMs": 4.028
+        },
+        "Parallel scavenge started": {
+          "count": 6,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 2,
+          "durMs": 0.248
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 5,
+          "durMs": 8.87
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 2,
+          "durMs": 0.16
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 2,
+          "durMs": 0.125
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 2,
+          "durMs": 0.152
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 2,
+          "durMs": 0.004
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 2,
+          "durMs": 0.035
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 2,
+          "durMs": 0.003
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.01
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.011
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.005
+        },
+        "V8.GC_BACKGROUND_UNPARK": {
+          "count": 2,
+          "durMs": 4.739
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL": {
+          "count": 1,
+          "durMs": 1.774
+        },
+        "V8.DeoptimizeCode": {
+          "count": 2,
+          "durMs": 0.056
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 1,
+          "durMs": 0.006
+        },
+        "AnimationFrame": {
+          "count": 26,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 16,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 16,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 5,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 46,
+          "durMs": 0
+        },
+        "Animation": {
+          "count": 24,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 2,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "pointerover": 2,
+        "mouseover": 2,
+        "pointermove": 1,
+        "mousemove": 1,
+        "pointerdown": 1,
+        "mousedown": 1,
+        "focus": 1,
+        "focusin": 1,
+        "DOMFocusIn": 1,
+        "pointerup": 1,
+        "mouseup": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "blur": 1,
+        "focusout": 1,
+        "DOMFocusOut": 1,
+        "contentvisibilityautostatechange": 100
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 19,
+          "durMs": 46.799
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 7.983
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 1.746
+        },
+        "UpdateLayoutTree": {
+          "count": 13,
+          "durMs": 5.802
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 7.181
+        },
+        "Paint": {
+          "count": 11,
+          "durMs": 4.658
+        },
+        "HitTest": {
+          "count": 11,
+          "durMs": 0.833
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.016
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 39.456
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 39.443,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 4.51,
+          "type": "click"
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 4.389
+        },
+        {
+          "name": "Layout",
+          "durMs": 3.641,
+          "beginData": {
+            "dirtyObjects": 360,
+            "frame": "E5DB2721736C2C2C22BD41296AE5B8C5",
+            "partialLayout": false,
+            "totalObjects": 539
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "V8.GC_BACKGROUND_SAFEPOINT",
+          "durMs": 3.016
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.965
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.905
+        },
+        {
+          "name": "V8.GC_BACKGROUND_SAFEPOINT",
+          "durMs": 2.895
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.578
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.537
+        },
+        {
+          "name": "V8.GC_BACKGROUND_UNPARK",
+          "durMs": 2.37
+        },
+        {
+          "name": "V8.GC_BACKGROUND_UNPARK",
+          "durMs": 2.369
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.364
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.31
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.245
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.223
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.133
+        },
+        {
+          "name": "Layout",
+          "durMs": 2.012,
+          "beginData": {
+            "dirtyObjects": 115,
+            "frame": "E5DB2721736C2C2C22BD41296AE5B8C5",
+            "partialLayout": false,
+            "totalObjects": 210
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "dom": {
+        "digest": "2b587c5710b5d607a18e56398521c0c436887cf1de5dd743431c4199b45f363b",
+        "elementCount": 1594,
+        "articleCount": 1,
+        "sectionHeaders": [
+          "Videos · 1 on current page",
+          "Videos · 1 on current page"
+        ],
+        "rowsPerArticle": [
+          100
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 702.5
+          },
+          {
+            "height": 98,
+            "top": 808.5
+          },
+          {
+            "height": 98,
+            "top": 914.5
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Expandable result: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN video · N shown of N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nExpandable result: deterministic corpus row\n\nCreator N · @creatorN · Mar N, N\n\nNK view"
+      },
+      "screenshot": {
+        "digest": "abae858960f27633503c3d1ec2a7d5eb23ce4db8edd53ca328423125640a6a23",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-expand-r2.png",
+        "bytes": 101972
+      },
+      "visibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-expand-r2.png",
+        "bytes": 79448,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 702.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 703.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 703.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 751,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "oklab(0.86889 0.043008 0.076521 / 0.7)"
+        },
+        {
+          "row": {
+            "top": 808.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 809.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 809.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 857,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 914.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 915.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 915.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 963,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1020.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1021.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1021.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1069,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1126.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1127.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1127.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1175,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "3b711b6f3857037be4494cf920e5dd4af69ae75e193638727d1773eff849e3c6",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-expand-r2.png",
+        "bytes": 14397,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-expand-r2.png",
+        "bytes": 79448
+      }
+    },
+    {
+      "round": 3,
+      "wallMs": 173,
+      "counters": {
+        "searchRequests": 2,
+        "expandRequests": 1,
+        "interaction": "expand"
+      },
+      "metrics": {
+        "Nodes": 4296,
+        "JSEventListeners": 0,
+        "LayoutObjects": 449,
+        "LayoutCount": 3,
+        "RecalcStyleCount": 15,
+        "LayoutDuration": 10.559,
+        "RecalcStyleDuration": 8.697,
+        "ScriptDuration": 62.706,
+        "TaskDuration": 130.793,
+        "JSHeapUsedSize": 3207892,
+        "JSHeapTotalSize": 4194304,
+        "Documents": 0,
+        "Frames": 0
+      },
+      "trace": {
+        "thread_name": {
+          "count": 5,
+          "durMs": 0
+        },
+        "process_name": {
+          "count": 1,
+          "durMs": 0
+        },
+        "process_uptime_seconds": {
+          "count": 1,
+          "durMs": 0
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 7.702
+        },
+        "RequestAnimationFrame": {
+          "count": 4,
+          "durMs": 0
+        },
+        "FireAnimationFrame": {
+          "count": 4,
+          "durMs": 3.476
+        },
+        "v8.callFunction": {
+          "count": 19,
+          "durMs": 69.229
+        },
+        "FunctionCall": {
+          "count": 19,
+          "durMs": 65.369
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.717
+        },
+        "IntersectionObserverController::computeIntersections": {
+          "count": 16,
+          "durMs": 0.922
+        },
+        "Layerize": {
+          "count": 7,
+          "durMs": 2.007
+        },
+        "HitTest": {
+          "count": 12,
+          "durMs": 1.218
+        },
+        "v8.newInstance": {
+          "count": 6,
+          "durMs": 0.076
+        },
+        "UpdateLayoutTree": {
+          "count": 12,
+          "durMs": 7.696
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 2.546
+        },
+        "ResourceSendRequest": {
+          "count": 2,
+          "durMs": 0
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 10.479
+        },
+        "Paint": {
+          "count": 9,
+          "durMs": 4.592
+        },
+        "ResourceReceiveResponse": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceReceivedData": {
+          "count": 1,
+          "durMs": 0
+        },
+        "ResourceFinish": {
+          "count": 2,
+          "durMs": 0
+        },
+        "largestContentfulPaint::CandidateForSoftNavigation": {
+          "count": 2,
+          "durMs": 0
+        },
+        "V8.GC_HEAP_EXTERNAL_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.019
+        },
+        "MinorGC": {
+          "count": 2,
+          "durMs": 5.067
+        },
+        "V8.GC_HEAP_PROLOGUE": {
+          "count": 2,
+          "durMs": 0.008
+        },
+        "V8.GCScavenger": {
+          "count": 2,
+          "durMs": 4.918
+        },
+        "V8.GC_TIME_TO_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER": {
+          "count": 2,
+          "durMs": 4.886
+        },
+        "V8.GC_HEAP_PROLOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.002
+        },
+        "V8.GC_SCAVENGER_SCAVENGE": {
+          "count": 2,
+          "durMs": 4.839
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY": {
+          "count": 2,
+          "durMs": 0.324
+        },
+        "ComputeWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.003
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL": {
+          "count": 2,
+          "durMs": 0.284
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES": {
+          "count": 2,
+          "durMs": 0.014
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE": {
+          "count": 2,
+          "durMs": 3.931
+        },
+        "Parallel scavenge started": {
+          "count": 6,
+          "durMs": 0.004
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_ROOTS": {
+          "count": 2,
+          "durMs": 0.315
+        },
+        "V8.GC_SCAVENGER_BACKGROUND_SCAVENGE_PARALLEL": {
+          "count": 6,
+          "durMs": 10.449
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS": {
+          "count": 2,
+          "durMs": 0.203
+        },
+        "ClearWeaknessProcessor start": {
+          "count": 6,
+          "durMs": 0.014
+        },
+        "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL": {
+          "count": 2,
+          "durMs": 0.154
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_FINALIZE": {
+          "count": 2,
+          "durMs": 0.186
+        },
+        "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED": {
+          "count": 2,
+          "durMs": 0.005
+        },
+        "V8.GC_SCAVENGER_FREE_REMEMBERED_SET": {
+          "count": 2,
+          "durMs": 0.046
+        },
+        "V8.GC_SCAVENGER_RESIZE_NEW_SPACE": {
+          "count": 2,
+          "durMs": 0.006
+        },
+        "V8.GC_HEAP_EPILOGUE_SAFEPOINT": {
+          "count": 2,
+          "durMs": 0.01
+        },
+        "V8.GC_HEAP_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.013
+        },
+        "V8.GC_HEAP_EXTERNAL_EPILOGUE": {
+          "count": 2,
+          "durMs": 0.007
+        },
+        "V8.DeoptimizeCode": {
+          "count": 2,
+          "durMs": 0.08
+        },
+        "Responsiveness.Renderer.UserInteraction": {
+          "count": 1,
+          "durMs": 0.009
+        },
+        "AnimationFrame": {
+          "count": 24,
+          "durMs": 0
+        },
+        "AnimationFrame::Render": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::StyleAndLayout": {
+          "count": 14,
+          "durMs": 0
+        },
+        "AnimationFrame::Presentation": {
+          "count": 5,
+          "durMs": 0
+        },
+        "EventTiming": {
+          "count": 56,
+          "durMs": 0
+        },
+        "Animation": {
+          "count": 24,
+          "durMs": 0
+        },
+        "AnimationFrame::Script::Execute": {
+          "count": 2,
+          "durMs": 0
+        }
+      },
+      "eventDispatchTypes": {
+        "__playwright_reset_targets__": 1,
+        "__playwright_mark_target__": 1,
+        "pointerover": 2,
+        "mouseover": 2,
+        "pointermove": 1,
+        "mousemove": 1,
+        "pointerdown": 1,
+        "mousedown": 1,
+        "focus": 1,
+        "focusin": 1,
+        "DOMFocusIn": 1,
+        "pointerup": 1,
+        "mouseup": 1,
+        "click": 1,
+        "DOMActivate": 1,
+        "blur": 1,
+        "focusout": 1,
+        "DOMFocusOut": 1,
+        "contentvisibilityautostatechange": 100
+      },
+      "traceHighlight": {
+        "FunctionCall": {
+          "count": 19,
+          "durMs": 65.369
+        },
+        "EventDispatch": {
+          "count": 120,
+          "durMs": 7.702
+        },
+        "ParseHTML": {
+          "count": 600,
+          "durMs": 2.546
+        },
+        "UpdateLayoutTree": {
+          "count": 12,
+          "durMs": 7.696
+        },
+        "Layout": {
+          "count": 3,
+          "durMs": 10.479
+        },
+        "Paint": {
+          "count": 9,
+          "durMs": 4.592
+        },
+        "HitTest": {
+          "count": 12,
+          "durMs": 1.218
+        },
+        "PrePaint": {
+          "count": 23,
+          "durMs": 2.717
+        }
+      },
+      "longEvents": [
+        {
+          "name": "v8.callFunction",
+          "durMs": 58.071
+        },
+        {
+          "name": "FunctionCall",
+          "durMs": 58.055,
+          "functionName": "flush",
+          "url": "http://localhost:3000/node_modules/.vite/deps/dev-Bie2gT4M.js?v=f7b91629",
+          "lineNumber": 840
+        },
+        {
+          "name": "Layout",
+          "durMs": 5.864,
+          "beginData": {
+            "dirtyObjects": 360,
+            "frame": "AE320355A2248C32FC8EFC7FBDFD3AF5",
+            "partialLayout": false,
+            "totalObjects": 539
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "EventDispatch",
+          "durMs": 4.013,
+          "type": "click"
+        },
+        {
+          "name": "v8.callFunction",
+          "durMs": 3.912
+        },
+        {
+          "name": "Layout",
+          "durMs": 3.164,
+          "beginData": {
+            "dirtyObjects": 115,
+            "frame": "AE320355A2248C32FC8EFC7FBDFD3AF5",
+            "partialLayout": false,
+            "totalObjects": 210
+          },
+          "endData": {
+            "layoutRoots": [
+              {
+                "depth": 1,
+                "nodeId": 2,
+                "nodeName": "#document",
+                "quads": [
+                  [
+                    0,
+                    0,
+                    1280,
+                    0,
+                    1280,
+                    800,
+                    0,
+                    800
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.657
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.587
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.573
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.553
+        },
+        {
+          "name": "MinorGC",
+          "durMs": 2.41
+        },
+        {
+          "name": "V8.GCScavenger",
+          "durMs": 2.331
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "durMs": 2.313
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "durMs": 2.286
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "durMs": 2.105
+        },
+        {
+          "name": "UpdateLayoutTree",
+          "durMs": 2.053,
+          "beginData": {
+            "frame": "AE320355A2248C32FC8EFC7FBDFD3AF5"
+          }
+        }
+      ],
+      "dom": {
+        "digest": "2b587c5710b5d607a18e56398521c0c436887cf1de5dd743431c4199b45f363b",
+        "elementCount": 1594,
+        "articleCount": 1,
+        "sectionHeaders": [
+          "Videos · 1 on current page",
+          "Videos · 1 on current page"
+        ],
+        "rowsPerArticle": [
+          100
+        ],
+        "rowMetrics": [
+          {
+            "height": 98,
+            "top": 400.5
+          },
+          {
+            "height": 82,
+            "top": 506.5
+          },
+          {
+            "height": 98,
+            "top": 596.5
+          },
+          {
+            "height": 98,
+            "top": 702.5
+          },
+          {
+            "height": 98,
+            "top": 808.5
+          },
+          {
+            "height": 98,
+            "top": 914.5
+          }
+        ],
+        "ariaByArticle": [
+          [
+            [
+              "button",
+              "Play Expandable result: deterministic corpus row at 0:12",
+              null
+            ],
+            [
+              "button",
+              "Copy result link",
+              null
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment useful",
+              "false"
+            ],
+            [
+              "button",
+              "Mark moment not useful",
+              "false"
+            ]
+          ]
+        ],
+        "bodyTextSample": "Search YouTube transcripts\nSearch transcripts\nRelevant\nNewest\nOldest\nSearch\n\nSearch everything, select a creator, or begin with @ to filter by channel.\n\nSearch is available now. Expires at N:N AM in Ns.\nmoment\nALL CHANNELS\nN video · N shown of N moments · N ms request · N ms search\nVIDEOS · N ON CURRENT PAGE\nN:N\nExpandable result: deterministic corpus row\n\nCreator N · @creatorN · Mar N, N\n\nNK view"
+      },
+      "screenshot": {
+        "digest": "c7321a10e5954e47781caf06888e438cfaccdd64b098a382ef86fd66bf0f143c",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/screen-after-expand-r3.png",
+        "bytes": 101899
+      },
+      "visibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/visible-after-expand-r3.png",
+        "bytes": 79448,
+        "region": {
+          "x": 0,
+          "y": 278,
+          "width": 1280,
+          "height": 522
+        }
+      },
+      "visibleRowBoxes": [
+        {
+          "row": {
+            "top": 400.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 401.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 401.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 449,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(255, 199, 153)"
+        },
+        {
+          "row": {
+            "top": 506.5,
+            "height": 82,
+            "width": 542
+          },
+          "column": {
+            "top": 507.5,
+            "height": 80,
+            "width": 40
+          },
+          "useful": {
+            "top": 507.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 547.5,
+            "height": 40,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 596.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 597.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 597.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 645,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 702.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 703.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 703.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 751,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "oklab(0.86889 0.043008 0.076521 / 0.7)"
+        },
+        {
+          "row": {
+            "top": 808.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 809.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 809.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 857,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 914.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 915.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 915.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 963,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1020.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1021.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1021.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1069,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        },
+        {
+          "row": {
+            "top": 1126.5,
+            "height": 98,
+            "width": 542
+          },
+          "column": {
+            "top": 1127.5,
+            "height": 96,
+            "width": 40
+          },
+          "useful": {
+            "top": 1127.5,
+            "height": 47.5,
+            "width": 39,
+            "style": {
+              "borderTop": "0px solid rgb(160, 160, 160)",
+              "borderRight": "0px solid rgb(160, 160, 160)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "notUseful": {
+            "top": 1175,
+            "height": 48.5,
+            "width": 39,
+            "style": {
+              "borderTop": "1px solid rgb(37, 37, 37)",
+              "borderRight": "0px solid rgb(37, 37, 37)",
+              "color": "rgb(160, 160, 160)",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          },
+          "rowBorderTop": "rgb(37, 37, 37)"
+        }
+      ],
+      "roundingProbe": {
+        "cellCount": 0
+      },
+      "revealedScreenshot": {
+        "digest": "3b711b6f3857037be4494cf920e5dd4af69ae75e193638727d1773eff849e3c6",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/revealed-after-expand-r3.png",
+        "bytes": 14397,
+        "region": {
+          "x": 0,
+          "y": 678,
+          "width": 1280,
+          "height": 1200
+        }
+      },
+      "lateVisibleScreenshot": {
+        "digest": "83fdb31bfad923ae54311d010ce809a3883b2080c158bbbf341cbc2bf17306da",
+        "path": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-ytsearch/late-visible-after-expand-r3.png",
+        "bytes": 79448
+      }
+    }
+  ]
+}

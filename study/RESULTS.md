@@ -67,6 +67,31 @@ price.
 - Patterns moved to `references/discovery.md` as a lookup with measured costs and traps, applied
   only when a ledger row asks for them.
 
+## DOM study (perf-prove-it-dom)
+
+Three DOM workers on real apps, three adversarial verifiers, plus three reviewers that attacked the skill's own Blink and CDP claims before any case ran.
+
+| case | worker claim | verified outcome | verdict |
+| --- | --- | --- | --- |
+| `renderChatEmotes` (chatmost) | Nodes 3126 to 1050, UpdateLayoutTree 6.61 to 4.03 ms, Paint 11.24 to 4.34 ms | Nodes and LayoutObjects reproduced exactly every round; after-arm UpdateLayoutTree matches (4.20 ms), before was inflated by load; Paint reduction held in 8 of 9 paired rounds but the after-arm headline was not reproduced on a quiet box. Parity exact: text, ARIA, scroll, row rects, 6,224-case differential with 0 mismatches. | VERIFIED with corrections |
+| transcript expansion (ytsearch) | `content-visibility` on 100 rows: LayoutObjects 2197 to 449, LayoutDuration 27.4 to 9.9 ms, Paint 12.8 to 4.6 ms | Counters exact in dev and prod; durations load-dependent (prod: 12.63 to 4.62 ms layout). Deferred cost found: the first scroll re-pays 18 layouts and roughly 46 ms, so the full-scroll total is not the mount win. The worker's offscreen parity screenshots were viewport-clipped and invalid. | VERIFIED with corrections; the win is mount-scoped |
+| ReplyTree (postwork) | LayoutDuration 94.6 to 40.6 ms, RecalcStyleDuration 44.7 to 18.4 ms, TaskDuration 242.6 to 147.9 ms | Medians sat inside the verifier's round spread; trace args matched exactly (dirtyObjects 6808 to 485+398). The AA delta was understated (1.57%, not 0.44%); the first scroll re-pays 73 ms of layout; mount plus scroll-to-bottom task is about 20% worse than before. Focus and click into contained replies still work; the a11y tree is windowed at all times. | VERIFIED with corrections |
+
+### What the DOM verification caught
+
+1. Deferred work. Both containment cases looked better at mount and paid the layout back on the first revealing scroll. The skill now requires full-cycle measurement (mount plus the first revealing scroll) and `patterns.md` carries the measured re-payment.
+2. Overstated headline numbers. The chatmost Paint after-arm and the postwork AA percentage were not reproducible. Pixel claims now need the method (fixed clip, forced render, bounding box, max delta), not a headline percentage.
+3. Invalid parity evidence. The ytsearch offscreen parity captures were viewport-clipped strips. Parity for contained content needs force-rendered full-page captures.
+4. Stale evidence. The chatmost `evidence/raw/` traces came from a pilot run and did not match the worker's final results; the verifier rebuilt from HEAD and reproduced the counters exactly.
+
+### Corrections from the adversarial reviewers
+
+- `pipeline.md`: `SelectorMatcher` is actually `SelectorChecker` plus `ElementRuleCollector`; `PaintInvalidator` invalidates display-item clients and the items regenerate during Paint; `getComputedStyle` forces layout only for layout-dependent properties.
+- `measurement.md`: the tracing stream arrives on `tracingComplete`, not the `Tracing.end` response; a no-frame-advance `LayoutCount` of zero is a race; Chromium 152 headless emits `ThreadControllerImpl::RunTask` and `Layerize` and no `CompositeLayers`; `ScriptDuration` excludes work inside CDP evaluate; the longtask culprit is `entry.name` with `attribution[].containerType`; `durationThreshold` is silently ignored without `type: "event"`; durations are not deterministic, so compare medians.
+- `patterns.md`: the batch-insert buy is scoped to read-interleaved loops; the `innerText` cost is the getter plus its newline-to-`<br>` output change; class and inline-style writes both coalesce to one recalculation, so the buy is script volume; compositor-only skipping holds for CSS animations, not JavaScript per-frame writes; containment carries a11y, raster, and deferred-cost traps.
+
+The DOM skill ships with runnable primitive proofs in `study/dom-primitives/` and the three case harnesses in `study/harness/`.
+
 ## Paired eval (blinded judge)
 
 Six reports, three baseline (variant A) and three refined (variant B), scored out of 12 on the

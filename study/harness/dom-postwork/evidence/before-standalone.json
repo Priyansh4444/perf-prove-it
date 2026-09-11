@@ -1,0 +1,273 @@
+{
+  "browser": "152.0.7977.82",
+  "node": "v26.8.2",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "rounds": 3,
+  "tag": "before-standalone",
+  "arms": {
+    "before": {
+      "dir": "/home/pronsh/Coding/perf-prove-it/study/harness/dom-postwork/dist-before",
+      "rounds": [
+        {
+          "arm": "before",
+          "round": 1,
+          "delta": {
+            "Nodes": 6085,
+            "JSEventListeners": 1140,
+            "LayoutObjects": 6804,
+            "LayoutCount": 1,
+            "RecalcStyleCount": 1,
+            "LayoutDuration": 216.491,
+            "RecalcStyleDuration": 54.526,
+            "ScriptDuration": 0.795,
+            "TaskDuration": 367.822,
+            "JSHeapUsedSize": 3049116
+          },
+          "trace": {
+            "Layout": {
+              "count": 1,
+              "durMs": 216.404
+            },
+            "UpdateLayoutTree": {
+              "count": 1,
+              "durMs": 54.512
+            },
+            "Paint": {
+              "count": 1,
+              "durMs": 4.922
+            },
+            "UpdateLayerTree": {
+              "count": 0,
+              "durMs": 0
+            },
+            "CompositeLayers": {
+              "count": 0,
+              "durMs": 0
+            },
+            "ParseHTML": {
+              "count": 0,
+              "durMs": 0
+            },
+            "EventDispatch": {
+              "count": 0,
+              "durMs": 0
+            },
+            "FunctionCall": {
+              "count": 4,
+              "durMs": 1.479
+            },
+            "RunTask": {
+              "count": 0,
+              "durMs": 0
+            }
+          },
+          "stats": {
+            "elements": 4443,
+            "articles": 200,
+            "sections": 75,
+            "links": 134,
+            "iframes": 0,
+            "scrollHeight": 34098
+          },
+          "structure": {
+            "length": 133273,
+            "sha1": "885acddd1b449a4374f2325ba16e11758d03ff7d"
+          },
+          "text": {
+            "length": 41498,
+            "sha1": "c9778b6bb8cfd66ab6183346b552c7c6fbd40218"
+          },
+          "screenshots": {
+            "top": {
+              "file": "before-standalone-before-r1-top.png",
+              "sha1": "23f983a2c12f4d370e238e15fa357c76ec67182c"
+            },
+            "bottom": {
+              "file": "before-standalone-before-r1-bottom.png",
+              "sha1": "c56abf740c704179485b25b94d3931515a153dc5"
+            }
+          }
+        },
+        {
+          "arm": "before",
+          "round": 2,
+          "delta": {
+            "Nodes": 6085,
+            "JSEventListeners": 1140,
+            "LayoutObjects": 6804,
+            "LayoutCount": 1,
+            "RecalcStyleCount": 1,
+            "LayoutDuration": 98.014,
+            "RecalcStyleDuration": 48.71,
+            "ScriptDuration": 0.748,
+            "TaskDuration": 312.457,
+            "JSHeapUsedSize": 3038788
+          },
+          "trace": {
+            "Layout": {
+              "count": 1,
+              "durMs": 97.876
+            },
+            "UpdateLayoutTree": {
+              "count": 1,
+              "durMs": 48.697
+            },
+            "Paint": {
+              "count": 1,
+              "durMs": 5.495
+            },
+            "UpdateLayerTree": {
+              "count": 0,
+              "durMs": 0
+            },
+            "CompositeLayers": {
+              "count": 0,
+              "durMs": 0
+            },
+            "ParseHTML": {
+              "count": 0,
+              "durMs": 0
+            },
+            "EventDispatch": {
+              "count": 0,
+              "durMs": 0
+            },
+            "FunctionCall": {
+              "count": 4,
+              "durMs": 1.457
+            },
+            "RunTask": {
+              "count": 0,
+              "durMs": 0
+            }
+          },
+          "stats": {
+            "elements": 4443,
+            "articles": 200,
+            "sections": 75,
+            "links": 134,
+            "iframes": 0,
+            "scrollHeight": 34098
+          },
+          "structure": {
+            "length": 133273,
+            "sha1": "885acddd1b449a4374f2325ba16e11758d03ff7d"
+          },
+          "text": {
+            "length": 41498,
+            "sha1": "c9778b6bb8cfd66ab6183346b552c7c6fbd40218"
+          },
+          "screenshots": {
+            "top": {
+              "file": "before-standalone-before-r2-top.png",
+              "sha1": "23f983a2c12f4d370e238e15fa357c76ec67182c"
+            },
+            "bottom": {
+              "file": "before-standalone-before-r2-bottom.png",
+              "sha1": "c56abf740c704179485b25b94d3931515a153dc5"
+            }
+          }
+        },
+        {
+          "arm": "before",
+          "round": 3,
+          "delta": {
+            "Nodes": 6085,
+            "JSEventListeners": 1140,
+            "LayoutObjects": 6804,
+            "LayoutCount": 1,
+            "RecalcStyleCount": 1,
+            "LayoutDuration": 86.8,
+            "RecalcStyleDuration": 58.596,
+            "ScriptDuration": 0.898,
+            "TaskDuration": 341.555,
+            "JSHeapUsedSize": 3034580
+          },
+          "trace": {
+            "Layout": {
+              "count": 1,
+              "durMs": 86.725
+            },
+            "UpdateLayoutTree": {
+              "count": 1,
+              "durMs": 58.572
+            },
+            "Paint": {
+              "count": 1,
+              "durMs": 4.502
+            },
+            "UpdateLayerTree": {
+              "count": 0,
+              "durMs": 0
+            },
+            "CompositeLayers": {
+              "count": 0,
+              "durMs": 0
+            },
+            "ParseHTML": {
+              "count": 0,
+              "durMs": 0
+            },
+            "EventDispatch": {
+              "count": 0,
+              "durMs": 0
+            },
+            "FunctionCall": {
+              "count": 4,
+              "durMs": 2.024
+            },
+            "RunTask": {
+              "count": 0,
+              "durMs": 0
+            }
+          },
+          "stats": {
+            "elements": 4443,
+            "articles": 200,
+            "sections": 75,
+            "links": 134,
+            "iframes": 0,
+            "scrollHeight": 34098
+          },
+          "structure": {
+            "length": 133273,
+            "sha1": "885acddd1b449a4374f2325ba16e11758d03ff7d"
+          },
+          "text": {
+            "length": 41498,
+            "sha1": "c9778b6bb8cfd66ab6183346b552c7c6fbd40218"
+          },
+          "screenshots": {
+            "top": {
+              "file": "before-standalone-before-r3-top.png",
+              "sha1": "23f983a2c12f4d370e238e15fa357c76ec67182c"
+            },
+            "bottom": {
+              "file": "before-standalone-before-r3-bottom.png",
+              "sha1": "c56abf740c704179485b25b94d3931515a153dc5"
+            }
+          }
+        }
+      ],
+      "median": {
+        "LayoutCount": 1,
+        "RecalcStyleCount": 1,
+        "LayoutDurationMs": 98.014,
+        "RecalcStyleDurationMs": 54.526,
+        "ScriptDurationMs": 0.795,
+        "TaskDurationMs": 341.555,
+        "Nodes": 6085,
+        "JSEventListeners": 1140,
+        "LayoutTraceDurMs": 97.876,
+        "UpdateLayoutTreeDurMs": 54.512,
+        "PaintDurMs": 4.922,
+        "FunctionCallDurMs": 1.479,
+        "elements": 4443,
+        "scrollHeight": 34098
+      }
+    }
+  }
+}
