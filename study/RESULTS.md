@@ -92,6 +92,14 @@ Three DOM workers on real apps, three adversarial verifiers, plus three reviewer
 
 The DOM skill ships with runnable primitive proofs in `study/dom-primitives/` and the three case harnesses in `study/harness/`.
 
+## Browser tier follow-up (perf-prove-it-ts)
+
+A gap question ("does the TS skill know how its win behaves in the browser?") produced a verified recipe and three skill changes:
+
+- `study/browser-tier/` proves that in-page tier checks need `--js-flags=--allow-natives-syntax` (without it the page throws) and that `%ActiveTierIsMaglev` / `%ActiveTierIsTurbofan` work; 50,000 warmup calls on Chromium 152 reached Maglev, not TurboFan.
+- `SKILL.md` Step 2 now carries the browser harness and says a Node tier line is not a browser tier line.
+- Step 1 gained an avoidance question before the ledger, and the report now requires the target-runtime tier plus a plain-language explanation of the optimizer ladder (Ignition, Sparkplug, Maglev, TurboFan, and deopt as a reset).
+
 ## Paired eval (blinded judge)
 
 Six reports, three baseline (variant A) and three refined (variant B), scored out of 12 on the

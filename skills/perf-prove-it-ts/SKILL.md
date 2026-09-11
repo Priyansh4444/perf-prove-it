@@ -1,6 +1,6 @@
 ---
 name: perf-prove-it-ts
-description: "Reach peak TypeScript and JavaScript performance with V8's own evidence instead of profiles. Use when code must get faster, allocate less, or stop leaking: Ignition bytecode censuses for closures and allocations, Maglev and TurboFan tier checks, deopt diagnosis, CPU profiles for discovery, heap snapshots and GC traces for leak proof, behavior-locked A/B harnesses, and swarm battle testing. Triggers: optimize this TypeScript, why is this slow, make it faster, check the bytecode, run V8 on it, too many closures, GC pressure, memory leak, heap snapshot, microbenchmark, is it deoptimizing, battle test this, peak performance."
+description: "Reach peak TypeScript and JavaScript performance with V8's own evidence instead of profiles. Use when code must get faster, allocate less, or stop leaking: Ignition bytecode censuses for closures and allocations, Maglev and TurboFan tier checks in Node and the browser, deopt diagnosis, CPU profiles for discovery, heap snapshots and GC traces for leak proof, behavior-locked A/B harnesses, and swarm battle testing. Triggers: optimize this TypeScript, why is this slow, make it faster, check the bytecode, run V8 on it, too many closures, GC pressure, memory leak, heap snapshot, microbenchmark, is it deoptimizing, battle test this, peak performance."
 license: Apache-2.0
 ---
 
@@ -42,6 +42,7 @@ The profile answers "where is time going". It does not answer "what should this 
 
 Read the function with its callees, one hot function at a time. The floor is what the code forces the machine to do on the shapes production actually passes.
 
+0. Avoidance. Before pricing the unit's work, ask whether the work must exist at all: a caller-level skip, an upstream cache, a precomputed table, or a different algorithm can delete the whole ledger row. Deleting work beats optimizing it. The profile chose the unit; it does not prove the unit should run. If avoidance changes the unit, restart Step 1 on the new one.
 1. Inputs and shapes. Name what arrives: strings interned or built, arrays packed or holey, ids unique or not, params absent or present, regex global or not. Cost and behavior both key off shape, and shape can make a change legal or illegal: unique Map keys make index-based dedup safe, interned strings make a `switch` cheap. A second shape gets its own floor and its own bench.
 2. Callee inventory. Walk every call on the hot path until you hit a platform or native boundary or code outside the repo, and write what it does per invocation, not what its name says: `bm25` recomputes idf per candidate-term; `matchAll` clones the regex and allocates an iterator; `innerHTML` runs an HTML parse; a spread plus `includes` builds and scans a fresh array; a comparator does two Map `get`s per comparison. Every large win in the study came from this inventory, none from a cut list.
 3. Count per call and per element. One pass or several, and can the passes fuse? Loads, stores, compares, branches, allocations (objects, arrays, closures, contexts). Separate call-scoped work (hoistable) from element-scoped work (irreducible) and multiply through: 200 candidates x 3 terms x `Math.log` is 600 logs where 8 suffice.
@@ -84,7 +85,21 @@ Run with `node --allow-natives-syntax harness.cjs`. Warm until tier-up is observ
 node -v; node -p "process.versions.v8"; node -p "process.arch"
 ```
 
-Scope note: this harness is Node/V8. Bun runs JavaScriptCore and browsers cannot use `%` natives. For those, use the same floor and behavior locks, and the engine's own tools.
+Scope note: this harness is Node/V8. Bun runs JavaScriptCore. Browsers run V8 but a different build, and a page cannot use `%` natives unless the browser is launched with `--js-flags=--allow-natives-syntax` (verified on Chromium 152: without the flag the page throws `SyntaxError: Unexpected token '%'`). When the target is a browser, use the Node harness for the floor, behavior lock, and churn census, then re-establish the tier in the target runtime:
+
+```js
+// Playwright, same Chromium build you ship to
+const browser = await chromium.launch({ args: ["--js-flags=--allow-natives-syntax"] });
+const page = await browser.newPage();
+// Evaluate as a string so the page parser, not Node, parses the intrinsic.
+await page.evaluate(`(function () {
+  function f(x) { return x + 1; }
+  for (let i = 0; i < 50000; i++) f(i); // warm the real interaction, not a fixed count
+  return { maglev: %ActiveTierIsMaglev(f), turbofan: %ActiveTierIsTurbofan(f), status: %GetOptimizationStatus(f) };
+})()`);
+```
+
+Warm the real interaction first; a fresh function may still be interpreted. The tier booleans are the readable check, and `status` stays an opaque bit set, so never decode it from memory. DevTools Performance records optimization and deoptimization markers for sessions you cannot flag. Report `browser.version()`, the V8 version from `chrome://version` on the same build, and production versus dev bundle. A Node tier line does not prove browser tiering, and in real UI sessions many functions never leave Sparkplug or Maglev; state the tier you observed in the target runtime, and say when it was not measured. A win that only exists under forced TurboFan in Node is a capability claim, not a production claim.
 
 Probe every ledger row that reading cannot price. Counts, not timers: wrap the sink and count calls into heavy callees, count regex compiles and iterator constructions, count guard hits per input shape, count allocations. Discovery probes never run inside the timing harness. Recipes in `references/discovery.md`.
 
@@ -194,10 +209,12 @@ Every report ends with one machine read:
 
 Look up any mnemonic you do not know (`references/v8-evidence.md` points at the opcode list); never gloss from memory. Append the entry to a running ledger so the learning accumulates across units. One line per report is enough; the user should finish each unit knowing one more thing about the machine.
 
+Also teach the optimizer, once per report, in plain words and without hand-waving: the ladder is Ignition (interpreter), Sparkplug (baseline), Maglev (mid tier), TurboFan (top). A function climbs only while it stays hot, and a deopt drops it back to the interpreter and makes it climb again. Say which rung the function reached in the runtime that ships, what the win depends on (a tier, an inlining or escape-analysis decision that a new object shape can undo), and what would knock it down. The machine read teaches the machine; this paragraph teaches the optimizer, and it is what makes a browser-targeted report honest.
+
 ## The report
 
 1. The Step 1 ledger rows that moved (operation, source line, per-call count predicted and observed), the target line, the identity envelope with the reachable domain, counts before and after with raw bytecode lines tied to their source expressions, and the sibling delta when a sibling was built.
-2. Backend evidence: tier-up lines and deopt lines, with forced lines labeled capability and natural tiering shown separately.
+2. Backend evidence: tier-up lines and deopt lines, with forced lines labeled capability and natural tiering shown separately, plus the runtime line: harness runtime (Node and V8 versions) and target runtime (browser build, V8 version from `chrome://version`, production or dev bundle) with the tier observed there, or the explicit statement that the browser tier was not measured.
 3. Behavior proof: the exact test command, goldens, the identity claim with its domain and known divergences, and the differential counts.
 4. Speed and memory: medians, machine header, V8 version, load average, GC time, max pause, peak RSS, and whether allocation evidence is static or dynamic. Churn and retained are labeled as what they are.
 5. The trade: bytecode bytes before and after, source line delta in the hot function, module-level state added, cold-start delta when static data moved to module load, and what was deliberately not optimized.

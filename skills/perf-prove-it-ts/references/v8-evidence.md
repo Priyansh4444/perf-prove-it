@@ -47,6 +47,8 @@ node --allow-natives-syntax --trace-deopt harness.cjs 2>&1 | grep -E "rerank|tok
 
 Maglev is a mid tier and can be disabled by flag or skipped by the engine; do not require it. Require that you know which tier ran and quote the lines. If a function stays interpreted after heavy warmup, that is a finding, not a failure.
 
+The ladder is Ignition (interpreter), Sparkplug (baseline), Maglev (mid), TurboFan (top). A function climbs while it stays hot, and a deopt drops it back to the interpreter to climb again. V8's tiering budget scales with bytecode size and the feedback the function has collected, which is why a fixed warm-up count is superstition, and OSR can compile a loop mid-execution. In a browser the recipe is the embedder's (SKILL.md Step 2): launch with `--js-flags=--allow-natives-syntax` and read `%ActiveTierIsMaglev` / `%ActiveTierIsTurbofan` in the page, or record DevTools Performance for optimization and deoptimization markers. Node tier lines are not the browser's.
+
 Real deopt lines and what they meant:
 
 ```text
