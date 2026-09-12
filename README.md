@@ -144,13 +144,12 @@ The descriptions are written as triggers, so the agent picks the skill up when y
 
 Then it works one verified unit at a time:
 
-1. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
-2. Sandbox the unit with an ideal sibling function next to the original, and lock behavior with goldens before editing.
-3. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt`, `cargo asm` / `objdump` / `iai-callgrind`).
+1. If no function is named, run the static codebase audit to produce a ranked list of candidates. Static candidates are never labeled hot paths until runtime evidence establishes frequency.
+2. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
+3. Lock behavior before editing, then force the compiler to prove what it produced (`--print-bytecode`, `--trace-opt`, `cargo asm`, `objdump`, or `iai-callgrind`).
 4. Show equal outputs on equal inputs before showing any delta.
 5. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
-6. Fan out one subagent per unit, each returning pasted evidence. A second subagent verifies the patch and the behavior lock.
-7. Integrate one unit at a time and leave the remaining spikes documented for the next person.
+6. Integrate one verified unit at a time and leave the remaining candidates documented for the next person.
 
 ## What's inside
 
@@ -164,6 +163,7 @@ skills/
     references/memory-and-heap.md  heap snapshots, GC traces, leak proof
     references/findings.md       measured results and the surprises
     scripts/census.mjs           parse --print-bytecode output into a closure table
+    scripts/static-audit.mjs     rank whole-codebase static candidates for review
   perf-prove-it-rust/
     SKILL.md                     the workflow, in order
     references/asm-diff.md       generating and reading asm; common Rust surprises
