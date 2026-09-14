@@ -148,10 +148,11 @@ Then it works one verified unit at a time:
 
 1. If no function is named, run the static codebase audit to produce a ranked list of candidates. Static candidates are never labeled hot paths until runtime evidence establishes frequency.
 2. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
-3. Lock behavior before editing, then force the compiler to prove what it produced (`--print-bytecode`, `--trace-opt`, `cargo asm`, `objdump`, or `iai-callgrind`).
-4. Show equal outputs on equal inputs before showing any delta.
-5. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
-6. Integrate one verified unit at a time and leave the remaining candidates documented for the next person.
+3. Sandbox the unit with an ideal sibling function next to the original, and lock behavior with goldens before editing.
+4. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt` / tier checks, `cargo asm` / `objdump` / `iai-callgrind`).
+5. Show equal outputs on equal inputs before showing any delta.
+6. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
+7. Integrate one verified unit at a time and leave the remaining candidates documented for the next person.
 
 ## What's inside
 

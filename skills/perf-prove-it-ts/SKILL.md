@@ -1,9 +1,10 @@
 ---
 name: perf-prove-it-ts
-description: "Finds and proves TypeScript and JavaScript performance improvements with static audits, compiled-artifact inspection, and V8 evidence. Use for whole-repo performance audits, hot-path candidate discovery, closure or allocation reduction, deopts, GC pressure, leaks, bundle or sourcemap work, or optimizing one function."
+description: "Reach peak TypeScript and JavaScript performance with V8's own evidence instead of profiles. Use when code must get faster, allocate less, or stop leaking: Ignition bytecode censuses for closures and allocations, Maglev and TurboFan tier checks in Node and the browser, deopt diagnosis, CPU profiles for discovery, heap snapshots and GC traces for leak proof, behavior-locked A/B harnesses, and swarm battle testing. Triggers: optimize this TypeScript, why is this slow, make it faster, check the bytecode, run V8 on it, too many closures, GC pressure, memory leak, heap snapshot, microbenchmark, is it deoptimizing, battle test this, peak performance."
+license: Apache-2.0
 ---
 
-# Prove TypeScript performance
+# Perf prove it: TypeScript on V8
 
 **Experimental:** whole-codebase mode consumes substantial tokens and review time. Use it only with ample budget and review capacity. Large repositories produce many false positives and candidates. Inspired by React Doctor and Casey Muratori; inspect and prove candidates one at a time.
 
