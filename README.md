@@ -188,6 +188,7 @@ skills/
     references/pipeline.md       Blink pipeline stages, triggers, and source map
     references/measurement.md    CDP commands, metric keys, harness rules, verifier traps
     references/patterns.md       before/after DOM patterns with measured effects and traps
+    references/web-vitals.md     Core Web Vitals thresholds, field/lab discipline, INP/CLS levers
     examples/                    three worked cases with floors, counters, and traps
 study/
   PROTOCOL.md                    the study frame and rubric

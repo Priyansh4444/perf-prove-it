@@ -12,6 +12,8 @@ Never guess which stage is slow from the code alone. A trace says it. The trace 
 
 Profiles choose the unit. They are for discovery, never for the target. The floor comes from counting what the interaction requires, then you do not stop until the gap is closed or explained.
 
+Prioritize by poor field Core Web Vitals (LCP, INP, CLS at p75); a trace finds the cause. Keep field and lab evidence separate.
+
 ## Route
 
 Read only the matching reference.
@@ -19,6 +21,7 @@ Read only the matching reference.
 - Pipeline stages, what triggers each, and the Blink source map: `references/pipeline.md`.
 - CDP harness, metrics, traces, long tasks and INP, allocation rate, forced-reflow detection, verification protocol: `references/measurement.md`.
 - Before/after patterns with measured effects and traps: `references/patterns.md`.
+- User-facing outcome metrics, field versus lab, and the INP/CLS levers: `references/web-vitals.md`.
 - Worked cases from real studies, with counters and machine reads: `examples/`.
 
 ## Loop
@@ -49,6 +52,7 @@ Never call a reduced page, hand-written DOM snippet, or equivalent harness the a
 ## Hard gates
 
 - No UI performance claim from wall clock alone. Counters and trace events are the verdict.
+- No field claim from a single trace or `PerformanceObserver`. That is a lab observation; field impact stays pending until aggregated user data exists.
 - No arm comparison from the same page. Separate pages, same state, discarded warmup.
 - No parity snapshot taken without advancing two `requestAnimationFrame` ticks.
 - No behavior change hidden in a render change. Same-node fixes keep the DOM shape; node-reduction fixes are parity on rendered text, ARIA semantics, scroll and event behavior, and pixels with a measured diff.
@@ -71,4 +75,5 @@ Never call a reduced page, hand-written DOM snippet, or equivalent harness the a
 - `references/pipeline.md`: the stages, triggers, cost classes, and the Blink source map.
 - `references/measurement.md`: CDP commands, trace workflow, metric keys, forced reflow detection, harness rules.
 - `references/patterns.md`: before and after DOM patterns with measured effects and traps.
+- `references/web-vitals.md`: Core Web Vitals thresholds, field/lab discipline, and the INP/CLS levers.
 - `examples/`: three worked cases with floors, counters, machine reads, and the traps they taught.
