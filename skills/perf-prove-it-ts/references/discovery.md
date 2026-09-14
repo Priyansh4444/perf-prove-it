@@ -85,7 +85,7 @@ Patterns, not an order. Apply one only when Step 1 found the matching shape, and
 | per-record closure (`.some`, `.every`, `.map`, comparator) | module-level loop or hoisted function | bytecode grows: `rerank` 476 to 1856 bytes, cold-tier cost only |
 | repeated pass over the same data | fuse into one loop | intermediates and the second traversal disappear |
 | spread into Set union | one Set plus one output array | per-call array and iterator |
-| per-call default or predicate | hoist to module scope | none; keep a pure helper exported if tests read it |
+| per-call default or predicate | hoist to module scope | a default value is evaluated on every call that omits the argument: `cb = () => null` emits `CreateClosure` and cost 54 scavenges per 1M calls, 0 after hoisting, same 21-byte function either way (`examples/default-param-pipeline`) |
 | static lookup built per call | build once at module load | serverless and edge pay it per cold start; weigh and disclose |
 | numeric scratch | `arr.length = n` then fill, or `Float64Array` | `new Array(n)` filled with doubles is `HOLEY_DOUBLE_ELEMENTS` and pays a second backing store; `Array.from({length:n})` costs about 6 us per 200-element call; `arr.length = n` pays the same transition and is chosen only when a lint rule bans `new Array(n)`; `Float64Array` is packed with no transition |
 | linear membership over interned strings | `switch` or `Set` | switch beat object lookup by about 4x and `Set` by 1.3 ns on the second call site; object lookup was worst |

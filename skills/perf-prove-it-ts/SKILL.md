@@ -1,92 +1,94 @@
 ---
 name: perf-prove-it-ts
-description: "Finds and proves TypeScript and JavaScript performance improvements with static codebase audits and V8 evidence. Use for whole-repo performance audits, hot-path candidate discovery, closure or allocation reduction, deopts, GC pressure, leaks, or optimizing one function."
+description: "Finds and proves TypeScript and JavaScript performance improvements with static audits, compiled-artifact inspection, and V8 evidence. Use for whole-repo performance audits, hot-path candidate discovery, closure or allocation reduction, deopts, GC pressure, leaks, bundle or sourcemap work, or optimizing one function."
 ---
 
-# Perf prove it: TypeScript on V8
+# Prove TypeScript performance
 
-Use Casey Muratori's method: derive the least work permitted by the program's intent, then compare it with the work the machine actually performs. Intent is not the function body alone; recover it from callers, tests, types, invariants, and user-visible behavior. Static evidence chooses candidates; runtime evidence establishes heat and impact. Never call a static candidate a hot path.
+**Experimental:** whole-codebase mode consumes substantial tokens and review time. Use it only with ample budget and review capacity. Large repositories produce many false positives and candidates. Inspired by React Doctor and Casey Muratori; inspect and prove candidates one at a time.
+
+Write down the mathematically smallest sequence of steps the function must perform. Then make V8 bytecode to model that math, and then show what the code actually runs. Close the gap, prove behavior did not change, and disclose what the optimization costs.
+
+JavaScript compiles through several optimization tiers depending on how often the code actually runs. Re-benchmark at the tier the code reaches before calling a change a win; see `scripts/tier-check.mjs` for how to check the tier.
+
+Measure both sides of every change: runtime speed and memory behavior. Time the code at the tier it actually runs at, and separately record allocation rate (collections per unit of work, or bytes from `--heap-prof`), GC time, pause, promotion, and peak RSS. A change can win one and lose the other; a heap-used snapshot alone is not an allocation measurement. Report both verdicts together, and call out any allocation-rate win that shows up as a GC-cost loss.
+
+Profiles are for discovery, never for the target. They find local minima and cannot tell you what should be possible. The target comes from counting the work the problem requires. Establish what the hardware could theoretically do, then do not stop until the gap is closed or explained.
+
+Always be willing to dive deeper. Patching the framework, or even the packages used are an option.
+
+This skill is viable function to function. Optimizing an entire stack is still hard for a model because intent is hard to recover, though it is possible. Ask the user whether they want one function or an end-to-end interaction optimized.
+
+Recover intent from callers, tests, types, invariants, and user-visible behavior. Static findings are fallible candidates, never hot paths or wins.
 
 ## Route
 
-Choose one route before reading a reference.
+Read only the matching reference.
 
-- **Codebase audit** — no function is named, the whole repository is in scope, or the user asks what is likely hot. Read `references/codebase-audit.md`, then run `node scripts/static-audit.mjs <paths...>`. This is the default static route.
-- **Function optimization** — a function or measured bottleneck is named. Read `references/discovery.md`, then inspect that function and its callers.
-- **V8 diagnosis** — bytecode, optimization tier, or deoptimization is the question. Read `references/v8-evidence.md`.
-- **Memory or leak** — allocation, GC, retention, or a leak is the question. Read `references/memory-and-heap.md`.
-- **Pattern lookup** — consult `references/patterns.md` only after source inspection finds a matching shape.
+- Repository or unknown hot code: `references/codebase-audit.md`; run `scripts/static-audit.mjs`.
+- Named function or measured bottleneck: `references/discovery.md`.
+- JSX/HTML, bundles, or source maps: `references/compiled-artifact.md`.
+- Rendering/reconciliation/DOM: `references/rendering.md`.
+- Bytecode, tiers, or deopts: `references/v8-evidence.md`.
+- Benchmark or A/B requested: `references/benchmark-protocol.md`.
+- Allocation, GC, retention, or leaks: `references/memory-and-heap.md`.
+- Multiple agents or battle testing: `references/swarm.md`.
+- Node versus browser/Bun/Deno: `references/runtime-matrix.md`.
+- Known source shape after inspection: `references/patterns.md`.
+- Worked cases from real studies, with raw evidence: `examples/`.
 
-Do not preload another reference. A route may load a second reference only when its evidence requires it.
+## Loop
 
-## Shared loop
+1. State required behavior and reachable workload.
+2. Count current traversals, calls, allocations, data movement, and boundaries; derive the permitted floor. Record allocation rate and GC cost next to the timing.
+3. Establish only the evidence needed for the claim.
+4. Predict one change's term-by-term effect, make it, and repeat behavior/mechanism/impact checks, timing and memory both.
+5. Keep results unchanged: win, zero, or regression. Include costs and revert path.
 
-1. Recover intent from callers, tests, types, invariants, and observable behavior. State what may change and what must not.
-2. Define the unit: a repository candidate or one named function.
-3. Derive the floor: the fewest logical values, traversals, calls, allocations, and data movements that intent permits.
-4. Lock behavior over the reachable input domain, including adversarial edges.
-5. Record the current work as counts or formulas, plus a runtime baseline appropriate to the claim.
-6. Make one change and predict exactly which terms should move.
-7. Re-run the work accounting, behavior proof, and runtime evidence.
-8. Keep a change only when the mechanism moved as predicted and its measured trade is acceptable. A zero timing delta is still a valid process result; report it as zero.
+Evidence ascends: static candidate → reachability → frequency → mechanism → impact. Stop at the supported rung.
 
-For a codebase audit, repeat the loop one candidate at a time in ranked order. Do not edit every scanner hit.
+## Provenance
 
-## Evidence ladder
+Small proof-of-concept code is allowed for a bounded hypothesis and may be benched with Node bytecode. Label it **model probe**: it proves only that model's mechanism, not the application. Prefer the real emitted artifact and its source map. Shipped-code claims require:
 
-Use the lowest rung that can support the claim, then stop.
+```text
+source + commit → real build + versions → emitted JS path/hash → exact runtime command/version → observation
+```
 
-1. **Static candidate:** file, line, enclosing scope, matched construct, and why repetition is plausible.
-2. **Reachability:** callers or entry points show the code can run in the target workload.
-3. **Frequency:** a profile, trace, counter, or representative workload shows how often it runs.
-4. **Mechanism:** bytecode, tier/deopt output, allocation profile, or heap snapshot explains the cost.
-5. **Impact:** isolated A/B runs show the change beats A/A noise without behavior drift.
+For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/paint claims. Bytecode shows interpreter instructions and static construction sites, not dynamic allocation or browser work. For more details refer to `skills/perf-prove-it-dom`.
 
-The static audit produces rung 1. It ranks review order; it does not prove heat, allocations, or speed.
-
-## Hard gates
-
-- No source edit before the reachable behavior domain and baseline are recorded.
-- No behavior, schema, ordering, error, or public-API change hidden in a performance patch.
-- No timing claim without isolated processes, load context, an A/A control, and at least five runs per arm.
-- No allocation claim from syntax alone. Label bytecode counts **static sites**; use `--heap-prof` or GC counts for dynamic allocation.
-- No retained-memory claim without forced-GC snapshots.
-- No tier claim from a forced compile request; require a completed optimization line or active-tier check in the shipped runtime.
-- No win without its measured benefit, readability/cold-start/memory price, and revert path.
-
-## Built-in tools
+## Commands
 
 ```sh
-# Whole-codebase triage. JSON is stable enough for scripts and evals.
-node <skill-dir>/scripts/static-audit.mjs src convex
-node <skill-dir>/scripts/static-audit.mjs --json src convex
+# Bounded candidates; NDJSON streams during scanning.
+node <skill-dir>/scripts/static-audit.mjs --stream src
+node <skill-dir>/scripts/static-audit.mjs --json src
 
-# Allocation-site census from an existing V8 bytecode dump.
-node <skill-dir>/scripts/census.mjs --json bytecode.txt
+# Noisy leads, explicit opt-in.
+node <skill-dir>/scripts/static-audit.mjs --include-advisory --max=100 src
 
-# Static analyzer self-test.
+# Persist false-positive decisions outside prompt context; ledgers expire after 24h.
+node <skill-dir>/scripts/static-audit.mjs --dismiss=<id> --reason='<short reason>'
+node <skill-dir>/scripts/static-audit.mjs --cleanup-ledger
+
+# Static emitted-artifact/sourcemap inventory; never executes application code.
+node <skill-dir>/scripts/compiled-audit.mjs dist ChatMarkdown thread.message-sent
+
+# Opcode classes, loop-attributed allocation sites, protocol ops, and A/B diff.
+node --print-bytecode --print-bytecode-filter='fnName' harness.cjs | node <skill-dir>/scripts/census.mjs --classes
+node <skill-dir>/scripts/census.mjs --diff before.txt after.txt
+
 node <skill-dir>/scripts/static-audit.test.mjs
+node <skill-dir>/scripts/compiled-audit.test.mjs
+node <skill-dir>/scripts/census.test.mjs
 ```
+
+Full tool and scanner-rule index: `scripts/README.md`.
+
+Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, and next proof. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
 
 ## Report
 
-For each investigated candidate, write an action ledger before any aggregate benchmark summary:
+For each reviewed candidate: **intent → current work → floor → predicted action → observed mechanism → impact → behavior/cost/revert**. Report speed and memory together: time at the measured tier, allocation rate, GC time, peak RSS. One without the other is an incomplete verdict. For static-only work, title it **candidates, not measured hot paths** and name the next probe.
 
-1. **Intent:** required behavior and the context that establishes it.
-2. **Current work:** a symbolic count, such as `E edges × 2 array pushes per side`.
-3. **Floor:** the least work that preserves intent, with irreducible terms named.
-4. **Action:** one source change and its predicted term-by-term delta.
-5. **Observed mechanism:** actual bytecode, allocation, instruction, or call counts that moved—or did not.
-6. **Observed impact:** the isolated runtime result, including zero or regression, without rewriting the prediction after the fact.
-7. **Behavior and price:** identity evidence, source/bytecode size, memory or cold-start cost, uncertainty, and revert.
-
-For a static-only audit, title the output **candidates, not measured hot paths**. Separate reviewed findings from scanner hits and recommend the smallest runtime probe that would promote each finding to the next evidence rung.
-
-## References
-
-- `references/codebase-audit.md`: repository-wide static discovery and candidate ranking.
-- `references/discovery.md`: function work ledger, hidden callees, guards, shapes, and identity domains.
-- `references/v8-evidence.md`: V8 harnesses, bytecode, tiering, deopts, and measurement traps.
-- `references/memory-and-heap.md`: allocation profiles, GC traces, snapshots, and leak proof.
-- `references/patterns.md`: measured before/after patterns; lookup only.
-- `references/findings.md`: prior results and known surprises; calibration only.
+Be transparent. Explain why the change is impactful, show the bytecode delta, and make the cost and benefit concrete. Every change is a tradeoff: show what is lost and what is gained, unless the change removes genuinely redundant work, which is the goal.
