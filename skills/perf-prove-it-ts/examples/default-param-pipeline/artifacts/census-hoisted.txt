@@ -1,0 +1,8 @@
+function    len closures contexts arr[] obj{} re{} other
+----------- --- -------- -------- ----- ----- ---- -----
+withHoisted 21  0        0        0     0     0    0    
+
+1 function(s), 0 closure/context construction sites
+rule-based columns: closures, contexts, arrays, objects, regexps, other
+static sites per function body, not dynamic counts: a guarded site may never execute
+v8 14.6.202.34-node.28, node v26.8.2

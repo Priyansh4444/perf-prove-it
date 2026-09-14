@@ -1,0 +1,2 @@
+[bailout (kind: deopt-eager, reason: Insufficient type feedback for generic global access): begin. deoptimizing 0x1491cf669a09 <JSFunction (sfi = 0x1491cf668eb1)>, 0x1b5d133c2e79 <Code MAGLEV>, opt id 4, bytecode offset 125, deopt exit 9, FP to SP delta 120, caller SP 0x7ffd4411f540, pc 0x7fc5580064df]
+1000000

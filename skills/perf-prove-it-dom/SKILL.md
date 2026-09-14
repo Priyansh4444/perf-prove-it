@@ -1,7 +1,6 @@
 ---
 name: perf-prove-it-dom
-description: "Make browser UI fast with evidence from Blink and the Chrome DevTools Protocol. Use when renders are janky, interactions lag, styles or layout thrash, lists re-render, or DOM work is suspected: pipeline cost classes (DOM, style, layout, paint, composite), forced synchronous layout, CDP Performance metrics (LayoutCount, RecalcStyleCount, durations), trace events, INP and long tasks, DocumentFragment and cloneNode patterns, compositor-only properties, and CSS containment. Triggers: why is my UI slow, jank, layout thrashing, forced reflow, slow render, INP, long task, DOM performance, re-render, expensive CSS, paint cost, check the trace."
-license: Apache-2.0
+description: "Makes browser UI fast with evidence from Blink and the Chrome DevTools Protocol: pipeline cost classes, forced synchronous layout, Performance metrics and trace events, INP and long tasks, containment, and browser allocation rate. Use when a render or interaction is slow: why is my UI slow, jank, layout thrashing, forced reflow, slow render, check the trace, expensive CSS, or paint cost."
 ---
 
 # Perf prove it: the browser DOM and Blink
@@ -9,6 +8,10 @@ license: Apache-2.0
 The browser is a pipeline, not a function call. A UI unit costs node mutations, style invalidations, layout work, painted pixels, and composited layers. Count those, understand which stage pays, then remove work from the stage that actually costs.
 
 Never guess which stage is slow from the code alone. A trace says it. The trace is the compiler output of the browser, the same way bytecode is the compiler output of V8.
+
+## Evidence provenance gate
+
+Never call a reduced page, hand-written DOM snippet, or equivalent harness the application’s render output. Label it **model probe**. For JSX/TSX or templated HTML, record the source commit, real build command and versions, emitted JS/chunk path and hash, browser version, and trace command. Inspect the emitted JavaScript before attributing work to a component. A model probe can form a hypothesis; only the shipped artifact plus a browser trace can prove render, DOM, layout, paint, or allocation claims.
 
 ## The pipeline
 
@@ -133,7 +136,7 @@ Take every win you can prove and disclose its cost. There is no readability exem
 
 ## Step 6: read the implementation when the pipeline surprises you
 
-The source is public. Read it when a cost does not match the docs.
+The source is public. Read it when a cost does not match the docs. Paths below are inside the Chromium tree, not files in this skill.
 
 - `source.chromium.org` and `github.com/chromium/chromium` are the same tree. Search a symbol, read the class, read the commit message that changed it.
 - `third_party/blink/renderer/core/README.md` maps the four core stages.
@@ -172,9 +175,11 @@ Examples: one `UpdateLayoutTree` instead of 500 after switching to a class toggl
 - No `innerHTML` on untrusted input.
 - No promoted-layer or `will-change` advice without counting layers and memory.
 - No "faster" verdict without the before and after trace pasted in.
+- No readability cost hidden. Name the added JS or CSS complexity next to the counters and let the user decide. Readability is a price to disclose, not a veto.
 
 ## References
 
 - `references/pipeline.md`: the stages, triggers, cost classes, and the Blink source map.
 - `references/measurement.md`: CDP commands, trace workflow, metric keys, forced reflow detection, harness rules.
 - `references/patterns.md`: before and after DOM patterns with measured effects and traps.
+- `examples/`: three worked cases with floors, counters, machine reads, and the traps they taught.

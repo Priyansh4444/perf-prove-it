@@ -1,7 +1,6 @@
 ---
 name: perf-prove-it-rust
-description: "Make Rust fast on the machine it will actually run on, with proof instead of profiles. Use when asked to optimize Rust, parallelize it, cut allocations or cache misses, or verify what the compiler emitted: ideal instruction-sequence design, asm diffs (cargo asm / objdump / Godbolt), deterministic instruction counts (iai-callgrind), perf counters, bounds-check and allocation removal, SIMD/target features, thread scaling, false sharing, and NUMA. Triggers: optimize this Rust, make this loop faster, check the assembly, asm diff, why is this slow, benchmark this, criterion, parallelize this, rayon, cache misses, false sharing, thread scaling."
-license: Apache-2.0
+description: "Makes Rust fast on the machine it will actually run on, with proof instead of profiles: ideal instruction sequences, asm diffs (cargo asm, objdump), deterministic instruction counts (iai-callgrind), perf counters, bounds-check and allocation removal, SIMD, thread scaling, false sharing, and NUMA. Use when asked to optimize this Rust, check the assembly, parallelize this, or chase cache misses and contention."
 ---
 
 # Perf prove it: Rust on your machine
@@ -133,9 +132,11 @@ Never optimize a codebase in one diff. Optimize one unit at a time: one function
 - No benchmark on an unpinned, loaded machine presented as truth. Print the load.
 - No "faster" verdict without either instruction counts or an asm diff pasted in.
 - No profile-driven local minimum presented as the optimum when the ideal was never written down.
+- No readability cost hidden. Name the added lines, the duplicated invariants, and any `unsafe` or tricky code next to the win, and let the user decide. Readability is a price to disclose, not a veto.
 
 ## References
 
 - `references/asm-diff.md`: commands, annotated asm reading, common Rust codegen surprises.
 - `references/machine-and-threads.md`: machine census, thread scaling protocol, false sharing, counters.
 - `scripts/machine.sh`: one-shot machine header for benchmark reports.
+- `examples/`: the video indexer case with the win and the rejected experiments.

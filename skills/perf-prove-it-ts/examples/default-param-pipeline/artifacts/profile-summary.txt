@@ -1,0 +1,9 @@
+withDefault                      42  31.6%
+(garbage collector)              32  24.1%
+evaluate                         25  18.8%
+cb                               15  11.3%
+(anonymous)                      13   9.8%
+(idle)                            2   1.5%
+getCLIOptionsFromBinding          1   0.8%
+readSync                          1   0.8%
+total samples 133
