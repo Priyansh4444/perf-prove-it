@@ -30,6 +30,18 @@ Read only the matching reference.
 5. Close the gap by the stage that pays. Make one change and re-measure; containment and virtualization defer work, so also measure the first scroll that reveals it.
 6. Prove behavior, metric, cycle, trace, and memory parity, then report the trade and the revert.
 
+## Read the implementation when the pipeline surprises you
+
+The source is public. When a cost does not match the docs, read Blink itself. These paths are inside the Chromium tree, not files in this skill.
+
+- `source.chromium.org` and `github.com/chromium/chromium` are the same tree. Start at `third_party/blink/renderer/core/README.md`, which maps the four core stages.
+- `core/dom/` is the DOM tree, `core/css/` the style engine, `core/layout/` layout, `core/paint/` paint and property trees. `cc/` is the compositor; `core/paint/README.md` describes the commit handoff to `cc::Layer`.
+- Find a behavior by symbol first, then read the class and its header comments; Blink headers carry the design notes. Read the commit that changed the file for the rationale and the linked design doc.
+- If a trace event name confuses you, search it in the tree. The emitter is usually one `TRACE_EVENT` macro away from the code that decides the behavior.
+- Prefer reading source over memorizing flags, because flags change.
+
+Quoting the implementation in the report is the equivalent of pasting bytecode: it turns an opinion about CSS into a fact about Blink. The full stage-and-source map lives in `references/pipeline.md`.
+
 ## Evidence provenance gate
 
 Never call a reduced page, hand-written DOM snippet, or equivalent harness the application's render output. Label it **model probe**. For JSX/TSX or templated HTML, record the source commit, real build command and versions, emitted JS/chunk path and hash, browser version, and trace command. Inspect the emitted JavaScript before attributing work to a component. A model probe can form a hypothesis; only the shipped artifact plus a browser trace can prove render, DOM, layout, paint, or allocation claims.
@@ -51,7 +63,7 @@ Never call a reduced page, hand-written DOM snippet, or equivalent harness the a
 2. Trace evidence: event counts and durations pasted, before and after.
 3. Behavior proof: the parity contract for the fix class, with a screenshot or a11y comparison, same events, same DOM shape.
 4. The trade: DOM size, layer count or memory, accessibility impact, security, and the revert.
-5. One machine read.
+5. One machine read: paste the trace event or counter, one plain sentence for what Blink did, and what it bought this interaction.
 6. Remaining spikes and what would reopen them.
 
 ## References
