@@ -98,8 +98,27 @@ function lastSignificantIndex(masked) {
 function regexAllowedAfter(lastCode, masked) {
   if (!lastCode) return true;
   if (lastCode === '"' || lastCode === "'" || lastCode === "`" || lastCode === "/") return false;
-  if (lastCode === ")" || lastCode === "]" || lastCode === "}" || lastCode === "<") return false;
+  if (lastCode === "]" || lastCode === "}" || lastCode === "<") return false;
   const significant = lastSignificantIndex(masked);
+  if (lastCode === ")") {
+    let depth = 0;
+    for (let index = significant - 1; index >= 0; index--) {
+      const char = masked[index];
+      if (char === ")") depth += 1;
+      else if (char === "(") {
+        if (depth === 0) {
+          let before = index - 1;
+          while (before >= 0 && /\s/.test(masked[before])) before -= 1;
+          let end = before + 1;
+          let start = end;
+          while (start > 0 && /[\w$]/.test(masked[start - 1])) start -= 1;
+          return ["if", "while", "for", "with", "switch", "catch"].includes(masked.slice(start, end));
+        }
+        depth -= 1;
+      }
+    }
+    return false;
+  }
   const before = lastSignificantIndex(masked.slice(0, Math.max(significant, 0)));
   if (lastCode === ">") return before >= 0 && masked[before] === "=";
   if (lastCode === "+" || lastCode === "-") return !(before >= 0 && masked[before] === lastCode);
@@ -115,6 +134,27 @@ function regexAllowedAfter(lastCode, masked) {
   return true;
 }
 
+function regexClosesOnLine(source, start) {
+  let escaped = false;
+  let inClass = false;
+  for (let index = start + 1; index < source.length; index++) {
+    const char = source[index];
+    if (char === "\n") return false;
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (char === "\\") {
+      escaped = true;
+      continue;
+    }
+    if (char === "[") inClass = true;
+    else if (char === "]") inClass = false;
+    else if (char === "/" && !inClass) return true;
+  }
+  return false;
+}
+
 function maskNonCode(source) {
   let state = "code";
   let escaped = false;
@@ -127,7 +167,7 @@ function maskNonCode(source) {
     if (state === "code") {
       if (char === "/" && next === "/") state = "line-comment";
       else if (char === "/" && next === "*") state = "block-comment";
-      else if (char === "/" && regexAllowedAfter(lastCode, masked)) {
+      else if (char === "/" && regexAllowedAfter(lastCode, masked) && regexClosesOnLine(source, index)) {
         state = "regex";
         regexClass = false;
         escaped = false;

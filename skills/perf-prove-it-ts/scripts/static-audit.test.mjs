@@ -361,6 +361,20 @@ const cases = [
     count: 1,
     check: (matches) => matches[0]?.enclosingFunction === "g",
   },
+  {
+    name: "a regex in statement position after a control header does not hide a same-line finding",
+    source: `if (x) /{/.test(s); export function fn(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "fn",
+  },
+  {
+    name: "division after a call or parenthesized expression is not a regex",
+    source: `const a = f() / 2; const b = (x + y) / 2; export function div2(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "div2",
+  },
 ];
 
 const failures = [
