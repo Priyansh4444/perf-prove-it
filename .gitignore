@@ -5,3 +5,9 @@ dist/
 .repos/
 
 *.tgz
+
+# local secrets
+.env
+.env.*
+!.env.example
+.npmrc
