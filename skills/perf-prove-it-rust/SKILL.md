@@ -138,5 +138,5 @@ Never optimize a codebase in one diff. Optimize one unit at a time: one function
 
 - `references/asm-diff.md`: commands, annotated asm reading, common Rust codegen surprises.
 - `references/machine-and-threads.md`: machine census, thread scaling protocol, false sharing, counters.
-- `npx perf-prove-it machine`: one-shot machine header for benchmark reports, (or `scripts/machine.sh`).
+- `npx perf-prove-it machine`: one-shot machine header for benchmark reports.
 - `examples/`: the video indexer case with the win and the rejected experiments.

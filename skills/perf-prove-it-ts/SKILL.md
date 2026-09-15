@@ -10,7 +10,7 @@ license: Apache-2.0
 
 Write down the mathematically smallest sequence of steps the function must perform. Then make V8 bytecode to model that math, and then show what the code actually runs. Close the gap, prove behavior did not change, and disclose what the optimization costs.
 
-JavaScript compiles through several optimization tiers depending on how often the code actually runs. Re-benchmark at the tier the code reaches before calling a change a win; see `scripts/tier-check.mjs` for how to check the tier.
+JavaScript compiles through several optimization tiers depending on how often the code actually runs. Re-benchmark at the tier the code reaches before calling a change a win; see `npx perf-prove-it tier` for how to check the tier.
 
 Measure both sides of every change: runtime speed and memory behavior. Time the code at the tier it actually runs at, and separately record allocation rate (collections per unit of work, or bytes from `--heap-prof`), GC time, pause, promotion, and peak RSS. A change can win one and lose the other; a heap-used snapshot alone is not an allocation measurement. Report both verdicts together, and call out any allocation-rate win that shows up as a GC-cost loss.
 
@@ -26,7 +26,7 @@ Recover intent from callers, tests, types, invariants, and user-visible behavior
 
 Read only the matching reference.
 
-- Repository or unknown hot code: `references/codebase-audit.md`; run `scripts/static-audit.mjs`.
+- Repository or unknown hot code: `references/codebase-audit.md`; run `npx perf-prove-it audit`.
 - Named function or measured bottleneck: `references/discovery.md`.
 - JSX/HTML, bundles, or source maps: `references/compiled-artifact.md`.
 - Rendering/reconciliation/DOM: `references/rendering.md`.

@@ -13,7 +13,7 @@ Use this route when performance depends on JSX/HTML rendering, a framework trans
 
 If the project cannot build, report **compiled-artifact evidence unavailable**. A reduced or equivalent JavaScript probe is a **model probe** only and must be labeled as such, regardless of which model or runner executes the skill.
 
-`node scripts/compiled-audit.mjs <dist> [term ...]` is the static first pass. It records emitted-file hashes, sizes, sourcemap presence, and matching terms without executing the application. Only after this inventory may a separate V8 harness import the exact artifact.
+`npx perf-prove-it compiled <dist> [term ...]` is the static first pass. It records emitted-file hashes, sizes, sourcemap presence, and matching terms without executing the application. Only after this inventory may a separate V8 harness import the exact artifact.
 
 ## Rendering accounting
 

@@ -7,7 +7,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const legacyTest = join(root, "skills", "perf-prove-it-ts", "scripts", "static-audit.test.mjs");
+const legacyTest = join(root, "test", "legacy", "static-audit.test.mjs");
 const shim = join(root, "test", "legacy-shim.mts");
 const cli = join(root, "dist", "cli.mjs");
 

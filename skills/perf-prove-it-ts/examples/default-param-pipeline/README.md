@@ -127,8 +127,8 @@ Bytecode length: 21
 Inspect: the default is a branch. When the second argument is not `undefined`, the jump skips the closure. When it is omitted, `CreateClosure` builds a new function object for `cb`. This is the allocation, and it lives inside the per-call body.
 
 ```sh
-node ../../../scripts/census.mjs ../artifacts/bytecode-default.txt
-node ../../../scripts/census.mjs ../artifacts/bytecode-hoisted.txt
+npx perf-prove-it census ../artifacts/bytecode-default.txt
+npx perf-prove-it census ../artifacts/bytecode-hoisted.txt
 ```
 
 `artifacts/census-default.txt`:
