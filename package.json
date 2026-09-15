@@ -1,6 +1,6 @@
 {
   "name": "perf-prove-it",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Static performance audit for TypeScript and JavaScript. Parses with oxc, lowers files to facts, ranks candidates, and ships the agent skill.",
   "bin": {
@@ -34,11 +34,9 @@
     "oxc-parser": "0.150.0"
   },
   "devDependencies": {
-    "@babel/parser": "^7.24.0",
+    "@oxc-project/types": "^0.150.0",
     "@types/node": "^24.0.0",
-    "acorn": "^8.11.0",
     "tsdown": "^0.23.0",
-    "tsx": "^4.23.0",
     "typescript": "^5.9.3"
   },
   "license": "Apache-2.0",
