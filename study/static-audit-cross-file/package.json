@@ -1,0 +1,10 @@
+{
+  "name": "static-audit-cross-file",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Multi-file TypeScript fixture for the static-audit call-site census",
+  "scripts": {
+    "verify": "node verify.mjs"
+  }
+}
