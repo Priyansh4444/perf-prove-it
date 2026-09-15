@@ -48,6 +48,16 @@ Read only the matching reference.
 
 Evidence ascends: static candidate → reachability → frequency → mechanism → impact. Stop at the supported rung.
 
+## Evidence ladder
+
+Use the lowest rung that can support the claim, then stop. Each rung names what it proves and the command that produces it.
+
+1. **Static candidate.** `npx perf-prove-it audit` returns a file, line, enclosing function, the matched construct, a symbolic current-work model, and a candidate floor. It ranks review order and proves only that the code exists.
+2. **Reachability.** Callers and entry points show the code can run in the target workload. The audit's `staticCallSites` and rank boost are reachability within this codebase, never executions.
+3. **Frequency.** A profile, trace, counter, or representative workload shows how often it runs. `--cpu-prof` or a CDP trace for the interaction; a call counter for one function.
+4. **Mechanism.** Bytecode, tier or deopt output, an allocation profile, or a heap snapshot explains the cost. `npx perf-prove-it census`, `npx perf-prove-it tier`, `--trace-opt`, `--trace-deopt`, `--heap-prof`.
+5. **Impact.** Isolated A/B runs beat the A/A band without behavior drift. Follow `references/benchmark-protocol.md`: one process per arm, warm to the target tier, at least five trials per arm.
+
 ## Provenance
 
 Small proof-of-concept code is allowed for a bounded hypothesis and may be benched with Node bytecode. Label it **model probe**: it proves only that model's mechanism, not the application. Prefer the real emitted artifact and its source map. Shipped-code claims require:
@@ -57,6 +67,17 @@ source + commit → real build + versions → emitted JS path/hash → exact run
 ```
 
 For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/paint claims. Bytecode shows interpreter instructions and static construction sites, not dynamic allocation or browser work. For more details refer to `skills/perf-prove-it-dom`.
+
+## Hard gates
+
+- No source edit before the reachable behavior domain and a baseline are recorded.
+- No behavior, schema, ordering, error, or public-API change hidden in a performance patch.
+- No static candidate called a hot path. `audit` output is a ranked queue, not a verdict.
+- No timing claim without isolated processes, load context, an A/A control, and at least five runs per arm.
+- No allocation claim from syntax alone. Label `audit` and `census` counts as **static sites**; use `--heap-prof` or GC counts for dynamic allocation.
+- No retained-memory claim without a forced-GC snapshot.
+- No tier claim from a forced compile request. Require a completed optimization line or the `npx perf-prove-it tier` check in the shipped runtime.
+- No win without its measured benefit, its readability, cold-start, and memory price, and a revert path.
 
 ## Commands
 
