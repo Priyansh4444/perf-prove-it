@@ -86,7 +86,7 @@ node <skill-dir>/scripts/census.test.mjs
 
 Full tool and scanner-rule index: `scripts/README.md`.
 
-Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, and next proof. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
+Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, next proof, and the enclosing locally-defined function's static call-site count when there is one. Rank rises with that count; it is reachability, never runtime frequency. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
 
 ## Report
 

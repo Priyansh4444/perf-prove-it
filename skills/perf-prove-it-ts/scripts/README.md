@@ -6,7 +6,7 @@ Everything in this directory is dependency-free and runs on the repository under
 
 | script | purpose | evidence produced |
 | --- | --- | --- |
-| `static-audit.mjs` | Source scanner for whole-repository triage. Excludes tests, fixtures, `node_modules`, `dist`, `.repos`, generated output; labels benchmark files separately. | Ranked findings with a stable id, confidence, symbolic work model, candidate floor, and next proof. |
+| `static-audit.mjs` | Source scanner for whole-repository triage. Excludes tests, fixtures, `node_modules`, `dist`, `.repos`, generated output; labels benchmark files separately. | Ranked findings with a stable id, confidence, symbolic work model, candidate floor, next proof, and the enclosing locally-defined function's static call-site count. |
 | `census.mjs` | Parses `--print-bytecode` dumps (stdin or files). Baseline table counts closure/context/array/object/regexp construction sites. `--classes` adds opcode cost classes, protocol-op counts, and loop-attributed allocation sites. `--diff before.txt after.txt` prints per-function opcode-class deltas. | Static construction sites, cost-class composition, per-iteration allocation candidates. Not dynamic counts. |
 | `compiled-audit.mjs` | Inventory of emitted bundles and source maps; never executes application code. | Emitted paths, function sizes, source-map presence. |
 | `tier-check.mjs` | Warms a hot function and reports whether Maglev/TurboFan are reachable on this build. | Machine/build tier capability before any tier claim. |
@@ -21,6 +21,8 @@ node --allow-natives-syntax tier-check.mjs
 ```
 
 The scanner keeps a 24h ledger under the OS temp directory (`--cleanup-ledger` removes it). Set `PERF_PROVE_IT_SESSION_ID` when the host has a stable run id.
+
+Ranking counts static call sites of the enclosing function when that function is defined in the scanned roots (`name(` and `this.name(`; not imports or other receivers), lifting a finding by +1/+2/+3 at 1–2/3–9/10+ sites. It is reachability for review order, not runtime frequency: `useState()` and similar framework calls are never counted.
 
 ## Scanner rules
 

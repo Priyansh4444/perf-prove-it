@@ -214,6 +214,34 @@ const cases = [
     kind: "comparator-repeated-work",
     count: 0,
   },
+  {
+    name: "local call sites raise the enclosing function's rank",
+    source: `function handler() { for (const item of items) allowed.includes(item.id); }\nhandler(1); handler(2); handler(3);`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "handler" && matches[0]?.staticCallSites === 3 && matches[0]?.rankBoost === 2 && matches[0]?.score === 9,
+  },
+  {
+    name: "uncalled local functions keep the base rank",
+    source: `function lonely() { for (const item of items) allowed.includes(item.id); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "lonely" && matches[0]?.staticCallSites === 0 && matches[0]?.rankBoost === 0 && matches[0]?.score === 7,
+  },
+  {
+    name: "framework calls such as useState never raise a rank",
+    source: `function screen() { const [open] = useState(false); for (const item of items) allowed.includes(item.id); }\nuseState(true); useState(false); useState(0);`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "screen" && matches[0]?.staticCallSites === 0 && matches[0]?.score === 7,
+  },
+  {
+    name: "this-method call sites count toward the method's rank",
+    source: `class Grid { render() { for (const item of items) allowed.includes(item.id); } tick() { this.render(); } }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "render" && matches[0]?.staticCallSites === 1 && matches[0]?.rankBoost === 1 && matches[0]?.score === 8,
+  },
 ];
 
 const failures = [

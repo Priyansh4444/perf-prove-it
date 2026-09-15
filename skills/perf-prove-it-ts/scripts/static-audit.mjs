@@ -310,6 +310,28 @@ function loopRegions(masked, pairs) {
   return loops;
 }
 
+function bindingNameBefore(masked, cursor) {
+  const back = (index) => {
+    while (index > 0 && /\s/.test(masked[index - 1])) index -= 1;
+    return index;
+  };
+  let probe = back(cursor);
+  if (probe > 0 && /[\w$]/.test(masked[probe - 1])) {
+    let wordEnd = probe;
+    while (wordEnd > 0 && /[\w$]/.test(masked[wordEnd - 1])) wordEnd -= 1;
+    if (masked.slice(wordEnd, probe) !== "async") return null;
+    probe = back(wordEnd);
+  }
+  const marker = probe > 0 ? masked[probe - 1] : "";
+  if (marker !== "=" && marker !== ":") return null;
+  let nameEnd = probe - 1;
+  while (nameEnd > 0 && /\s/.test(masked[nameEnd - 1])) nameEnd -= 1;
+  let nameStart = nameEnd;
+  while (nameStart > 0 && /[\w$]/.test(masked[nameStart - 1])) nameStart -= 1;
+  const name = masked.slice(nameStart, nameEnd);
+  return /^[A-Za-z_$][\w$]*$/.test(name) ? { name, nameStart } : null;
+}
+
 function functionRegions(masked, pairs, reversePairs) {
   const regions = [];
   for (const match of masked.matchAll(/\bfunction\b/g)) {
@@ -317,7 +339,16 @@ function functionRegions(masked, pairs, reversePairs) {
     if (openParams < 0 || !pairs.has(openParams)) continue;
     const closeParams = pairs.get(openParams);
     const openBody = skipSpace(masked, closeParams + 1);
-    if (masked[openBody] === "{" && pairs.has(openBody)) regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(openParams + 1, closeParams)), parentLoop: null });
+    if (masked[openBody] !== "{" || !pairs.has(openBody)) continue;
+    const declared = masked.slice(match.index + 8, openParams).match(/\*?\s*([A-Za-z_$][\w$]*)/);
+    regions.push({
+      start: openBody + 1,
+      end: pairs.get(openBody),
+      bindings: bindingNames(masked.slice(openParams + 1, closeParams)),
+      parentLoop: null,
+      name: declared?.[1] ?? null,
+      declNameStart: declared ? match.index + 8 + declared.index + declared[0].length - declared[1].length : null,
+    });
   }
   for (const match of masked.matchAll(/=>/g)) {
     const openBody = skipSpace(masked, match.index + 2);
@@ -327,7 +358,8 @@ function functionRegions(masked, pairs, reversePairs) {
     let paramsStart = paramsEnd;
     if (masked[paramsEnd - 1] === ")" && reversePairs.has(paramsEnd - 1)) paramsStart = reversePairs.get(paramsEnd - 1) + 1;
     else while (paramsStart > 0 && /[\w$]/.test(masked[paramsStart - 1])) paramsStart -= 1;
-    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(paramsStart, paramsEnd)), parentLoop: null });
+    const binding = bindingNameBefore(masked, masked[paramsStart - 1] === "(" ? paramsStart - 1 : paramsStart);
+    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(paramsStart, paramsEnd)), parentLoop: null, name: binding?.name ?? null, declNameStart: binding?.nameStart ?? null });
   }
   for (const [openParams, closeParams] of pairs) {
     if (masked[openParams] !== "(") continue;
@@ -338,10 +370,46 @@ function functionRegions(masked, pairs, reversePairs) {
     let nameStart = nameEnd;
     while (nameStart > 0 && /[\w$]/.test(masked[nameStart - 1])) nameStart -= 1;
     const name = masked.slice(nameStart, nameEnd);
-    if (!name || ["if", "for", "while", "switch", "catch", "with"].includes(name)) continue;
-    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(openParams + 1, closeParams)), parentLoop: null });
+    if (!name || ["if", "for", "while", "switch", "catch", "with", "function"].includes(name)) continue;
+    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(openParams + 1, closeParams)), parentLoop: null, name, declNameStart: nameStart });
+  }
+  for (const region of regions) {
+    region.parent = regions.filter((other) => other !== region && other.start <= region.start && region.end <= other.end).sort((a, b) => b.start - a.start)[0] ?? null;
   }
   return regions;
+}
+
+function enclosingFunctionName(regions, start, end) {
+  let region = containingRegion(regions, start, end);
+  while (region && !region.name) region = region.parent;
+  return region?.name ?? null;
+}
+
+function callCountsInFile(masked, definedNames, regions) {
+  const counts = new Map();
+  if (definedNames.size === 0) return counts;
+  const declarations = new Map();
+  for (const region of regions) {
+    if (region.name === null || region.declNameStart === null) continue;
+    const sites = declarations.get(region.name) ?? new Set();
+    sites.add(region.declNameStart);
+    declarations.set(region.name, sites);
+  }
+  const pattern = new RegExp(`\\b(?:${[...definedNames].map(escapedRegExp).join("|")})\\s*\\(`, "g");
+  for (const match of masked.matchAll(pattern)) {
+    const name = wordAt(masked, match.index);
+    if (declarations.get(name)?.has(match.index)) continue;
+    let previous = match.index - 1;
+    while (previous >= 0 && /\s/.test(masked[previous])) previous -= 1;
+    if (masked[previous] === ".") {
+      let receiverEnd = previous;
+      let receiverStart = receiverEnd;
+      while (receiverStart > 0 && /[\w$]/.test(masked[receiverStart - 1])) receiverStart -= 1;
+      if (masked.slice(receiverStart, receiverEnd) !== "this") continue;
+    }
+    counts.set(name, (counts.get(name) ?? 0) + 1);
+  }
+  return counts;
 }
 
 function reducerRegions(masked, pairs) {
@@ -409,9 +477,21 @@ function normalizedAnchor(text) {
 
 export function scan(roots = ["."], options = {}) {
   const findings = [];
-  for (const file of [...new Set(roots.flatMap(filesUnder))].sort()) {
+  const files = [...new Set(roots.flatMap(filesUnder))].sort();
+  const prepared = new Map();
+  for (const file of files) {
     const source = readFileSync(file, "utf8");
     const searchable = maskNonCode(source);
+    const { pairs, reversePairs } = lexicalIndex(searchable);
+    prepared.set(file, { source, searchable, pairs, reversePairs, functions: functionRegions(searchable, pairs, reversePairs) });
+  }
+  const definedNames = new Set([...prepared.values()].flatMap((item) => item.functions.flatMap((region) => (region.name ? [region.name] : []))));
+  const callSites = new Map([...definedNames].map((name) => [name, 0]));
+  for (const item of prepared.values()) {
+    for (const [name, count] of callCountsInFile(item.searchable, definedNames, item.functions)) callSites.set(name, (callSites.get(name) ?? 0) + count);
+  }
+  for (const [file, preparedItem] of prepared) {
+    const { source, searchable, pairs, reversePairs, functions } = preparedItem;
     const fileName = relative(process.cwd(), file) || file;
     const occurrences = new Map();
     const emit = (kind, start, end, details, confidence = actionableKinds.has(kind) ? "review" : "advisory", anchorStart = start, anchorEnd = end) => {
@@ -421,9 +501,12 @@ export function scan(roots = ["."], options = {}) {
       occurrences.set(occurrenceKey, occurrence + 1);
       const excerpt = source.slice(start, end).replace(/\s+/g, " ").trim().slice(0, 160);
       const [score, note, currentWork, candidateFloor, proof] = details;
+      const owner = enclosingFunctionName(functions, anchorStart, anchorEnd);
+      const sites = owner ? callSites.get(owner) ?? 0 : 0;
+      const rankBoost = sites >= 10 ? 3 : sites >= 3 ? 2 : sites >= 1 ? 1 : 0;
       const finding = {
         id: findingId(kind, fileName, anchor, occurrence),
-        score,
+        score: score + rankBoost,
         kind,
         confidence,
         file: fileName,
@@ -433,6 +516,9 @@ export function scan(roots = ["."], options = {}) {
         currentWork,
         candidateFloor,
         proof,
+        enclosingFunction: owner,
+        staticCallSites: owner ? sites : null,
+        rankBoost,
         surface: /(?:^|[/\\])(?:bench|benchmark|benchmarks)(?:[/\\]|$)|\.bench\.[cm]?[jt]sx?$/.test(file) ? "benchmark" : "product",
       };
       findings.push(finding);
@@ -444,9 +530,7 @@ export function scan(roots = ["."], options = {}) {
       for (const match of searchable.matchAll(matcher)) emit(kind, match.index, match.index + match[0].length, [score, note, currentWork, candidateFloor, proof]);
     }
 
-    const { pairs, reversePairs } = lexicalIndex(searchable);
     const loops = loopRegions(searchable, pairs);
-    const functions = functionRegions(searchable, pairs, reversePairs);
     const reducers = reducerRegions(searchable, pairs);
 
     for (const loop of loops) {
@@ -740,7 +824,10 @@ function main(argv) {
   } else if (json) console.log(JSON.stringify({ claim: "static candidates, not measured hot paths", summary, findings }, null, 2));
   else {
     console.log("Static candidates, not measured hot paths\n");
-    for (const item of findings) console.log(`${item.score}\t${item.kind}\t${item.surface}\t${item.file}:${item.line}\n  evidence: ${item.excerpt}\n  current:  ${item.currentWork}\n  floor:    ${item.candidateFloor}\n  prove:    ${item.proof}`);
+    for (const item of findings) {
+      console.log(`${item.score}\t${item.kind}\t${item.surface}\t${item.file}:${item.line}\n  evidence: ${item.excerpt}\n  current:  ${item.currentWork}\n  floor:    ${item.candidateFloor}\n  prove:    ${item.proof}`);
+      if (item.enclosingFunction) console.log(`  calls:    ${item.enclosingFunction}: ${item.staticCallSites} static call site${item.staticCallSites === 1 ? "" : "s"}, rank +${item.rankBoost} (static census, not runtime frequency)`);
+    }
     console.log(`\n${summary.reported} reported; ${summary.advisorySuppressed} advisory suppressed; ${summary.truncated} truncated.`);
     console.log("Review source and establish runtime frequency before editing. Use --include-advisory for noisy syntax leads.");
   }
