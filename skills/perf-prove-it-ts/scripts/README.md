@@ -1,12 +1,23 @@
 # Tool and rule index
 
-Everything in this directory is dependency-free and runs on the repository under audit. Tests run with `node <script>.test.mjs`.
+Everything in this directory has no runtime dependencies and runs on the repository under audit. Tests run with `node <script>.test.mjs` (or `npm test` from the repository root, which installs `typescript`/`@babel/parser`/`acorn` as dev dependencies).
+
+## Parsing
+
+`static-audit.mjs` resolves a real parser from the repository it scans, in order: `typescript`, `@babel/parser`, `acorn`. When one is found it drives function regions, cross-file call-site counts, and literal/comment masking from the AST; when none is found it falls back to a dependency-free lexical scan. The chosen backend is reported in the summary (`backend`) and in plain output.
+
+- Force the fallback: `PERF_PROVE_IT_LEXICAL=1`.
+- Pin a backend: `PERF_PROVE_IT_PARSER=@babel/parser` (or `typescript`, `acorn`).
+- Add a search location: `PERF_PROVE_IT_PARSER_ROOT=/path/to/project`.
+
+`code-model.mjs` implements resolution and the three adapters. Files that fail to parse fall back to the lexical scan per file.
 
 ## Tools
 
 | script | purpose | evidence produced |
 | --- | --- | --- |
-| `static-audit.mjs` | Source scanner for whole-repository triage. Excludes tests, fixtures, `node_modules`, `dist`, `.repos`, generated output; labels benchmark files separately. | Ranked findings with a stable id, confidence, symbolic work model, candidate floor, next proof, and the enclosing locally-defined function's static call-site count. |
+| `static-audit.mjs` | Source scanner for whole-repository triage. Excludes tests, fixtures, `node_modules`, `dist`, `.repos`, generated output; labels benchmark files separately. Uses an AST backend when a parser resolves, else a lexical fallback. | Ranked findings with a stable id, confidence, symbolic work model, candidate floor, next proof, and the enclosing locally-defined function's static call-site count. |
+| `code-model.mjs` | Parser resolution (typescript / @babel/parser / acorn) and AST extraction of function regions, call sites, and literal/comment ranges. | Function regions and call sites for the census; masked source for the rules. |
 | `census.mjs` | Parses `--print-bytecode` dumps (stdin or files). Baseline table counts closure/context/array/object/regexp construction sites. `--classes` adds opcode cost classes, protocol-op counts, and loop-attributed allocation sites. `--diff before.txt after.txt` prints per-function opcode-class deltas. | Static construction sites, cost-class composition, per-iteration allocation candidates. Not dynamic counts. |
 | `compiled-audit.mjs` | Inventory of emitted bundles and source maps; never executes application code. | Emitted paths, function sizes, source-map presence. |
 | `tier-check.mjs` | Warms a hot function and reports whether Maglev/TurboFan are reachable on this build. | Machine/build tier capability before any tier claim. |
@@ -22,7 +33,7 @@ node --allow-natives-syntax tier-check.mjs
 
 The scanner keeps a 24h ledger under the OS temp directory (`--cleanup-ledger` removes it). Set `PERF_PROVE_IT_SESSION_ID` when the host has a stable run id.
 
-Ranking counts static call sites of the enclosing function when that function is defined in the scanned roots (`name(` and `this.name(`; not imports or other receivers), lifting a finding by +1/+2/+3 at 1–2/3–9/10+ sites. It is reachability for review order, not runtime frequency: `useState()` and similar framework calls are never counted.
+Ranking counts static call sites of the enclosing function when that function is defined in the scanned roots (`name(` and `this.name(`; not imports or other receivers), lifting a finding by +1/+2/+3 at 1–2/3–9/10+ sites. It is reachability for review order, not runtime frequency: `useState()` and similar framework calls are never counted. With an AST backend this is exact for the syntax; the lexical fallback approximates it.
 
 ## Scanner rules
 

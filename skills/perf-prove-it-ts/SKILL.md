@@ -84,7 +84,7 @@ node <skill-dir>/scripts/compiled-audit.test.mjs
 node <skill-dir>/scripts/census.test.mjs
 ```
 
-Full tool and scanner-rule index: `scripts/README.md`.
+Full tool and scanner-rule index: `scripts/README.md`. The scanner resolves `typescript`, `@babel/parser`, or `acorn` from the scanned repository and reads the census from the AST; with none present it falls back to a dependency-free lexical scan (`PERF_PROVE_IT_LEXICAL=1` forces the fallback). The summary reports the backend.
 
 Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, next proof, and the enclosing locally-defined function's static call-site count when there is one. Rank rises with that count; it is reachability, never runtime frequency. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
 

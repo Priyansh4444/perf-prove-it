@@ -4,6 +4,7 @@ import { extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import { createHash } from "node:crypto";
+import { resolveParser, analyzeFile, withParents, maskRanges } from "./code-model.mjs";
 const extensions = new Set([".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".mts", ".cts"]);
 const ignored = new Set([".git", ".repos", "node_modules", "dist", "build", "coverage", ".next", ".solid", ".svelte-kit", "vendor", "generated", "__generated__", "fixtures"]);
 const ignoredFile = /(?:^|\.)(?:test|spec|fixture)\.[cm]?[jt]sx?$/;
@@ -17,6 +18,7 @@ const actionableKinds = new Set([
   "comparator-repeated-work",
 ]);
 const ledgerBase = join(tmpdir(), "perf-prove-it");
+let activeBackend = "lexical";
 
 function sessionKey() {
   // Host-agnostic: CI/agents may provide one stable run id; otherwise keep
@@ -155,11 +157,12 @@ function regexClosesOnLine(source, start) {
   return false;
 }
 
-function maskNonCode(source) {
+export function maskNonCode(source) {
   let state = "code";
   let escaped = false;
   let regexClass = false;
   let lastCode = "";
+  let atLineStart = true;
   let masked = "";
   for (let index = 0; index < source.length; index++) {
     const char = source[index];
@@ -167,6 +170,9 @@ function maskNonCode(source) {
     if (state === "code") {
       if (char === "/" && next === "/") state = "line-comment";
       else if (char === "/" && next === "*") state = "block-comment";
+      else if (index === 0 && char === "#" && next === "!") state = "line-comment";
+      else if (char === "<" && source.startsWith("<!--", index)) state = "line-comment";
+      else if (char === "-" && source.startsWith("-->", index) && atLineStart) state = "line-comment";
       else if (char === "/" && regexAllowedAfter(lastCode, masked) && regexClosesOnLine(source, index)) {
         state = "regex";
         regexClass = false;
@@ -180,12 +186,16 @@ function maskNonCode(source) {
         continue;
       } else {
         masked += char;
-        if (!/\s/.test(char)) lastCode = char;
+        if (/[\n\r\u2028\u2029]/.test(char)) atLineStart = true;
+        else if (!/\s/.test(char)) {
+          lastCode = char;
+          atLineStart = false;
+        }
         continue;
       }
     }
     masked += char === "\n" ? "\n" : " ";
-    if (state === "line-comment" && char === "\n") state = "code";
+    if (state === "line-comment" && /[\n\r\u2028\u2029]/.test(char)) state = "code";
     else if (state === "block-comment" && char === "*" && next === "/") {
       masked += " ";
       index += 1;
@@ -197,7 +207,8 @@ function maskNonCode(source) {
         state = "code";
         lastCode = "/";
       } else if (char === "\n") state = "code";
-    } else if ((state === '"' || state === "'" || state === "`") && !escaped && char === state) {
+    } else if ((state === '"' || state === "'") && char === "\n") state = "code";
+    else if ((state === '"' || state === "'" || state === "`") && !escaped && char === state) {
       state = "code";
       lastCode = char;
     }
@@ -373,7 +384,8 @@ function loopRegions(masked, pairs) {
       loops.push({ loopStart, statementEnd: statementEnd(masked, loopStart, pairs), start: braced ? statementStart + 1 : statementStart, end: braced ? pairs.get(statementStart) : statementFinish, bindings: new Set(), parentLoop: null });
       continue;
     }
-    const open = skipSpace(masked, loopStart + kind.length);
+    let open = skipSpace(masked, loopStart + kind.length);
+    if (kind === "for" && wordAt(masked, open) === "await") open = skipSpace(masked, open + 5);
     if (masked[open] !== "(" || !pairs.has(open)) continue;
     const close = pairs.get(open);
     const statementStart = skipSpace(masked, close + 1);
@@ -518,7 +530,7 @@ function functionRegions(masked, pairs, reversePairs) {
     let nameStart = nameEnd;
     while (nameStart > 0 && /[\w$]/.test(masked[nameStart - 1])) nameStart -= 1;
     const name = masked.slice(nameStart, nameEnd);
-    if (!name || ["if", "for", "while", "switch", "catch", "with", "function"].includes(name)) continue;
+    if (!name || ["if", "for", "while", "switch", "catch", "with", "function", "await"].includes(name)) continue;
     regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(openParams + 1, closeParams)), parentLoop: null, name, declNameStart: nameStart });
   }
   const unique = [];
@@ -528,9 +540,6 @@ function functionRegions(masked, pairs, reversePairs) {
     if (seen.has(key)) continue;
     seen.add(key);
     unique.push(region);
-  }
-  for (const region of unique) {
-    region.parent = unique.filter((other) => other !== region && other.start <= region.start && region.end <= other.end && (other.start < region.start || other.end > region.end)).sort((a, b) => b.start - a.start)[0] ?? null;
   }
   return unique;
 }
@@ -711,16 +720,28 @@ function normalizedAnchor(text) {
 export function scan(roots = ["."], options = {}) {
   const findings = [];
   const files = [...new Set(roots.flatMap(filesUnder))].sort();
+  const parser = resolveParser(roots.length ? roots : ["."]);
   const prepared = new Map();
   for (const file of files) {
     const source = readFileSync(file, "utf8");
-    const searchable = maskNonCode(source);
+    const model = analyzeFile(source, file, parser);
+    const searchable = model && model.nonCode ? maskRanges(source, model.nonCode) : maskNonCode(source);
     const { pairs, reversePairs } = lexicalIndex(searchable);
-    prepared.set(file, { source, searchable, pairs, reversePairs, functions: functionRegions(searchable, pairs, reversePairs) });
+    const functions = withParents(model ? model.functions : functionRegions(searchable, pairs, reversePairs));
+    prepared.set(file, { source, searchable, pairs, reversePairs, model, functions });
   }
   const definedNames = new Set([...prepared.values()].flatMap((item) => item.functions.flatMap((region) => (region.name ? [region.name] : []))));
+  const modelCount = [...prepared.values()].filter((item) => item.model).length;
+  activeBackend = parser && modelCount ? (modelCount === prepared.size ? parser.name : `${parser.name} (${prepared.size - modelCount} file(s) lexical)`) : "lexical";
   const callSites = new Map([...definedNames].map((name) => [name, 0]));
   for (const item of prepared.values()) {
+    if (item.model) {
+      for (const call of item.model.calls) {
+        if (!callSites.has(call.name)) continue;
+        callSites.set(call.name, callSites.get(call.name) + 1);
+      }
+      continue;
+    }
     for (const [name, count] of callCountsInFile(item.searchable, item.pairs, definedNames, item.functions)) callSites.set(name, (callSites.get(name) ?? 0) + count);
   }
   for (const [file, preparedItem] of prepared) {
@@ -1049,6 +1070,7 @@ function main(argv) {
     advisorySuppressed: includeAdvisory ? 0 : allFindings.length - reviewed.length,
     truncated: Math.max(0, reviewed.length - findings.length),
     dismissed: scannedFindings.length - allFindings.length,
+    backend: activeBackend,
     ledger: ledgerPath(),
     cleanup: "node <skill-dir>/scripts/static-audit.mjs --cleanup-ledger",
   };
@@ -1062,6 +1084,7 @@ function main(argv) {
       if (item.enclosingFunction) console.log(`  calls:    ${item.enclosingFunction}: ${item.staticCallSites} static call site${item.staticCallSites === 1 ? "" : "s"}, rank +${item.rankBoost} (static census, not runtime frequency)`);
     }
     console.log(`\n${summary.reported} reported; ${summary.advisorySuppressed} advisory suppressed; ${summary.truncated} truncated.`);
+    console.log(`parser backend: ${summary.backend}${summary.backend === "lexical" ? " (dependency-free; install a parser for full accuracy)" : ""}`);
     console.log("Review source and establish runtime frequency before editing. Use --include-advisory for noisy syntax leads.");
   }
 }

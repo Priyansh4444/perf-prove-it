@@ -172,6 +172,7 @@ skills/
     references/patterns.md       before/after patterns with real census numbers
     references/findings.md       measured results and the surprises
     scripts/static-audit.mjs     rank whole-codebase static candidates; scanner rules
+    scripts/code-model.mjs       resolve typescript/@babel/parser/acorn and read the AST census
     scripts/census.mjs           parse --print-bytecode output into a closure/opcode table
     scripts/compiled-audit.mjs   static emitted-bundle and sourcemap inventory
     scripts/tier-check.mjs       report Maglev/TurboFan reachability on this build
