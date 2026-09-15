@@ -1,15 +1,45 @@
 {
   "name": "perf-prove-it",
   "private": true,
-  "version": "0.0.0",
-  "description": "Dev tooling for the perf-prove-it skills. The shipped skill scripts have no runtime dependencies; the static audit resolves a parser from the repository it scans (typescript, then @babel/parser, then acorn) and falls back to a dependency-free lexical scan.",
+  "version": "0.1.0",
   "type": "module",
+  "description": "Static performance audit for TypeScript and JavaScript. Parses with oxc, lowers files to facts, ranks candidates, and ships the agent skill.",
+  "bin": {
+    "perf-prove-it": "./dist/cli.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
-    "test": "node skills/perf-prove-it-ts/scripts/static-audit.test.mjs && node skills/perf-prove-it-ts/scripts/code-model.test.mjs && node skills/perf-prove-it-ts/scripts/census.test.mjs && node skills/perf-prove-it-ts/scripts/compiled-audit.test.mjs && node study/static-audit-cross-file/verify.mjs"
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-transform-types --test test/*.test.mts",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@effect/platform-node": "4.0.0-rc.115",
+    "effect": "4.0.0-rc.115",
+    "oxc-parser": "0.150.0"
   },
   "devDependencies": {
     "@babel/parser": "^7.24.0",
+    "@types/node": "^24.0.0",
     "acorn": "^8.11.0",
-    "typescript": "^5.6.0"
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3"
   }
 }
