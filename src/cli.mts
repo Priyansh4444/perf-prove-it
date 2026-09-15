@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { createRequire } from "node:module";
 import { Effect, Option } from "effect";
 import { Argument, Command, Flag } from "effect/unstable/cli";
 import { NodeRuntime, NodeServices } from "@effect/platform-node";
@@ -10,7 +11,18 @@ import { run as runTier } from "./tier.mts";
 import { run as runMachine } from "./machine.mts";
 import { run as runInstall } from "./install.mts";
 
-const VERSION = "0.1.0";
+const requirePackage = createRequire(import.meta.url);
+
+function readVersion(): string {
+  try {
+    const loaded: { version?: string } = requirePackage("../package.json");
+    return typeof loaded.version === "string" ? loaded.version : "0.0.0";
+  } catch {
+    return "0.0.0";
+  }
+}
+
+const VERSION = readVersion();
 
 type Format = "pretty" | "json" | "ndjson";
 
