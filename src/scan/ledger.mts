@@ -1,6 +1,8 @@
 import { appendFileSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+import { Option, Schema } from "effect";
+import { LedgerEntrySchema } from "../core/schema.mts";
 
 const LEDGER_ROOT = join(tmpdir(), "perf-prove-it");
 
@@ -40,12 +42,8 @@ export function dismissedIds(): Set<string> {
   const ids = new Set<string>();
   for (const line of readFileSync(file, "utf8").trim().split("\n")) {
     if (line.length === 0) continue;
-    try {
-      const parsed = JSON.parse(line) as { id?: unknown };
-      if (typeof parsed.id === "string") ids.add(parsed.id);
-    } catch {
-      /* ignore malformed lines */
-    }
+    const parsed = Schema.decodeUnknownOption(LedgerEntrySchema)(JSON.parse(line));
+    if (Option.isSome(parsed) && parsed.value.id !== undefined) ids.add(parsed.value.id);
   }
   return ids;
 }

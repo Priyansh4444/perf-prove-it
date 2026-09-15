@@ -65,7 +65,7 @@ const audit = Command.make(
       const format: Format = config.stream ? "ndjson" : config.json ? "json" : "pretty";
       const concurrency = Option.isSome(config.concurrency) ? config.concurrency.value : undefined;
       const excluded = dismissedIds();
-      const result = yield* Effect.tryPromise(() =>
+      const scanned = Effect.tryPromise(() =>
         scan(Option.getOrElse(config.paths, (): readonly string[] => []), {
           includeAdvisory: config.includeAdvisory,
           max: config.max,
@@ -73,7 +73,16 @@ const audit = Command.make(
           ...(concurrency === undefined ? {} : { concurrency }),
         }),
       );
-      yield* Effect.sync(() => render(result, format));
+      const result = yield* scanned.pipe(
+        Effect.catch((cause) =>
+          Effect.sync(() => {
+            process.stderr.write(`perf-prove-it audit: ${cause instanceof Error ? cause.message : String(cause)}\n`);
+            process.exitCode = 1;
+            return null;
+          }),
+        ),
+      );
+      if (result !== null) yield* Effect.sync(() => render(result, format));
     }),
 ).pipe(Command.withDescription("Scan source roots and rank static performance candidates."));
 

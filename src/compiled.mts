@@ -4,6 +4,8 @@
 import * as crypto from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { Schema } from "effect";
+import { SourcemapSchema } from "./core/schema.mts";
 
 interface SourcemapInfo {
   sources: number;
@@ -28,20 +30,16 @@ function walk(dir: string): string[] {
   return out;
 }
 
-function lengthOf(value: unknown): number {
-  if (typeof value === "string" || typeof value === "function") return value.length;
-  if (typeof value === "object" && value !== null && "length" in value && typeof value.length === "number") {
-    return value.length;
+function sourcemapInfo(text: string): SourcemapInfo | null {
+  try {
+    const decoded = Schema.decodeUnknownSync(SourcemapSchema)(JSON.parse(text));
+    return {
+      sources: Array.isArray(decoded.sources) ? decoded.sources.length : 0,
+      embedded: Array.isArray(decoded.sourcesContent),
+    };
+  } catch {
+    return null;
   }
-  return 0;
-}
-
-function sourcemapInfo(map: unknown): SourcemapInfo | null {
-  if (!map) return null;
-  const record = typeof map === "object" ? (map as Record<string, unknown>) : null;
-  const sources = record === null ? undefined : record["sources"];
-  const sourcesContent = record === null ? undefined : record["sourcesContent"];
-  return { sources: lengthOf(sources), embedded: Array.isArray(sourcesContent) };
 }
 
 export function auditCompiled(root: string, terms: readonly string[] = []): CompiledResult[] {
@@ -50,21 +48,14 @@ export function auditCompiled(root: string, terms: readonly string[] = []): Comp
     if (!file.endsWith(".js")) continue;
     const source = fs.readFileSync(file, "utf8");
     const mapFile = `${file}.map`;
-    let map: unknown = null;
-    if (fs.existsSync(mapFile)) {
-      try {
-        map = JSON.parse(fs.readFileSync(mapFile, "utf8"));
-      } catch {
-        /* reported as absent */
-      }
-    }
+    const map = fs.existsSync(mapFile) ? sourcemapInfo(fs.readFileSync(mapFile, "utf8")) : null;
     const matched = terms.filter((term) => source.includes(term));
     if (terms.length > 0 && matched.length === 0) continue;
     results.push({
       file: path.relative(process.cwd(), file),
       bytes: Buffer.byteLength(source),
       sha256: crypto.createHash("sha256").update(source).digest("hex"),
-      sourcemap: sourcemapInfo(map),
+      sourcemap: map,
       matched,
     });
   }
