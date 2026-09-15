@@ -60,31 +60,34 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 
 ## Commands
 
+The tools ship as one CLI. Run it with `npx perf-prove-it` (or `npm i -g perf-prove-it`). It resolves a parser from the repository it scans; the legacy `scripts/*.mjs` files are kept only as the parity oracle.
+
 ```sh
-# Bounded candidates; NDJSON streams during scanning.
-node <skill-dir>/scripts/static-audit.mjs --stream src
-node <skill-dir>/scripts/static-audit.mjs --json src
+# Rank static candidates across a repo. NDJSON with --stream.
+npx perf-prove-it audit src convex
+npx perf-prove-it audit --json src
+npx perf-prove-it audit --stream --include-advisory --max=100 src
 
-# Noisy leads, explicit opt-in.
-node <skill-dir>/scripts/static-audit.mjs --include-advisory --max=100 src
+# Persist false-positive decisions outside prompt context; the ledger expires after 24h.
+npx perf-prove-it audit --dismiss=<id> --reason='<short reason>'
+npx perf-prove-it audit --cleanup-ledger
 
-# Persist false-positive decisions outside prompt context; ledgers expire after 24h.
-node <skill-dir>/scripts/static-audit.mjs --dismiss=<id> --reason='<short reason>'
-node <skill-dir>/scripts/static-audit.mjs --cleanup-ledger
+# Bytecode census from an existing V8 dump. Add --classes for opcode cost classes and loop attribution.
+node --print-bytecode --print-bytecode-filter='fnName' harness.cjs | npx perf-prove-it census --classes
+npx perf-prove-it census --diff before.txt after.txt
 
-# Static emitted-artifact/sourcemap inventory; never executes application code.
-node <skill-dir>/scripts/compiled-audit.mjs dist ChatMarkdown thread.message-sent
+# Emitted bundle and sourcemap inventory; never executes application code.
+npx perf-prove-it compiled dist ChatMarkdown
 
-# Opcode classes, loop-attributed allocation sites, protocol ops, and A/B diff.
-node --print-bytecode --print-bytecode-filter='fnName' harness.cjs | node <skill-dir>/scripts/census.mjs --classes
-node <skill-dir>/scripts/census.mjs --diff before.txt after.txt
+# Machine and tier evidence for a benchmark report.
+npx perf-prove-it machine
+node --allow-natives-syntax "$(command -v perf-prove-it)" tier
 
-node <skill-dir>/scripts/static-audit.test.mjs
-node <skill-dir>/scripts/compiled-audit.test.mjs
-node <skill-dir>/scripts/census.test.mjs
+# Install these skills into your agent's skill directory.
+npx perf-prove-it install
 ```
 
-Full tool and scanner-rule index: `scripts/README.md`. The scanner resolves `typescript`, `@babel/parser`, or `acorn` from the scanned repository and reads the census from the AST; with none present it falls back to a dependency-free lexical scan (`PERF_PROVE_IT_LEXICAL=1` forces the fallback). The summary reports the backend.
+Full tool and rule index: `scripts/README.md`. The CLI is the source of truth for tools; `perf-prove-it audit` reads the census from an oxc AST and falls back to a dependency-free lexical scan only if the parser cannot be loaded.
 
 Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, next proof, and the enclosing locally-defined function's static call-site count when there is one. Rank rises with that count; it is reachability, never runtime frequency. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
 

@@ -1,13 +1,13 @@
 # Machine and threads: measure on the box you own
 
-Every number in a report is a property of the program plus the machine. Record the machine with `scripts/machine.sh` first, then design threads and memory around it.
+Every number in a report is a property of the program plus the machine. Record the machine with `npx perf-prove-it machine` first, then design threads and memory around it.
 
 ## Read the machine header
 
 - **Physical cores vs logical CPUs.** `nproc` counts logical CPUs. For compute-bound work, one thread per physical core is the default; SMT helps memory-bound code and can hurt AVX-heavy code. Compute physical cores with `lscpu -p=CPU,CORE | grep -v '^#' | cut -d, -f2 | sort -u | wc -l`.
 - **Hybrid parts (P-cores + E-cores).** On Intel Arrow Lake / Alder Lake class CPUs, `lscpu` lists one "core" entry per CPU even when the topology differs. Check `/sys/devices/system/cpu/cpu*/topology/core_type` (or `coretemp`/`turbostat`) before assuming all cores are equal. A range like `taskset -c 0-5` can pin to P-cores only.
 - **Cache sizes matter more than clock.** L1d per core, L2 per cluster, L3 shared. A working set that fits L2 behaves nothing like one that streams from DRAM. `lscpu` prints all three; write them into the report when the change is memory-relevant.
-- **Governor and boost.** `powersave` vs `performance`, and boost on/off, swing results more than most code changes. `scripts/machine.sh` prints both. If the box is on `powersave`, either benchmark both or say so.
+- **Governor and boost.** `powersave` vs `performance`, and boost on/off, swing results more than most code changes. `npx perf-prove-it machine` prints both. If the box is on `powersave`, either benchmark both or say so.
 - **Load.** `/proc/loadavg` first. Load 4 on 16 CPUs means every wall-clock number has a wind in it.
 
 ## Counter commands
