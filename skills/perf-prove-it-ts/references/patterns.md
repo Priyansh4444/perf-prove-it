@@ -1,6 +1,6 @@
 # Patterns that survived a real bytecode census
 
-Source: a V8 run over the ranking engine of a TypeScript search service (Convex backend). Six hot functions, all goldens green, 103 tests passing after the change. Numbers come from Ignition bytecode, not timers.
+Source: a V8 run over the ranking engine of a TypeScript search service (with a Convex backend). Six hot functions, all goldens green, 103 tests passing after the change. Numbers come from Ignition bytecode, not timers.
 
 ## The census that started it
 
@@ -28,7 +28,7 @@ escalate           0         0
 
 `--trace-opt` showed Maglev then TurboFan on every function, no deopts, before and after.
 
-Measured outcome on this machine: rerank 42.8 to 38.9 µs per call, peak RSS 154 to 122 MB per 100k calls, GC time flat at about 58 ms, scavenges 687 to 1410 per 100k. The full reading, including why scavenges doubled without a regression, is in `findings.md`.
+Measured outcome in the recorded run: rerank 42.8 to 38.9 µs per call, peak RSS 154 to 122 MB per 100k calls, GC time flat at about 58 ms, scavenges 687 to 1410 per 100k. The full reading, including why scavenges doubled without a regression, is in `findings.md`.
 
 ## 1. Fuse the passes, delete the per-candidate array
 

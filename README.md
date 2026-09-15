@@ -43,7 +43,7 @@ Three agent skills that make code faster the honest way: write down the ideal wo
 
 No profiles to chase, no "should be faster" claims, no microbenchmarks invented after the fact.
 
-- `perf-prove-it-ts`: TypeScript and JavaScript on V8. Ignition bytecode censuses, Maglev and TurboFan tier checks, deopt diagnosis, closure and allocation cuts, leak audits.
+- `perf-prove-it-ts`: TypeScript and JavaScript on V8, with a JavaScriptCore reference for Bun and Safari. Ignition bytecode censuses, Maglev and TurboFan tier checks, deopt diagnosis, closure and allocation cuts, leak audits.
 - `perf-prove-it-rust`: Rust on the CPU you actually own. Ideal instruction sequence first, asm diff second, instruction counters and perf counters third, threads and caches treated as part of the design.
 - `perf-prove-it-dom`: Browser UI on Blink. Pipeline stages (DOM, style, layout, paint, composite), CDP counter and trace evidence, forced synchronous layout, INP and long tasks, containment and compositor patterns.
 
@@ -173,7 +173,7 @@ Manual copy also works. Drop `skills/<name>/` into any skills directory your age
 
 ## Use it
 
-The descriptions are written as triggers, so the agent picks the skill up when you say things like:
+The skills are named and described for the artifact they cover, so a plain request routes to one:
 
 - "make this TypeScript faster", "check the bytecode", "is this deoptimizing", "why is this allocating"
 - "optimize this Rust", "check the assembly", "parallelize this properly", "why is this cache-missing"
@@ -199,7 +199,8 @@ skills/
     SKILL.md                     the workflow, in order
     references/codebase-audit.md repository-wide static discovery and candidate ranking
     references/discovery.md      the work ledger: hidden-work passes, probes, identity domains
-    references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons
+    references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons, shapes
+    references/jsc-evidence.md   JavaScriptCore tiers, shapes, and memory for Bun and Safari
     references/compiled-artifact.md  emitted JS/bundles, sourcemaps, JSX/HTML route
     references/rendering.md      React/Solid/JSX render and DOM evidence route
     references/benchmark-protocol.md  A/A control, process isolation, timing rules

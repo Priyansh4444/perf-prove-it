@@ -1,6 +1,6 @@
 # search-sorts: an array, an iterator, and a scan become three compares
 
-Source: the repo's `study/reports/search-sorts-worker.md` (verifier short: worker evidence, no independent reproduction).
+Source: one recorded study (worker report retained in the perf-prove-it repository; no independent reproduction).
 Unit: `isSearchSort` and `isAvailableSearchSort` over 7 fixed sort-name strings.
 
 ## The source change

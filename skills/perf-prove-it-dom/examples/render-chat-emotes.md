@@ -1,6 +1,6 @@
 # renderChatEmotes: fewer nodes, and a headline that needed a quiet box
 
-Source: the repo's `study/`, chatmost case.
+Source: a recorded study (chat-emotes render case).
 Interaction: rendering a chat feed with emotes.
 
 ## Floor and counters

@@ -33,7 +33,7 @@ Temporaries per rerank call: about 204 (one object per candidate plus throwaway 
 
 **Bytecode grew 476 to 1856 and that is the shape of the win.** The callback bodies moved inline into `rerank`, so the caller got bigger and the anonymous closures went away. Bytecode runs in the cold tier; the growth is a compile-time and cold-start cost, not a per-call one. It is also the positive story: the work moved out of six closures into one readable loop.
 
-**`new Array(n)` is not free, it is a trade.** Verified on Node 26 with `%DebugPrint`:
+**`new Array(n)` is not free, it is a trade.** Verified with `%DebugPrint`:
 
 ```text
 new Array(3) filled with doubles  -> HOLEY_DOUBLE_ELEMENTS, new backing store on transition
@@ -52,7 +52,7 @@ node --heap-prof --heap-prof-dir=. --heap-prof-name=leak.heapprofile app.mjs   #
 node -e 'require("node:v8").writeHeapSnapshot("./snap.heapsnapshot")'          # writes a snapshot
 ```
 
-Both were exercised on Node 26 and produce files that open in Chrome DevTools Memory panel. Leak verdicts come from snapshot comparison after `global.gc()`, not from grep. Commands and reading guide: `memory-and-heap.md`.
+Both produce files that open in the Chrome DevTools Memory panel. Leak verdicts come from snapshot comparison after `global.gc()`, not from grep. Commands and reading guide: `memory-and-heap.md`.
 
 ## How to read a result from this method
 

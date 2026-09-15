@@ -1,6 +1,6 @@
 # rerank: seven closures to one, then the calls that remained
 
-Sources: the repo's `study/reports/rerank-worker.md`, `study/reports/rerank-verifier.md`, and the original run behind `references/patterns.md` and `references/findings.md`.
+Sources: one recorded study (worker and verifier reports retained in the perf-prove-it repository), summarized in `references/patterns.md` and `references/findings.md`.
 Unit: `rerank` in a search ranking engine, 200 candidates per call.
 
 ## First run: the closures

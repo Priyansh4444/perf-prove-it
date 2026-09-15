@@ -1,6 +1,6 @@
 # Measurement: CDP, traces, and the harness rules
 
-Verified on Chromium 152.0.7977.82, Playwright 1.63, Linux x64. Timings and counters are from that build; re-verify after a browser upgrade.
+Counters and timings move with the browser build and platform; the numbers here come from one Chromium build on Linux x64. Re-verify after a browser or Playwright upgrade.
 
 ## Harness
 
@@ -25,7 +25,7 @@ const after = await metrics();
 
 Rules:
 
-- Pass a function to `page.evaluate`, never a string. A string is evaluated as an expression, so an arrow function passed as a string is never invoked. Verified on Playwright 1.63 and documented in playwright issue 26851. If a string is unavoidable, wrap it: `"(() => { ... })()"`. A passed function is serialized and runs in the page, so it cannot close over script variables; pass data as arguments: `page.evaluate(fn, arg)`.
+- Pass a function to `page.evaluate`, never a string. A string is evaluated as an expression, so an arrow function passed as a string is never invoked. This is a known Playwright trap. If a string is unavoidable, wrap it: `"(() => { ... })()"`. A passed function is serialized and runs in the page, so it cannot close over script variables; pass data as arguments: `page.evaluate(fn, arg)`.
 - Advance two `requestAnimationFrame` ticks after the interaction and before the `after` snapshot. An idle headless page does not necessarily run the rendering lifecycle, so a structure change alone may not be counted. Two ticks produce exactly one lifecycle pass. Verified: fragment insert then two rAFs showed `LayoutCount: 1` in every round.
 - Do not claim "zero layouts" from a snapshot taken without advancing frames. A frame can run during the `getMetrics` round trip: the same no-frame-advance scenario read `LayoutCount: 0` in 8 of 10 rounds and `1` in 2 in one session, 0 of 10 in a quiet session, and 4 of 5 after a 300 ms wait. Frame timing is not under the harness's control. Use the snapshot only to show the tree is dirty, and use the two-rAF protocol for a deterministic count.
 - Blink excludes work that runs inside a CDP `Runtime.evaluate` call from `ScriptDuration`: a 500 ms busy loop driven through `page.evaluate` showed `ScriptDuration +0 ms` and `TaskDuration +501 ms`, while the same loop as an in-page `setTimeout` task showed `ScriptDuration +120 ms`. Counters like `LayoutCount` still register from an evaluate; drive the interaction as a page task for script-time claims.
@@ -40,13 +40,13 @@ Rules:
 - Metrics and screenshots are different windows. Take metric deltas at exactly two rAFs; take screenshots after the page has fully settled (fonts, smooth scrolling, animations). With `scroll-behavior: smooth`, settle the scroll explicitly before capturing.
 - Screenshots need `animations: "disabled"` and a settled page.
 - Stub the data layer, never the render layer. The faithful extraction for a framework component keeps the real components and render functions and replaces only data hooks and backend clients with fixtures; the measured DOM work must be the real code path.
-- Playwright 1.63 `page.accessibility.snapshot()` can return nothing on some setups. Fall back to a DOM dump of roles, accessible names, `alt` and `title` attributes.
+- `page.accessibility.snapshot()` can return nothing on some setups. Fall back to a DOM dump of roles, accessible names, `alt` and `title` attributes.
 
 ## Runtime metrics
 
 `Performance.getMetrics` returns `Metric` objects with `name` and `value`. The protocol does not document units or the full key list. Durations are seconds. Read the Chromium performance monitor source when a key's meaning matters, and treat the key set as version-dependent.
 
-Keys observed on Chromium 152 (not exhaustive):
+Keys observed (not exhaustive; metric names move between Chromium builds):
 
 | Key | Meaning |
 | --- | --- |
@@ -62,7 +62,7 @@ Keys observed on Chromium 152 (not exhaustive):
 | `JSHeapUsedSize`, `JSHeapTotalSize` | V8 heap bytes at the snapshot; depends on GC timing, so not an allocation-rate measure |
 | `Documents`, `Frames` | document and frame counts |
 
-Delta two snapshots around one interaction plus two rAF ticks. Verified on Chromium 152, medians of three rounds, fresh context each round:
+Delta two snapshots around one interaction plus two rAF ticks. Medians of three rounds, fresh context each round:
 
 - Read-after-write loop, 500 iterations: `LayoutCount` +500, `RecalcStyleCount` +500, `LayoutDuration` +68.4 ms. Every iteration is a forced synchronous layout; all three rounds matched exactly on counters.
 - Fragment insert of 500 nodes, then two rAFs: `LayoutCount` +1, `RecalcStyleCount` +1, `LayoutDuration` +10.6 ms. One lifecycle pass.
@@ -89,7 +89,7 @@ await complete;
 
 The stream form (`transferMode: "ReturnAsStream"` plus `IO.read`) is the alternative for large traces. Both are in the CDP Tracing domain.
 
-Count events by `name` and sum `dur` (microseconds). Names are emitted with `TRACE_EVENT` macros and change across Chromium versions, so read them from the trace. On Chromium 152 the DevTools timeline is built from events including `ThreadControllerImpl::RunTask`, `FunctionCall`, `EventDispatch`, `ParseHTML`, `UpdateLayoutTree`, `Layout`, `Paint`, `Layerize`, and `HitTest`. `RunTask`, `UpdateLayerTree`, and `CompositeLayers` from older versions did not appear in headless Chromium 152 traces with the recommended categories. Map whatever you find to a stage with `references/pipeline.md`.
+Count events by `name` and sum `dur` (microseconds). Names are emitted with `TRACE_EVENT` macros and change across Chromium versions, so read them from the trace. The DevTools timeline is built from events including `ThreadControllerImpl::RunTask`, `FunctionCall`, `EventDispatch`, `ParseHTML`, `UpdateLayoutTree`, `Layout`, `Paint`, `Layerize`, and `HitTest`. Older names like `RunTask`, `UpdateLayerTree`, and `CompositeLayers` did not appear in the traces measured for this skill with the recommended categories; probe your own trace before relying on a name. Map whatever you find to a stage with `references/pipeline.md`.
 
 What to read:
 
@@ -127,7 +127,7 @@ await client.send("Tracing.end");
 // count MinorGC and MajorGC events by name
 ```
 
-Chromium 152 emits `MinorGC` and `MajorGC` as top-level events in the `v8` category. Verified: a loop allocating 2 million small objects produced 11 `MinorGC` and 1 `MajorGC`. Scavenges track bytes allocated into young space, so their count per interaction is the allocation rate to compare between arms.
+Chromium traces emit `MinorGC` and `MajorGC` as top-level events in the `v8` category (verify the names on your build; they move). Verified: a loop allocating 2 million small objects produced 11 `MinorGC` and 1 `MajorGC`. Scavenges track bytes allocated into young space, so their count per interaction is the allocation rate to compare between arms.
 
 For allocation sites and sampled bytes, use CDP sampling:
 

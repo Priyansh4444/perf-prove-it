@@ -1,6 +1,6 @@
 # decodeEntities: a DOM parse replaced by a string scan
 
-Sources: the repo's `study/reports/highlight-worker.md`, `study/reports/highlight-verifier.md`.
+Sources: one recorded study (worker and verifier reports retained in the perf-prove-it repository).
 Unit: `decodeEntities` over search result titles and transcript fragments.
 
 ## The source change

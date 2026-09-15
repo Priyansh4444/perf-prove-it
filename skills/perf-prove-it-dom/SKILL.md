@@ -1,6 +1,6 @@
 ---
 name: perf-prove-it-dom
-description: "Make browser UI fast with evidence from Blink and the Chrome DevTools Protocol. Use when renders are janky, interactions lag, styles or layout thrash, lists re-render, or DOM work is suspected: pipeline cost classes (DOM, style, layout, paint, composite), forced synchronous layout, CDP Performance metrics (LayoutCount, RecalcStyleCount, durations), trace events, INP and long tasks, DocumentFragment and cloneNode patterns, compositor-only properties, and CSS containment. Triggers: why is my UI slow, jank, layout thrashing, forced reflow, slow render, INP, long task, DOM performance, re-render, expensive CSS, paint cost, check the trace."
+description: "Optimize browser UI performance with Blink's evidence instead of profiles."
 license: Apache-2.0
 ---
 

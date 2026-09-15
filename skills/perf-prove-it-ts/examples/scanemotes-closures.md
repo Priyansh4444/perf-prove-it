@@ -1,6 +1,6 @@
 # scanemotes: clones, iterators, and per-message closures
 
-Sources: the repo's `study/reports/scanemotes-worker.md`, corrected by `study/reports/scanemotes-verifier.md`.
+Sources: one recorded study (worker report, corrected by the verifier report, retained in the perf-prove-it repository).
 Units: `scanEmotes` and `ingestMessage` in a chat ingest path, per message.
 
 ## The source change
@@ -27,7 +27,7 @@ ingestMessage optimized: 0 closures, 0 contexts (total 0)
 
 Bytecode lengths reproduce exactly: scan 644 to 673, ingest 1311 to 1255. Note the optimized scan function is longer: fewer allocations does not always mean shorter bytecode.
 
-The one line that changed, from the worker's dump (`study/reports/scanemotes-worker.md`):
+The one line that changed, from the worker's dump:
 
 ```text
 983211 S> ... @  820 : 8b 25 01 02  CreateClosure [37:... <SharedFunctionInfo bumpTarget>], FBV[1], #2

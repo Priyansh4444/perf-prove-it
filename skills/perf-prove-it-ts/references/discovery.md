@@ -17,6 +17,7 @@ Rules that fall out:
 
 - A call whose result depends on a subset of its arguments, with the rest loop-invariant, is doing repeat work. Split the invariant part from the varying part.
 - A call that hides a parse, a clone, a compile, or a collection rebuild is heavyweight even when the callee is one line. Price the callee body, not the call site.
+- `JSON.stringify` keeps its fast path only without `replacer` or `space`, without `toJSON`, without indexed properties on the objects, and with sequential strings. Break any one and the cost jumps; check those conditions before blaming stringify itself.
 - Preserve arithmetic order when extracting or caching. A hoisted idf must multiply the same cached value the original computed, in the same order, or identity can drift.
 
 ## Pass B: guards and data shape
@@ -37,7 +38,7 @@ Three levels, checked in order:
 2. Per call, invariant at module load: static vocabularies, compiled matchers, `Intl` formatters, regex literals. Parse once, and disclose the cold-start and memory price.
 3. Module-level mutable state: a shared regex or cache carries `lastIndex` or lifetime semantics. The scan rewrite resets `lastIndex` and is safe only because the function is synchronous and no caller leaves a non-zero `lastIndex`. State the invariant that makes the hoist safe, not just the hoist.
 
-Preallocation trade, measured on Node 26/V8 14.6: `new Array(n)` filled with doubles is `HOLEY_DOUBLE_ELEMENTS` and allocates a second backing store on the Smi to Double transition; `Float64Array` is packed and transition-free; `Array.from({length:n})` costs about 6 microseconds per 200-element call; `arr.length = n` pays the same transition and is chosen only when a lint rule bans `new Array(n)`. Pick per row, stamp the build, and disclose which.
+Preallocation trade, measured: `new Array(n)` filled with doubles is `HOLEY_DOUBLE_ELEMENTS` and allocates a second backing store on the Smi to Double transition; `Float64Array` is packed and transition-free; `Array.from({length:n})` costs about 6 microseconds per 200-element call; `arr.length = n` pays the same transition and is chosen only when a lint rule bans `new Array(n)`. Pick per row, stamp the build, and disclose which.
 
 ## Pass D: data structures as work
 
@@ -54,7 +55,7 @@ Counts, not timers. Discovery probes never appear in the timing harness.
 
 - Sink counter: wrap the platform setter (`HTMLTextAreaElement.prototype.innerHTML`, `document.createElement`, a network client) and count invocations per outer call.
 - Callee counter: wrap the imported function and record calls per outer call plus the number of distinct argument values it sees. Wrapping can block inlining; discovery only.
-- Allocation evidence: census for static `Create` sites (Step 4), `--heap-prof` object counts for dynamic truth. A no-GC `heapUsed` delta is churn, not retained.
+- Allocation evidence: census for static `Create` sites (the census over `--print-bytecode` output), `--heap-prof` object counts for dynamic truth. A no-GC `heapUsed` delta is churn, not retained.
 - Guard counter: run separate corpora per shape and count hot-side hits.
 - Iterator and compile sites: bytecode shows `CreateArrayFromIterable`, `GetIterator`, `CreateRegExpLiteral`, `CreateClosure` at the offset of the source expression.
 
@@ -68,7 +69,7 @@ Identity is a claim about the inputs the callers can produce, not about the type
 4. Differential fuzz: extract both arms mechanically, run each in its own process, compare recursively with `Object.is` so NaN and `-0` cannot hide. Include the real corpus, the adversarial edges, and randomized cases.
 5. Write the claim: "identical on <domain>; diverges on <edge>; unreachable because <caller invariant>. <n> checks, <m> mismatches." Never write "bit-identical" without the domain.
 
-Calibration from the study, where reports outran the code:
+Calibration from the recorded runs, where reports outran the code:
 
 - `rerank`: "bit-identical" was true only on unique ids. Duplicate ids change dedup keys, winner, and order.
 - `isSearchSort`: the first fuzz caught 6 mismatches on truthy non-boolean `engagement`.

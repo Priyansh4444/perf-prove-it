@@ -1,6 +1,6 @@
 # Worked examples: what the census found, in plain words
 
-Each example is one real case from the repo's `study/` or a worked pipeline. Same shape every time: the source, the census numbers, the one bytecode line that changed, what the machine was doing, the measured outcome, how behavior was proved identical, and, where a verifier ran, what it corrected. Numbers are from one run on one machine; reproduce before quoting.
+Each example is one real case from the original study or a worked pipeline. Same shape every time: the source, the census numbers, the one bytecode line that changed, what the machine was doing, the measured outcome, how behavior was proved identical, and, where a verifier ran, what it corrected. Numbers are from one run on one machine; reproduce before quoting.
 
 - `rerank-closures.md`: seven closures down to one, and the bytecode line that was misread the first time.
 - `search-sorts-switch.md`: an allocation and an iterator walk replaced by strict compares.

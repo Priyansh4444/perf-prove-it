@@ -1,14 +1,14 @@
 ---
 name: perf-prove-it-ts
-description: "Reach peak TypeScript and JavaScript performance with V8's own evidence instead of profiles. Use when code must get faster, allocate less, or stop leaking: Ignition bytecode censuses for closures and allocations, Maglev and TurboFan tier checks in Node and the browser, deopt diagnosis, CPU profiles for discovery, heap snapshots and GC traces for leak proof, behavior-locked A/B harnesses, and swarm battle testing. Triggers: optimize this TypeScript, why is this slow, make it faster, check the bytecode, run V8 on it, too many closures, GC pressure, memory leak, heap snapshot, microbenchmark, is it deoptimizing, battle test this, peak performance."
+description: "Optimize TypeScript performance on V8 and JavaScriptCore with engine evidence instead of profiles."
 license: Apache-2.0
 ---
 
-# Perf prove it: TypeScript on V8
+# Perf prove it: TypeScript on V8 and JavaScriptCore
 
-**Experimental:** whole-codebase mode consumes substantial tokens and review time. Use it only with ample budget and review capacity. Large repositories produce many false positives and candidates. Inspired by React Doctor and Casey Muratori; inspect and prove candidates one at a time.
+**Experimental:** Whole-codebase mode consumes substantial tokens and review time. Use it only with ample budget and review capacity. Large repositories produce many false positives and candidates. Inspired by React Doctor and Casey Muratori; inspect and prove candidates one at a time.
 
-Write down the mathematically smallest sequence of steps the function must perform. Then make V8 bytecode to model that math, and then show what the code actually runs. Close the gap, prove behavior did not change, and disclose what the optimization costs.
+Write down the mathematically smallest sequence of steps the function must perform. Then make the engine's bytecode model that math, and then show what the code actually runs. Close the gap, prove behavior did not change, and disclose what the optimization costs.
 
 JavaScript compiles through several optimization tiers depending on how often the code actually runs. Re-benchmark at the tier the code reaches before calling a change a win; see `npx perf-prove-it tier` for how to check the tier.
 
@@ -30,9 +30,11 @@ Read only the matching reference.
 - Named function or measured bottleneck: `references/discovery.md`.
 - JSX/HTML, bundles, or source maps: `references/compiled-artifact.md`.
 - Rendering/reconciliation/DOM: `references/rendering.md`.
-- Bytecode, tiers, or deopts: `references/v8-evidence.md`.
+- Bytecode, tiers, deopts, or object shapes and inline caches: `references/v8-evidence.md`.
+- Bun or Safari (JavaScriptCore) tiers, shapes, or memory: `references/jsc-evidence.md`.
 - Benchmark or A/B requested: `references/benchmark-protocol.md`.
 - Allocation, GC, retention, or leaks: `references/memory-and-heap.md`.
+- Measured outcomes and surprises from the recorded runs: `references/findings.md`.
 - Multiple agents or battle testing: `references/swarm.md`.
 - Node versus browser/Bun/Deno: `references/runtime-matrix.md`.
 - Known source shape after inspection: `references/patterns.md`.
@@ -66,7 +68,7 @@ Small proof-of-concept code is allowed for a bounded hypothesis and may be bench
 source + commit → real build + versions → emitted JS path/hash → exact runtime command/version → observation
 ```
 
-For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/paint claims. Bytecode shows interpreter instructions and static construction sites, not dynamic allocation or browser work. For more details refer to `skills/perf-prove-it-dom`.
+For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/paint claims. Bytecode shows interpreter instructions and static construction sites, not dynamic allocation or browser work. For more details refer to the `perf-prove-it-dom` skill.
 
 ## Hard gates
 
@@ -76,12 +78,12 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 - No timing claim without isolated processes, load context, an A/A control, and at least five runs per arm.
 - No allocation claim from syntax alone. Label `audit` and `census` counts as **static sites**; use `--heap-prof` or GC counts for dynamic allocation.
 - No retained-memory claim without a forced-GC snapshot.
-- No tier claim from a forced compile request. Require a completed optimization line or the `npx perf-prove-it tier` check in the shipped runtime.
+- No tier claim from a forced compile request. Require a completed optimization line or the `npx perf-prove-it tier` check in the shipped runtime (Maglev/TurboFan on V8, DFG/FTL on JavaScriptCore).
 - No win without its measured benefit, its readability, cold-start, and memory price, and a revert path.
 
 ## Commands
 
-The tools ship as one CLI. Run it with `npx perf-prove-it` (or `npm i -g perf-prove-it`). It resolves a parser from the repository it scans; the legacy `scripts/*.mjs` files are kept only as the parity oracle.
+The tools ship as one CLI. Run it with `npx perf-prove-it` (or `npm i -g perf-prove-it`). It resolves a parser from the repository it scans.
 
 ```sh
 # Rank static candidates across a repo. NDJSON with --stream.
@@ -108,7 +110,7 @@ node --allow-natives-syntax "$(command -v perf-prove-it)" tier
 npx perf-prove-it install
 ```
 
-Full tool and rule index: `scripts/README.md`. The CLI is the source of truth for tools; `perf-prove-it audit` reads the census from an oxc AST and falls back to a dependency-free lexical scan only if the parser cannot be loaded.
+Full command list: `npx perf-prove-it --help`. The CLI is the source of truth for tools; `perf-prove-it audit` reads the census from an oxc AST and falls back to a dependency-free lexical scan only if the parser cannot be loaded.
 
 Set `PERF_PROVE_IT_SESSION_ID` when the host has a run/agent identifier. Each finding has a stable ID, confidence, work formula, candidate floor, next proof, and the enclosing locally-defined function's static call-site count when there is one. Rank rises with that count; it is reachability, never runtime frequency. The temporary ledger suppresses reviewed false positives for that run; output prints its path.
 

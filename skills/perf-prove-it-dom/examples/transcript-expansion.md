@@ -1,6 +1,6 @@
 # Transcript expansion: the win that moved to the scroll
 
-Source: the repo's `study/`, ytsearch case.
+Source: a recorded study (transcript-expansion case).
 Interaction: expanding a transcript to 100 rows.
 
 ## Floor and counters

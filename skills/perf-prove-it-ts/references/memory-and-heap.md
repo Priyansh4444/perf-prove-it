@@ -18,7 +18,9 @@ Scavenging is bad when:
 - Objects that should die young get promoted to old space, causing major GCs later.
 - The count is high only because the code allocates garbage it does not need.
 
-The count of scavenges tracks how many bytes were allocated into the young semi-space, not how healthy the program is. Our own run is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the cost, and the scavenge count as the allocation rate, with its unit. A single heap-used reading is not evidence.
+The count of scavenges tracks how many bytes were allocated into the young semi-space, not how healthy the program is. The `rerank` run recorded in `patterns.md` is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the cost, and the scavenge count as the allocation rate, with its unit. A single heap-used reading is not evidence.
+
+The cost model behind that: young allocation is a bump-pointer store, so short-lived objects are nearly free. V8 pays for survivors (copied by the scavenger) and promotions (major GC), plus a write barrier on every old-to-young pointer store. Scavenge count tracks bytes allocated only while the semi-space size is fixed; `--max-semi-space-size` trades RSS for fewer scavenges. Chromium schedules V8's incremental marking into idle time between tasks; Node's platform exposes no idle-task source, so those incremental steps run around normal tasks instead. Concurrent marking and sweeping still run on worker threads in both.
 
 ## Allocation rate
 
@@ -116,7 +118,7 @@ Grep for these as triage, then prove each with the protocol above. "Looks bounde
 
 ## Elements kinds, measured
 
-`node --allow-natives-syntax -e '... %DebugPrint(a)'` prints the elements kind. Verified on Node 26:
+`node --allow-natives-syntax -e '... %DebugPrint(a)'` prints the elements kind. Verified:
 
 ```text
 new Array(3) filled with doubles  -> FixedDoubleArray[3]  HOLEY_DOUBLE_ELEMENTS
@@ -126,6 +128,18 @@ arr.length = 3 then fill           -> HOLEY_SMI to HOLEY_DOUBLE, same backing-st
 ```
 
 Preallocation avoids growth copies but starts holey and pays a backing-store allocation when the kind transitions from Smi to Double while filling. For internal numeric scratch where churn matters, `Float64Array` avoids both. `arr.length = n` is chosen for lint compatibility, not speed. `--trace-elements-transitions` prints transitions but is noisy; prefer `%DebugPrint` on a known object.
+
+The lattice generalizes, with one exception: `Array.prototype.fill` may narrow and re-pack an array. Otherwise a holey array never becomes packed again, a `NaN`, `Infinity`, or `-0` write moves a numeric array to doubles, and reading past `length` can leave that load site on the slow prototype-walking path. Sparse arrays (a gap of 1024 or more, or a fast backing store that would use about 3x the memory of the equivalent dictionary, under roughly 7% occupancy) become dictionary elements, and indexed properties with custom attributes force slow elements. Keep hot arrays dense and one kind.
+
+## Strings that keep parents alive
+
+- `slice` and `substring` on a large string return a sliced view that keeps the whole parent alive. A retained one-kilobyte slice can pin megabytes; copy the slice when the parent is big.
+- `+` chains build ConsString trees that flatten on first read, and the flatten allocates. Hashing walks the tree without flattening it, but equality and comparison flatten both operands once their hashes match.
+- Property-key strings are interned and compared by pointer, which is why a `switch` over literals is a pointer compare rather than a string comparison.
+
+## One numeric representation per slot
+
+A non-Smi store into a plain slot used to box a `HeapNumber` on every write; mutable slots and fields now update in place. The rule survives either way: writing a different representation into a slot that optimized code has learned deopts every dependent function. Keep one representation per field, and initialize a future-double field with `NaN` rather than `null` or an integer.
 
 ## Do not measure with instruments attached
 

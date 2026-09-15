@@ -1,6 +1,6 @@
 # ReplyTree: the same deferral, plus an accessibility price
 
-Source: the repo's `study/`, postwork case.
+Source: a recorded study (reply-tree case).
 Interaction: rendering a 200-reply, 3-level reply tree.
 
 ## Floor and counters
