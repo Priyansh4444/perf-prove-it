@@ -77,6 +77,7 @@ function atLineStart(source, index) {
 export function commentRanges(source, literalRanges) {
   const ranges = [...literalRanges].sort((a, b) => a[0] - b[0]);
   const comments = [];
+  const shebangIndex = source[0] === "\uFEFF" ? 1 : 0;
   let cursor = 0;
   for (let index = 0; index < source.length; index++) {
     while (cursor < ranges.length && ranges[cursor][1] <= index) cursor += 1;
@@ -84,9 +85,9 @@ export function commentRanges(source, literalRanges) {
       index = ranges[cursor][1] - 1;
       continue;
     }
-    if (index === 0 && source[0] === "#" && source[1] === "!") {
-      const end = lineEnd(source, 2);
-      comments.push([0, end]);
+    if (index === shebangIndex && source[index] === "#" && source[index + 1] === "!") {
+      const end = lineEnd(source, index + 2);
+      comments.push([index, end]);
       index = end - 1;
     } else if (source.startsWith("<!--", index)) {
       const end = lineEnd(source, index + 4);

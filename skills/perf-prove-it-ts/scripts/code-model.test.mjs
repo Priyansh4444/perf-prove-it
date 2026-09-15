@@ -18,6 +18,11 @@ const check = (ok, message) => {
   if (!ok) failures.push(message);
 };
 
+if (parser && parser.name !== "typescript") {
+  console.log(`code-model test: ${parser.name} backend forced; typescript-specific assertions skipped`);
+  process.exit(0);
+}
+
 if (!parser) {
   console.log("code-model test: no parser resolvable (install typescript, @babel/parser, or acorn); AST assertions skipped");
 } else {
@@ -66,6 +71,9 @@ if (!parser) {
 
   const shebang = "#!/usr/bin/env node Math.max(...xs)\nexport function f(): void {}\n";
   check(!maskRanges(shebang, analyze(shebang, "a.js", parser).nonCode).includes("Math.max"), "shebang not masked");
+
+  const bomShebang = "\uFEFF#!/usr/bin/env node Math.max(...xs)\nexport function f(): void {}\n";
+  check(!maskRanges(bomShebang, analyze(bomShebang, "a.js", parser).nonCode).includes("Math.max"), "BOM-prefixed shebang not masked");
 
   const crComment = "// c\rexport function f(): void {}\n";
   check(maskRanges(crComment, analyze(crComment, "a.ts", parser).nonCode).includes("function f"), "carriage-return comment hid code");

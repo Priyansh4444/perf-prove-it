@@ -170,7 +170,7 @@ export function maskNonCode(source) {
     if (state === "code") {
       if (char === "/" && next === "/") state = "line-comment";
       else if (char === "/" && next === "*") state = "block-comment";
-      else if (index === 0 && char === "#" && next === "!") state = "line-comment";
+      else if ((index === 0 || (index === 1 && source[0] === "\uFEFF")) && char === "#" && next === "!") state = "line-comment";
       else if (char === "<" && source.startsWith("<!--", index)) state = "line-comment";
       else if (char === "-" && source.startsWith("-->", index) && atLineStart) state = "line-comment";
       else if (char === "/" && regexAllowedAfter(lastCode, masked) && regexClosesOnLine(source, index)) {
@@ -749,7 +749,7 @@ export function scan(roots = ["."], options = {}) {
     const fileName = relative(process.cwd(), file) || file;
     const occurrences = new Map();
     const emit = (kind, start, end, details, confidence = actionableKinds.has(kind) ? "review" : "advisory", anchorStart = start, anchorEnd = end) => {
-      const anchor = normalizedAnchor(searchable.slice(anchorStart, anchorEnd));
+      const anchor = normalizedAnchor(source.slice(anchorStart, anchorEnd));
       const occurrenceKey = `${kind}\0${anchor}`;
       const occurrence = occurrences.get(occurrenceKey) ?? 0;
       occurrences.set(occurrenceKey, occurrence + 1);

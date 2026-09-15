@@ -474,6 +474,12 @@ const cases = [
     kind: "spread-call",
     count: 0,
   },
+  {
+    name: "a byte-order mark before a shebang is handled",
+    source: `\uFEFF#!/usr/bin/env node Math.max(...xs)\nexport function f(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "spread-call",
+    count: 0,
+  },
 ];
 
 const failures = [
