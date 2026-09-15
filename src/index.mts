@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFile, readdir } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import { extname, join, relative, resolve } from "node:path";
 import { availableParallelism } from "node:os";
 import { Effect } from "effect";
@@ -33,6 +33,7 @@ export interface ScanOptions {
   readonly includeAdvisory?: boolean;
   readonly max?: number;
   readonly concurrency?: number;
+  readonly exclude?: ReadonlySet<string>;
   readonly onFinding?: (finding: Finding) => void;
 }
 
@@ -43,6 +44,7 @@ export interface ScanResult {
     readonly matched: number;
     readonly advisorySuppressed: number;
     readonly truncated: number;
+    readonly dismissed: number;
     readonly files: number;
     readonly backend: "oxc";
     readonly concurrency: number;
@@ -81,12 +83,12 @@ async function discover(roots: readonly string[]): Promise<string[]> {
     const absolute = resolve(root);
     let info;
     try {
-      info = await readdir(absolute, { withFileTypes: true });
+      info = await stat(absolute);
     } catch {
       continue;
     }
-    if (Array.isArray(info)) await visit(absolute);
-    else if (EXTENSIONS.has(extname(absolute))) files.push(absolute);
+    if (info.isDirectory()) await visit(absolute);
+    else if (info.isFile() && EXTENSIONS.has(extname(absolute))) files.push(absolute);
   }
   return [...new Set(files)].sort();
 }
@@ -180,7 +182,9 @@ export function scanEffect(roots: readonly string[], options: ScanOptions = {}):
       for (const raw of runRules(item.facts)) all.push(buildFinding(item, raw, callSites, occurrences));
     }
     all.sort((a, b) => b.score - a.score || a.file.localeCompare(b.file) || a.line - b.line || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
-    const reviewed = options.includeAdvisory === true ? all : all.filter((finding) => finding.confidence === Confidence.Review);
+    const excluded = options.exclude ?? new Set<string>();
+    const live = all.filter((finding) => !excluded.has(finding.id));
+    const reviewed = options.includeAdvisory === true ? live : live.filter((finding) => finding.confidence === Confidence.Review);
     const max = options.max ?? 20;
     const selected = reviewed.slice(0, max);
     if (options.onFinding !== undefined) for (const finding of selected) options.onFinding(finding);
@@ -188,14 +192,16 @@ export function scanEffect(roots: readonly string[], options: ScanOptions = {}):
       claim: CLAIM,
       summary: {
         reported: selected.length,
-        matched: all.length,
-        advisorySuppressed: all.length - reviewed.length,
+        matched: live.length,
+        advisorySuppressed: live.length - reviewed.length,
         truncated: Math.max(0, reviewed.length - selected.length),
+        dismissed: all.length - live.length,
         files: files.length,
         backend: "oxc" as const,
         concurrency,
         parseErrors,
-        elapsedMs: Date.now() - started,      },
+        elapsedMs: Date.now() - started,
+      },
       findings: selected,
     };
   }).pipe(Effect.orDie);

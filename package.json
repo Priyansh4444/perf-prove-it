@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-transform-types --test test/*.test.mts",
+    "test": "npm run build && node --experimental-transform-types --test test/*.test.mts",
     "prepack": "npm run build"
   },
   "dependencies": {

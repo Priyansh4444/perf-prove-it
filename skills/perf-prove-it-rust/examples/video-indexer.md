@@ -1,6 +1,6 @@
 # Video indexer: delete the passes, do not tune them
 
-Source: the article run on this machine (Core Ultra 7 255H, 16 CPUs, 24 MiB L3, powersave governor; `scripts/machine.sh` prints the header).
+Source: the article run on this machine (Core Ultra 7 255H, 16 CPUs, 24 MiB L3, powersave governor; `npx perf-prove-it machine` prints the header).
 Unit: `collect_visible_videos`, answering "are there enough distinct videos yet?" after every backend page.
 
 ## The floor

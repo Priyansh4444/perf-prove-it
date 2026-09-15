@@ -27,7 +27,7 @@ When reading the machine, three questions explain most results:
 
 ## Step 0: profile the machine before the code
 
-Performance claims are machine claims. Run `scripts/machine.sh` (or the same commands) and keep the output for the final report:
+Performance claims are machine claims. Run `npx perf-prove-it machine` (or the same commands) and keep the output for the final report:
 
 - CPU model, physical cores vs logical CPUs, P-core/E-core split on hybrid parts
 - L1/L2/L3 sizes, NUMA nodes
@@ -138,5 +138,5 @@ Never optimize a codebase in one diff. Optimize one unit at a time: one function
 
 - `references/asm-diff.md`: commands, annotated asm reading, common Rust codegen surprises.
 - `references/machine-and-threads.md`: machine census, thread scaling protocol, false sharing, counters.
-- `scripts/machine.sh`: one-shot machine header for benchmark reports.
+- `npx perf-prove-it machine`: one-shot machine header for benchmark reports, (or `scripts/machine.sh`).
 - `examples/`: the video indexer case with the win and the rejected experiments.
