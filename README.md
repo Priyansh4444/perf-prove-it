@@ -1,8 +1,41 @@
 <p align="center">
-  <img src="src/                           the CLI: oxc facts, rules, Effect v4 commands
-test/                          CLI tests and the legacy suites used as the parity oracle
-assets/logo.png" alt="perf-prove-it" width="560">
+  <img src="https://github.com/Priyansh4444/perf-prove-it/raw/main/assets/logo.png" alt="perf-prove-it" width="420">
 </p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/perf-prove-it"><img alt="npm version" src="https://img.shields.io/npm/v/perf-prove-it?color=34d399&label=npm"></a>
+  <a href="https://github.com/Priyansh4444/perf-prove-it/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/npm/l/perf-prove-it?color=22d3ee"></a>
+  <img alt="node version" src="https://img.shields.io/node/v/perf-prove-it?color=475569">
+</p>
+
+<h3 align="center">Make code faster the honest way.</h3>
+
+<p align="center">
+  Derive the floor, make the compiler show what it emitted, close the gap.<br>
+  One CLI and three agent skills. No profiles to chase, no "should be faster" claims.
+</p>
+
+## Run it
+
+```sh
+# rank static performance candidates across a repo
+npx perf-prove-it
+
+# machine-readable report, for scripts and agents
+npx perf-prove-it audit src convex --json
+
+# what the bytecode actually constructs, with opcode cost classes
+node --print-bytecode --print-bytecode-filter='fnName' harness.cjs | npx perf-prove-it census --classes
+
+# provenance: emitted bundles and sourcemaps, hashed
+npx perf-prove-it compiled dist
+
+# is this machine's tiering machinery real?
+node --allow-natives-syntax "$(command -v perf-prove-it)" tier
+
+# install the three skills for your agent
+npx perf-prove-it install
+```
 
 > **Experimental warning:** Whole-repository audits are expensive. Use this only when you have plenty of token budget and substantial review capacity. Large codebases contain many functions, many false positives, and many tempting optimizations. This project is experimental, inspired by React Doctor and Casey Muratori's “least work” approach; static findings are hypotheses, not permission to edit broadly. Review and prove each change independently.
 
@@ -159,6 +192,8 @@ Then it works one verified unit at a time:
 ## What's inside
 
 ```
+src/                           the CLI: oxc facts, rules, Effect v4 commands
+test/                          CLI tests and the legacy suites used as the parity oracle
 skills/
   perf-prove-it-ts/
     SKILL.md                     the workflow, in order
@@ -203,8 +238,6 @@ presentation/
   bytecode/                      full raw dumps the slides use
   record.mjs                     records each slide to MP4 and GIF
   animations/                    the recorded clips
-src/                           the CLI: oxc facts, rules, Effect v4 commands
-test/                          CLI tests and the legacy suites used as the parity oracle
 assets/
   logo.svg, logo-mark.svg     wordmark and square mark (vector)
   logo.png                    the mascot hero image the README leads with
