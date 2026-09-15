@@ -4,6 +4,9 @@ node_modules
 dist/
 .repos/
 
+# local-only: the deck and its recordings are built and kept on this machine
+presentation/
+
 *.tgz
 
 # local secrets

@@ -231,13 +231,6 @@ study/
   reports/                       raw worker, verifier, and judge reports
   dom-primitives/                runnable CDP primitive proofs with results.json
   harness/                       the three DOM case harnesses and evidence
-presentation/
-  README.md                      how to run and record the deck
-  src/routes/+page.svelte        Animotion slides: code, bytecode, opt, deopt
-  src/lib/data.ts                imports the raw captures
-  bytecode/                      full raw dumps the slides use
-  record.mjs                     records each slide to MP4 and GIF
-  animations/                    the recorded clips
 assets/
   logo.svg, logo-mark.svg     wordmark and square mark (vector)
   logo.png                    the mascot hero image the README leads with
