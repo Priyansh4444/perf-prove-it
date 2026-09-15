@@ -1,6 +1,49 @@
-import { parseSync, rawTransferSupported, Visitor } from "oxc-parser";
+import { createRequire } from "node:module";
 import type { ParserOptions, VisitorObject } from "oxc-parser";
 import type * as ESTree from "@oxc-project/types";
+
+interface OxcComment {
+  readonly type: "Line" | "Block";
+  readonly value: string;
+  readonly start: number;
+  readonly end: number;
+}
+
+interface OxcResult {
+  readonly program: ESTree.Program;
+  readonly comments: ReadonlyArray<OxcComment>;
+  readonly errors: ReadonlyArray<{ readonly message: string }>;
+}
+
+interface OxcModule {
+  readonly parseSync: (filename: string, sourceText: string, options?: ParserOptions) => OxcResult;
+  readonly rawTransferSupported: () => boolean;
+  readonly Visitor: new (visitor: VisitorObject) => { visit(program: ESTree.Program): void };
+}
+
+// Resolve oxc-parser at runtime instead of with a static ESM import. Bundlers
+// that follow the browser build link a module without Visitor or the native
+// transfer API, and that build imports an optional WASM binding which is not
+// installed. Node always gets the full native build.
+const requireOxc = createRequire(import.meta.url);
+let cachedOxc: OxcModule | null = null;
+
+function loadOxc(): OxcModule {
+  if (cachedOxc !== null) return cachedOxc;
+  const loaded = requireOxc("oxc-parser") as OxcModule | undefined;
+  if (
+    loaded === undefined ||
+    typeof loaded.parseSync !== "function" ||
+    typeof loaded.Visitor !== "function" ||
+    typeof loaded.rawTransferSupported !== "function"
+  ) {
+    throw new Error(
+      "perf-prove-it needs the Node build of oxc-parser. Install it with 'npm i oxc-parser' and run on Node 22.12 or newer; the browser or WASM build is not supported.",
+    );
+  }
+  cachedOxc = loaded;
+  return cachedOxc;
+}
 
 export interface Span {
   readonly start: number;
@@ -228,16 +271,17 @@ function isStaticExpression(argument: ESTree.Expression | ESTree.SpreadElement):
 
 type FastOptions = ParserOptions & { readonly experimentalRawTransfer?: boolean };
 
-function parseOptions(): FastOptions {
-  return rawTransferSupported() ? { experimentalRawTransfer: true } : {};
+function parseOptions(oxc: OxcModule): FastOptions {
+  return oxc.rawTransferSupported() ? { experimentalRawTransfer: true } : {};
 }
 
 export function extractFacts(file: string, source: string): FileFacts {
-  let result;
+  const oxc = loadOxc();
+  let result: OxcResult;
   try {
-    result = parseSync(file, source, parseOptions());
+    result = oxc.parseSync(file, source, parseOptions(oxc));
   } catch {
-    result = parseSync(file, source, {});
+    result = oxc.parseSync(file, source, {});
   }
 
   const functions: FunctionFact[] = [];
@@ -512,7 +556,7 @@ export function extractFacts(file: string, source: string): FileFacts {
     },
   };
 
-  new Visitor(visitor).visit(result.program);
+  new oxc.Visitor(visitor).visit(result.program);
 
   const resolvedArraySpreads = arraySpreads.map((spread) => {
     if (spread.source === null) return spread;
