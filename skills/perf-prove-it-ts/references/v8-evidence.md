@@ -49,6 +49,8 @@ Maglev is a mid tier and can be disabled by flag or skipped by the engine; do no
 
 The ladder is Ignition (interpreter), Sparkplug (baseline), Maglev (mid), TurboFan (top). A function climbs while it stays hot, and a deopt drops it back to the interpreter to climb again. V8's tiering budget scales with bytecode size and the feedback the function has collected, which is why a fixed warm-up count is superstition, and OSR can compile a loop mid-execution. In a browser the recipe is the embedder's (SKILL.md Step 2): launch with `--js-flags=--allow-natives-syntax` and read `%ActiveTierIsMaglev` / `%ActiveTierIsTurbofan` in the page, or record DevTools Performance for optimization and deoptimization markers. Node tier lines are not the browser's.
 
+One command checks the tier machinery on this machine before any claim depends on it: `node --allow-natives-syntax <skill-dir>/scripts/tier-check.mjs` warms a hot function, prints `{ turbofan, maglev }` with the build's versions, and exits non-zero if TurboFan was never reached. Verified on Node 26 / V8 14.6: the output is `{"turbofan":true,"maglev":false,...}`. Maglev reports false once TurboFan is active, so read the two fields separately. `--trace-opt` shows Maglev, then `completed compiling ... (target TURBOFAN_JS)`. In a browser, TurboFan is not guaranteed by call count: on headless Chromium 152 a hot function reached it in 4 of 8 warmed trials between 90,000 and 600,000 calls and stayed Maglev-only in the other trials through 1,000,000 calls. Report the tier you observed, not the tier you warmed toward.
+
 Real deopt lines and what they meant:
 
 ```text

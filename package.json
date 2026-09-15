@@ -1,0 +1,15 @@
+{
+  "name": "perf-prove-it",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Dev tooling for the perf-prove-it skills. The shipped skill scripts have no runtime dependencies; the static audit resolves a parser from the repository it scans (typescript, then @babel/parser, then acorn) and falls back to a dependency-free lexical scan.",
+  "type": "module",
+  "scripts": {
+    "test": "node skills/perf-prove-it-ts/scripts/static-audit.test.mjs && node skills/perf-prove-it-ts/scripts/code-model.test.mjs && node skills/perf-prove-it-ts/scripts/census.test.mjs && node skills/perf-prove-it-ts/scripts/compiled-audit.test.mjs && node study/static-audit-cross-file/verify.mjs"
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.24.0",
+    "acorn": "^8.11.0",
+    "typescript": "^5.6.0"
+  }
+}

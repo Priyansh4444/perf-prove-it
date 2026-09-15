@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="perf-prove-it" width="560">
+  <img src="assets/logo.png" alt="perf-prove-it" width="560">
 </p>
+
+> **Experimental warning:** Whole-repository audits are expensive. Use this only when you have plenty of token budget and substantial review capacity. Large codebases contain many functions, many false positives, and many tempting optimizations. This project is experimental, inspired by React Doctor and Casey Muratori's “least work” approach; static findings are hypotheses, not permission to edit broadly. Review and prove each change independently.
 
 Three agent skills that make code faster the honest way: write down the ideal work per function, then make the compiler show you what it actually emitted, and close the gap.
 
@@ -144,13 +146,13 @@ The descriptions are written as triggers, so the agent picks the skill up when y
 
 Then it works one verified unit at a time:
 
-1. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
-2. Sandbox the unit with an ideal sibling function next to the original, and lock behavior with goldens before editing.
-3. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt`, `cargo asm` / `objdump` / `iai-callgrind`).
-4. Show equal outputs on equal inputs before showing any delta.
-5. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
-6. Fan out one subagent per unit, each returning pasted evidence. A second subagent verifies the patch and the behavior lock.
-7. Integrate one unit at a time and leave the remaining spikes documented for the next person.
+1. If no function is named, run the static codebase audit to produce a ranked list of candidates. Static candidates are never labeled hot paths until runtime evidence establishes frequency.
+2. Establish the floor: the minimum operations the function must perform. That is the target, not a profile graph.
+3. Sandbox the unit with an ideal sibling function next to the original, and lock behavior with goldens before editing.
+4. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt` / tier checks, `cargo asm` / `objdump` / `iai-callgrind`).
+5. Show equal outputs on equal inputs before showing any delta.
+6. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
+7. Integrate one verified unit at a time and leave the remaining candidates documented for the next person.
 
 ## What's inside
 
@@ -158,25 +160,44 @@ Then it works one verified unit at a time:
 skills/
   perf-prove-it-ts/
     SKILL.md                     the workflow, in order
+    references/codebase-audit.md repository-wide static discovery and candidate ranking
     references/discovery.md      the work ledger: hidden-work passes, probes, identity domains
     references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons
-    references/patterns.md       before/after patterns with real census numbers
+    references/compiled-artifact.md  emitted JS/bundles, sourcemaps, JSX/HTML route
+    references/rendering.md      React/Solid/JSX render and DOM evidence route
+    references/benchmark-protocol.md  A/A control, process isolation, timing rules
+    references/runtime-matrix.md Node vs browser vs Bun vs Deno caveats
+    references/swarm.md          multi-agent slicing and verifier requirements
     references/memory-and-heap.md  heap snapshots, GC traces, leak proof
+    references/patterns.md       before/after patterns with real census numbers
     references/findings.md       measured results and the surprises
-    scripts/census.mjs           parse --print-bytecode output into a closure table
+    scripts/static-audit.mjs     rank whole-codebase static candidates; scanner rules
+    scripts/code-model.mjs       resolve typescript/@babel/parser/acorn and read the AST census
+    scripts/census.mjs           parse --print-bytecode output into a closure/opcode table
+    scripts/compiled-audit.mjs   static emitted-bundle and sourcemap inventory
+    scripts/tier-check.mjs       report Maglev/TurboFan reachability on this build
+    scripts/*.test.mjs           dependency-free self-tests for the tools
+    examples/                    worked cases: closures, default param, sorting, DOM guards
   perf-prove-it-rust/
     SKILL.md                     the workflow, in order
     references/asm-diff.md       generating and reading asm; common Rust surprises
     references/machine-and-threads.md  core/cache/thread measurement on your box
     scripts/machine.sh           one-shot machine profile for benchmark reports
+    examples/                    the video indexer case: the win and the rejected experiments
   perf-prove-it-dom/
     SKILL.md                     the workflow, in order
     references/pipeline.md       Blink pipeline stages, triggers, and source map
     references/measurement.md    CDP commands, metric keys, harness rules, verifier traps
     references/patterns.md       before/after DOM patterns with measured effects and traps
+    references/web-vitals.md     Core Web Vitals thresholds, field/lab discipline, INP/CLS levers
+    examples/                    three worked cases with floors, counters, and traps
 study/
   PROTOCOL.md                    the study frame and rubric
   RESULTS.md                     verified results, corrections, and skill changes
+  static-audit-solid-pr.md       static-audit evaluation against a real Solid PR
+  static-audit-cross-file/       multi-file TypeScript fixture for the call-site census
+  t3code-static-audit-harvest/   measured before/after pairs for scanner candidates
+  t3code-qr-eval/                packed-grid QR evaluation and its decision
   reports/                       raw worker, verifier, and judge reports
   dom-primitives/                runnable CDP primitive proofs with results.json
   harness/                       the three DOM case harnesses and evidence
@@ -188,7 +209,9 @@ presentation/
   record.mjs                     records each slide to MP4 and GIF
   animations/                    the recorded clips
 assets/
-  logo.svg, logo-mark.svg, logo.png, logo-mark.png
+  logo.svg, logo-mark.svg     wordmark and square mark (vector)
+  logo.png                    the mascot hero image the README leads with
+  logo-mark.png               raster of the square mark
 ```
 
 ## Philosophy
