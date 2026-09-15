@@ -71,7 +71,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 **Verify, unit.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.
 
-- [ ] `test/parity.test.mts` ports every case from `skills/perf-prove-it-ts/scripts/static-audit.test.mjs`. Run `npm test`.
+- [ ] `test/parity.test.mts` runs the preserved legacy suite at `test/legacy/static-audit.test.mjs` against the new CLI. Run `npm test`.
 - [ ] `test/rules.test.mts` feeds hand-written `FileFacts` fixtures to each rule without parsing. Run `npm test`.
 
 **Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten scenarios at the PR head, per the boot recipe, stdout captured instead of screenshots.
@@ -91,7 +91,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 - [ ] Metric. Wall time and peak RSS to scan the vendored `t3code/packages` tree.
 - [ ] Probe. `npm run build`, then time `node dist/cli.mjs --json .repos/t3code/packages` at trunk and at the head, interleaved, five runs each.
-- [ ] Baseline. Record the legacy `node skills/perf-prove-it-ts/scripts/static-audit.mjs --json .repos/t3code/packages` median first.
+- [ ] Baseline. Record the pre-CLI baseline once, before the legacy scripts were deleted, and keep it in the perf notes.
 - [ ] Rule. Fail if the new median is more than twice the legacy median, or if any file's findings disappear without an allowlist entry.
 
 **Review gate.** None. P1 is not review-gated.

@@ -1,6 +1,5 @@
 {
   "name": "perf-prove-it",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
   "description": "Static performance audit for TypeScript and JavaScript. Parses with oxc, lowers files to facts, ranks candidates, and ships the agent skill.",
@@ -41,5 +40,28 @@
     "tsdown": "^0.23.0",
     "tsx": "^4.23.0",
     "typescript": "^5.9.3"
+  },
+  "license": "Apache-2.0",
+  "author": "Priyansh Shah",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Priyansh4444/perf-prove-it.git"
+  },
+  "homepage": "https://github.com/Priyansh4444/perf-prove-it#readme",
+  "bugs": {
+    "url": "https://github.com/Priyansh4444/perf-prove-it/issues"
+  },
+  "keywords": [
+    "performance",
+    "v8",
+    "bytecode",
+    "oxc",
+    "effect",
+    "typescript",
+    "static-analysis",
+    "code-review"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

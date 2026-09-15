@@ -9,7 +9,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const commandsMain = join(root, "src", "commands-main.mts");
-const legacyScripts = join(root, "skills", "perf-prove-it-ts", "scripts");
+const legacyScripts = join(root, "test", "legacy");
 
 interface CommandResult {
   status: number | null;

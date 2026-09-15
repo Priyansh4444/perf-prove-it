@@ -11,8 +11,9 @@ node profile-summary.mjs ../artifacts/default.cpuprofile > ../artifacts/profile-
 # Step 4: the census, one dump per arm.
 node --print-bytecode --print-bytecode-filter=withDefault arm-default.mjs > ../artifacts/bytecode-default.txt 2>&1
 node --print-bytecode --print-bytecode-filter=withHoisted arm-hoisted.mjs > ../artifacts/bytecode-hoisted.txt 2>&1
-node ../../../scripts/census.mjs ../artifacts/bytecode-default.txt > ../artifacts/census-default.txt
-node ../../../scripts/census.mjs ../artifacts/bytecode-hoisted.txt > ../artifacts/census-hoisted.txt
+PERF_PROVE_IT="${PERF_PROVE_IT:-npx perf-prove-it}"
+$PERF_PROVE_IT census ../artifacts/bytecode-default.txt > ../artifacts/census-default.txt
+$PERF_PROVE_IT census ../artifacts/bytecode-hoisted.txt > ../artifacts/census-hoisted.txt
 
 # Step 3: backend evidence.
 node --trace-opt arm-default.mjs > ../artifacts/trace-opt-default.txt 2>&1

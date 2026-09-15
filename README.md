@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/logo.png" alt="perf-prove-it" width="560">
+  <img src="src/                           the CLI: oxc facts, rules, Effect v4 commands
+test/                          CLI tests and the legacy suites used as the parity oracle
+assets/logo.png" alt="perf-prove-it" width="560">
 </p>
 
 > **Experimental warning:** Whole-repository audits are expensive. Use this only when you have plenty of token budget and substantial review capacity. Large codebases contain many functions, many false positives, and many tempting optimizations. This project is experimental, inspired by React Doctor and Casey Muratori's “least work” approach; static findings are hypotheses, not permission to edit broadly. Review and prove each change independently.
@@ -171,18 +173,11 @@ skills/
     references/memory-and-heap.md  heap snapshots, GC traces, leak proof
     references/patterns.md       before/after patterns with real census numbers
     references/findings.md       measured results and the surprises
-    scripts/static-audit.mjs     rank whole-codebase static candidates; scanner rules
-    scripts/code-model.mjs       resolve typescript/@babel/parser/acorn and read the AST census
-    scripts/census.mjs           parse --print-bytecode output into a closure/opcode table
-    scripts/compiled-audit.mjs   static emitted-bundle and sourcemap inventory
-    scripts/tier-check.mjs       report Maglev/TurboFan reachability on this build
-    scripts/*.test.mjs           dependency-free self-tests for the tools
     examples/                    worked cases: closures, default param, sorting, DOM guards
   perf-prove-it-rust/
     SKILL.md                     the workflow, in order
     references/asm-diff.md       generating and reading asm; common Rust surprises
     references/machine-and-threads.md  core/cache/thread measurement on your box
-    scripts/machine.sh           one-shot machine profile for benchmark reports
     examples/                    the video indexer case: the win and the rejected experiments
   perf-prove-it-dom/
     SKILL.md                     the workflow, in order
@@ -208,6 +203,8 @@ presentation/
   bytecode/                      full raw dumps the slides use
   record.mjs                     records each slide to MP4 and GIF
   animations/                    the recorded clips
+src/                           the CLI: oxc facts, rules, Effect v4 commands
+test/                          CLI tests and the legacy suites used as the parity oracle
 assets/
   logo.svg, logo-mark.svg     wordmark and square mark (vector)
   logo.png                    the mascot hero image the README leads with
