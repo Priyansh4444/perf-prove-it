@@ -7,16 +7,15 @@
 // Add --trace-opt to watch the compiler lines. Exits non-zero if TurboFan is
 // never reached.
 
-type TierProbe = (fn: unknown) => boolean;
+type TierProbe = (fn: (values: readonly number[]) => number) => boolean;
 
 // %ActiveTierIsTurbofan is only a valid token under --allow-natives-syntax, so
 // the probe body is parsed lazily; a SyntaxError means this process was started
 // without the flag and the caller reports that instead of crashing.
 function probe(name: string): TierProbe | null {
   try {
-    const created: unknown = new Function("fn", `return %${name}(fn)`);
-    if (typeof created !== "function") return null;
-    return (fn: unknown): boolean => Boolean(created(fn));
+    const created = new Function("fn", `return %${name}(fn)`) as TierProbe;
+    return (fn: (values: readonly number[]) => number): boolean => Boolean(created(fn));
   } catch {
     return null;
   }

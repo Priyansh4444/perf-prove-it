@@ -287,24 +287,21 @@ export function runRules(facts: FileFacts): RawFinding[] {
     });
   }
 
-  const pushesByFunction = new Map<string, Array<{ root: string; span: Span }>>();
+  const pushesByFunction = new Map<string, Array<{ parent: string; array: string; span: Span }>>();
   for (const push of facts.pushes) {
-    if (push.root === null) continue;
-    const root = push.root.split(".")[0];
-    if (root === undefined) continue;
+    if (push.parent === null || push.array === null) continue;
     const key = `${push.function_ ?? -1}`;
     const list = pushesByFunction.get(key) ?? [];
-    list.push({ root, span: push.span });
+    list.push({ parent: push.parent, array: push.array, span: push.span });
     pushesByFunction.set(key, list);
   }
   for (const list of pushesByFunction.values()) {
     list.sort((a, b) => a.span.start - b.span.start);
-    for (let index = 0; index + 1 < list.length; index += 1) {
+    for (let index = 0; index < list.length; index += 1) {
       const first = list[index];
-      const second = list[index + 1];
-      if (first === undefined || second === undefined) continue;
-      if (first.root !== second.root) continue;
-      if (second.span.start - first.span.end > 400) continue;
+      if (first === undefined) continue;
+      const second = list.find((candidate, candidateIndex) => candidateIndex > index && candidate.parent === first.parent && candidate.array !== first.array && candidate.span.start - first.span.end <= 400);
+      if (second === undefined) continue;
       findings.push({
         kind: RuleKind.ParallelArrayGrowth,
         score: 9,

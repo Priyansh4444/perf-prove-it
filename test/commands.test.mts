@@ -1,4 +1,5 @@
 import { test } from "node:test";
+import { Schema } from "effect";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -117,9 +118,6 @@ test("tier without --allow-natives-syntax reports an error instead of crashing",
 test("tier reaches TurboFan when launched with --allow-natives-syntax", () => {
   const result = runCommands(["tier"], ["--allow-natives-syntax"]);
   assert.equal(result.status, 0, `tier failed:\n${result.stdout}\n${result.stderr}`);
-  const parsed: unknown = JSON.parse(result.stdout);
-  assert.ok(
-    typeof parsed === "object" && parsed !== null && "turbofan" in parsed && parsed.turbofan === true,
-    `turbofan not reached: ${result.stdout}`,
-  );
+  const parsed = Schema.decodeUnknownSync(Schema.Struct({ turbofan: Schema.Boolean }))(JSON.parse(result.stdout));
+  assert.equal(parsed.turbofan, true, `turbofan not reached: ${result.stdout}`);
 });

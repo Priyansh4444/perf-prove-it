@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { extname, join, relative, resolve } from "node:path";
 import { availableParallelism } from "node:os";
-import { Effect } from "effect";
+import { Data, Effect, Option } from "effect";
 import { CLAIM, Confidence, RuleKind, Surface } from "./core/types.mts";
 import { extractFacts, type FileFacts, type FunctionFact } from "./scan/facts.mts";
 import { runRules, type RawFinding } from "./scan/rules.mts";
@@ -53,6 +53,8 @@ export interface ScanResult {
   };
   readonly findings: readonly Finding[];
 }
+
+export class ScanFailed extends Data.TaggedError("ScanFailed")<{ readonly reason: string }> {}
 
 interface Prepared {
   readonly file: string;
@@ -156,11 +158,14 @@ function buildFinding(item: Prepared, raw: RawFinding, callSites: ReadonlyMap<st
   };
 }
 
-export function scanEffect(roots: readonly string[], options: ScanOptions = {}): Effect.Effect<ScanResult> {
+export function scanEffect(roots: readonly string[], options: ScanOptions = {}): Effect.Effect<ScanResult, ScanFailed> {
   return Effect.gen(function* () {
     const started = Date.now();
     const resolvedRoots = roots.length > 0 ? roots : ["."];
-    const files = yield* Effect.tryPromise(() => discover(resolvedRoots));
+    const files = yield* Effect.tryPromise({
+      try: () => discover(resolvedRoots),
+      catch: (cause) => new ScanFailed({ reason: cause instanceof Error ? cause.message : String(cause) }),
+    });
     const cpu = Math.max(1, Math.min(8, availableParallelism() - 1));
     const concurrency = Math.max(1, options.concurrency ?? cpu);
     const prepared = yield* Effect.forEach(
@@ -169,10 +174,10 @@ export function scanEffect(roots: readonly string[], options: ScanOptions = {}):
         Effect.tryPromise(async () => {
           const source = await readFile(file, "utf8");
           return { file, source, facts: extractFacts(file, source) } satisfies Prepared;
-        }).pipe(Effect.catch(() => Effect.succeed(null))),
+        }).pipe(Effect.option),
       { concurrency },
     );
-    const readable = prepared.filter((item): item is Prepared => item !== null);
+    const readable = prepared.flatMap((item) => (Option.isSome(item) ? [item.value] : []));
     const callSites = buildCallSites(readable);
     const all: Finding[] = [];
     let parseErrors = 0;
@@ -204,7 +209,7 @@ export function scanEffect(roots: readonly string[], options: ScanOptions = {}):
       },
       findings: selected,
     };
-  }).pipe(Effect.orDie);
+  });
 }
 
 export async function scan(roots: readonly string[], options: ScanOptions = {}): Promise<ScanResult> {
