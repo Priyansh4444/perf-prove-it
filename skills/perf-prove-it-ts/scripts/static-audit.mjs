@@ -87,9 +87,39 @@ const structuralRules = {
   "comparator-repeated-work": [7, "expensive work repeated inside a sort comparator", "O(N log N) comparator invocations, each repeating P parse or search calls", "P parse/search calls per element before the sort, then O(N log N) key comparisons", "hoist the repeated parse or search out of the comparator and preserve its tie-break; then count comparator invocations and repeated calls"],
 };
 
+const regexKeywords = new Set(["return", "typeof", "instanceof", "new", "delete", "void", "case", "yield", "await", "throw"]);
+
+function lastSignificantIndex(masked) {
+  let index = masked.length - 1;
+  while (index >= 0 && /\s/.test(masked[index])) index -= 1;
+  return index;
+}
+
+function regexAllowedAfter(lastCode, masked) {
+  if (!lastCode) return true;
+  if (lastCode === '"' || lastCode === "'" || lastCode === "`" || lastCode === "/") return false;
+  if (lastCode === ")" || lastCode === "]" || lastCode === "}" || lastCode === "<") return false;
+  const significant = lastSignificantIndex(masked);
+  const before = lastSignificantIndex(masked.slice(0, Math.max(significant, 0)));
+  if (lastCode === ">") return before >= 0 && masked[before] === "=";
+  if (lastCode === "+" || lastCode === "-") return !(before >= 0 && masked[before] === lastCode);
+  if (lastCode === "!") return !(before >= 0 && /[\w$)\]"'`]/.test(masked[before]));
+  if (/[\w$]/.test(lastCode)) {
+    let end = significant + 1;
+    let start = end;
+    while (start > 0 && /[\w$]/.test(masked[start - 1])) start -= 1;
+    const preceding = lastSignificantIndex(masked.slice(0, start));
+    if (preceding >= 0 && masked[preceding] === ".") return false;
+    return regexKeywords.has(masked.slice(start, end));
+  }
+  return true;
+}
+
 function maskNonCode(source) {
   let state = "code";
   let escaped = false;
+  let regexClass = false;
+  let lastCode = "";
   let masked = "";
   for (let index = 0; index < source.length; index++) {
     const char = source[index];
@@ -97,13 +127,20 @@ function maskNonCode(source) {
     if (state === "code") {
       if (char === "/" && next === "/") state = "line-comment";
       else if (char === "/" && next === "*") state = "block-comment";
-      else if (char === '"' || char === "'" || char === "`") {
+      else if (char === "/" && regexAllowedAfter(lastCode, masked)) {
+        state = "regex";
+        regexClass = false;
+        escaped = false;
+        masked += " ";
+        continue;
+      } else if (char === '"' || char === "'" || char === "`") {
         state = char;
         escaped = false;
         masked += " ";
         continue;
       } else {
         masked += char;
+        if (!/\s/.test(char)) lastCode = char;
         continue;
       }
     }
@@ -113,7 +150,17 @@ function maskNonCode(source) {
       masked += " ";
       index += 1;
       state = "code";
-    } else if ((state === '"' || state === "'" || state === "`") && !escaped && char === state) state = "code";
+    } else if (state === "regex") {
+      if (!escaped && char === "[") regexClass = true;
+      else if (!escaped && char === "]") regexClass = false;
+      else if (!escaped && !regexClass && char === "/") {
+        state = "code";
+        lastCode = "/";
+      } else if (char === "\n") state = "code";
+    } else if ((state === '"' || state === "'" || state === "`") && !escaped && char === state) {
+      state = "code";
+      lastCode = char;
+    }
     escaped = char === "\\" && !escaped;
     if (char !== "\\") escaped = false;
   }
@@ -332,13 +379,77 @@ function bindingNameBefore(masked, cursor) {
   return /^[A-Za-z_$][\w$]*$/.test(name) ? { name, nameStart } : null;
 }
 
+function bodyOpenAfterParams(masked, pairs, closeParams) {
+  let cursor = skipSpace(masked, closeParams + 1);
+  if (masked[cursor] !== ":") return cursor;
+  cursor += 1;
+  let paren = 0;
+  let bracket = 0;
+  let brace = 0;
+  for (; cursor < masked.length; cursor++) {
+    const char = masked[cursor];
+    if (char === "(") paren += 1;
+    else if (char === ")") {
+      if (paren === 0) break;
+      paren -= 1;
+    } else if (char === "[") bracket += 1;
+    else if (char === "]") {
+      if (bracket === 0) break;
+      bracket -= 1;
+    } else if (char === "{") {
+      if (paren === 0 && bracket === 0 && brace === 0) {
+        const close = pairs.get(cursor);
+        if (close !== undefined) {
+          const after = skipSpace(masked, close + 1);
+          if (["{", ">", "|", "&", "["].includes(masked[after])) {
+            cursor = close;
+            continue;
+          }
+        }
+        break;
+      }
+      brace += 1;
+    } else if (char === "}") {
+      if (brace === 0) break;
+      brace -= 1;
+    } else if (char === ";" && paren === 0 && bracket === 0 && brace === 0) break;
+  }
+  return skipSpace(masked, cursor);
+}
+
+function arrowParams(masked, reversePairs, arrowIndex) {
+  let cursor = arrowIndex;
+  while (cursor > 0 && /\s/.test(masked[cursor - 1])) cursor -= 1;
+  if (masked[cursor - 1] === ")" && reversePairs.has(cursor - 1)) {
+    return { paramsStart: reversePairs.get(cursor - 1) + 1, paramsEnd: cursor - 1 };
+  }
+  let depth = 0;
+  for (let index = cursor - 1; index >= 0; index--) {
+    const char = masked[index];
+    if (char === "}" || char === "]") depth += 1;
+    else if (char === "{" || char === "[") {
+      if (depth === 0) break;
+      depth -= 1;
+    } else if (depth === 0 && (char === ";" || char === "=")) break;
+    else if (depth === 0 && char === ")") {
+      if (reversePairs.has(index)) return { paramsStart: reversePairs.get(index) + 1, paramsEnd: index };
+      break;
+    }
+  }
+  let end = cursor;
+  let start = end;
+  while (start > 0 && /[\w$]/.test(masked[start - 1])) start -= 1;
+  if (start < end) return { paramsStart: start, paramsEnd: end };
+  return null;
+}
+
 function functionRegions(masked, pairs, reversePairs) {
   const regions = [];
   for (const match of masked.matchAll(/\bfunction\b/g)) {
     const openParams = masked.indexOf("(", match.index + match[0].length);
     if (openParams < 0 || !pairs.has(openParams)) continue;
     const closeParams = pairs.get(openParams);
-    const openBody = skipSpace(masked, closeParams + 1);
+    const openBody = bodyOpenAfterParams(masked, pairs, closeParams);
     if (masked[openBody] !== "{" || !pairs.has(openBody)) continue;
     const declared = masked.slice(match.index + 8, openParams).match(/\*?\s*([A-Za-z_$][\w$]*)/);
     regions.push({
@@ -353,17 +464,14 @@ function functionRegions(masked, pairs, reversePairs) {
   for (const match of masked.matchAll(/=>/g)) {
     const openBody = skipSpace(masked, match.index + 2);
     if (masked[openBody] !== "{" || !pairs.has(openBody)) continue;
-    let paramsEnd = match.index;
-    while (paramsEnd > 0 && /\s/.test(masked[paramsEnd - 1])) paramsEnd -= 1;
-    let paramsStart = paramsEnd;
-    if (masked[paramsEnd - 1] === ")" && reversePairs.has(paramsEnd - 1)) paramsStart = reversePairs.get(paramsEnd - 1) + 1;
-    else while (paramsStart > 0 && /[\w$]/.test(masked[paramsStart - 1])) paramsStart -= 1;
-    const binding = bindingNameBefore(masked, masked[paramsStart - 1] === "(" ? paramsStart - 1 : paramsStart);
-    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(paramsStart, paramsEnd)), parentLoop: null, name: binding?.name ?? null, declNameStart: binding?.nameStart ?? null });
+    const params = arrowParams(masked, reversePairs, match.index);
+    if (!params) continue;
+    const binding = bindingNameBefore(masked, masked[params.paramsStart - 1] === "(" ? params.paramsStart - 1 : params.paramsStart);
+    regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(params.paramsStart, params.paramsEnd)), parentLoop: null, name: binding?.name ?? null, declNameStart: binding?.nameStart ?? null });
   }
   for (const [openParams, closeParams] of pairs) {
     if (masked[openParams] !== "(") continue;
-    const openBody = skipSpace(masked, closeParams + 1);
+    const openBody = bodyOpenAfterParams(masked, pairs, closeParams);
     if (masked[openBody] !== "{" || !pairs.has(openBody)) continue;
     let nameEnd = openParams;
     while (nameEnd > 0 && /\s/.test(masked[nameEnd - 1])) nameEnd -= 1;
@@ -373,10 +481,18 @@ function functionRegions(masked, pairs, reversePairs) {
     if (!name || ["if", "for", "while", "switch", "catch", "with", "function"].includes(name)) continue;
     regions.push({ start: openBody + 1, end: pairs.get(openBody), bindings: bindingNames(masked.slice(openParams + 1, closeParams)), parentLoop: null, name, declNameStart: nameStart });
   }
+  const unique = [];
+  const seen = new Set();
   for (const region of regions) {
-    region.parent = regions.filter((other) => other !== region && other.start <= region.start && region.end <= other.end).sort((a, b) => b.start - a.start)[0] ?? null;
+    const key = `${region.start}:${region.end}:${region.name ?? ""}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    unique.push(region);
   }
-  return regions;
+  for (const region of unique) {
+    region.parent = unique.filter((other) => other !== region && other.start <= region.start && region.end <= other.end && (other.start < region.start || other.end > region.end)).sort((a, b) => b.start - a.start)[0] ?? null;
+  }
+  return unique;
 }
 
 function enclosingFunctionName(regions, start, end) {
@@ -385,7 +501,69 @@ function enclosingFunctionName(regions, start, end) {
   return region?.name ?? null;
 }
 
-function callCountsInFile(masked, definedNames, regions) {
+function typeBodyOpen(masked, start) {
+  let angle = 0;
+  for (let index = start; index < masked.length; index++) {
+    const char = masked[index];
+    if (char === "<") angle += 1;
+    else if (char === ">") {
+      if (angle > 0) angle -= 1;
+    } else if (char === "{" && angle === 0) return index;
+    else if (char === ";" && angle === 0) return -1;
+  }
+  return -1;
+}
+
+function declarationSpans(masked, pairs) {
+  const typeSpans = [];
+  const classSpans = [];
+  for (const match of masked.matchAll(/\binterface\s+[A-Za-z_$][\w$]*/g)) {
+    const open = typeBodyOpen(masked, match.index + match[0].length);
+    if (open >= 0 && pairs.has(open)) typeSpans.push([open, pairs.get(open)]);
+  }
+  for (const match of masked.matchAll(/\b(?:abstract\s+)?class\s+[A-Za-z_$][\w$]*/g)) {
+    const open = typeBodyOpen(masked, match.index + match[0].length);
+    if (open >= 0 && pairs.has(open)) classSpans.push([open, pairs.get(open)]);
+  }
+  for (const match of masked.matchAll(/\btype\s+[A-Za-z_$][\w$]*\s*(?:<[^>]*>)?\s*=/g)) {
+    for (let index = match.index + match[0].length; index < masked.length; index++) {
+      const char = masked[index];
+      if (char === "{") {
+        const close = pairs.get(index);
+        if (close !== undefined) {
+          typeSpans.push([index, close]);
+          index = close;
+          continue;
+        }
+      } else if (char === ";") break;
+      else if (char === "\n") {
+        let next = index + 1;
+        while (next < masked.length && /\s/.test(masked[next])) next += 1;
+        if (!/[|&,<([{=>:.?]/.test(masked[next] ?? "")) break;
+      }
+    }
+  }
+  return { typeSpans, classSpans };
+}
+
+const memberModifiers = new Set(["public", "private", "protected", "static", "abstract", "async", "get", "set", "readonly", "override", "declare"]);
+
+function declarationPosition(masked, nameStart) {
+  let before = nameStart - 1;
+  while (before >= 0 && /\s/.test(masked[before])) before -= 1;
+  if (before < 0) return true;
+  if (masked[before] === "{" || masked[before] === ";" || masked[before] === "}") return true;
+  let end = before + 1;
+  let start = end;
+  while (start > 0 && /[\w$]/.test(masked[start - 1])) start -= 1;
+  return memberModifiers.has(masked.slice(start, end));
+}
+
+function inAnyRegion(regions, index) {
+  return regions.some((region) => region.start <= index && index <= region.end);
+}
+
+function callCountsInFile(masked, pairs, definedNames, regions) {
   const counts = new Map();
   if (definedNames.size === 0) return counts;
   const declarations = new Map();
@@ -395,14 +573,29 @@ function callCountsInFile(masked, definedNames, regions) {
     sites.add(region.declNameStart);
     declarations.set(region.name, sites);
   }
+  const { typeSpans, classSpans } = declarationSpans(masked, pairs);
   const pattern = new RegExp(`\\b(?:${[...definedNames].map(escapedRegExp).join("|")})\\s*\\(`, "g");
   for (const match of masked.matchAll(pattern)) {
     const name = wordAt(masked, match.index);
     if (declarations.get(name)?.has(match.index)) continue;
-    let previous = match.index - 1;
-    while (previous >= 0 && /\s/.test(masked[previous])) previous -= 1;
-    if (masked[previous] === ".") {
-      let receiverEnd = previous;
+    let before = match.index - 1;
+    while (before >= 0 && /\s/.test(masked[before])) before -= 1;
+    let wordEnd = before + 1;
+    let wordStart = wordEnd;
+    while (wordStart > 0 && /[\w$]/.test(masked[wordStart - 1])) wordStart -= 1;
+    if (masked.slice(wordStart, wordEnd) === "function") continue;
+    if (typeSpans.some(([start, end]) => start <= match.index && match.index <= end)) continue;
+    const open = match.index + match[0].length - 1;
+    const close = pairs.get(open);
+    if (
+      close !== undefined &&
+      classSpans.some(([start, end]) => start <= match.index && match.index <= end) &&
+      !inAnyRegion(regions, match.index) &&
+      declarationPosition(masked, match.index) &&
+      masked[skipSpace(masked, close + 1)] === ":"
+    ) continue;
+    if (masked[before] === ".") {
+      let receiverEnd = before;
       let receiverStart = receiverEnd;
       while (receiverStart > 0 && /[\w$]/.test(masked[receiverStart - 1])) receiverStart -= 1;
       if (masked.slice(receiverStart, receiverEnd) !== "this") continue;
@@ -488,7 +681,7 @@ export function scan(roots = ["."], options = {}) {
   const definedNames = new Set([...prepared.values()].flatMap((item) => item.functions.flatMap((region) => (region.name ? [region.name] : []))));
   const callSites = new Map([...definedNames].map((name) => [name, 0]));
   for (const item of prepared.values()) {
-    for (const [name, count] of callCountsInFile(item.searchable, definedNames, item.functions)) callSites.set(name, (callSites.get(name) ?? 0) + count);
+    for (const [name, count] of callCountsInFile(item.searchable, item.pairs, definedNames, item.functions)) callSites.set(name, (callSites.get(name) ?? 0) + count);
   }
   for (const [file, preparedItem] of prepared) {
     const { source, searchable, pairs, reversePairs, functions } = preparedItem;

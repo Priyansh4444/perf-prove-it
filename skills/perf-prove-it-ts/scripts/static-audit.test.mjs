@@ -242,6 +242,125 @@ const cases = [
     count: 1,
     check: (matches) => matches[0]?.enclosingFunction === "render" && matches[0]?.staticCallSites === 1 && matches[0]?.rankBoost === 1 && matches[0]?.score === 8,
   },
+  {
+    name: "semicolons inside an object/tuple return type do not hide the function",
+    source: `function inner(): [{ a: number; b: number }] { for (const x of xs) allowed.includes(x); return []; }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "inner" && matches[0]?.staticCallSites === 0,
+  },
+  {
+    name: "typed arrow returning an object type keeps its enclosing name",
+    source: `const f = (): { a: number } => { for (const x of xs) allowed.includes(x); return { a: 1 }; };`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "f" && matches[0]?.staticCallSites === 0,
+  },
+  {
+    name: "interface and typed signatures are not call sites",
+    source: `interface I { render(): void; }\nexport function render(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "render" && matches[0]?.staticCallSites === 0 && matches[0]?.rankBoost === 0,
+  },
+  {
+    name: "method overload signatures are not call sites",
+    source: `class C { compute(a: string): void; compute(a: number): void; compute(a: unknown): void { for (const x of xs) allowed.includes(x); } }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "compute" && matches[0]?.staticCallSites === 0,
+  },
+  {
+    name: "regex literals neither count as calls nor hide later findings",
+    source: `export function foo(): void { for (const x of xs) allowed.includes(x); }\nconst re = /don't|foo(b/;`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "foo" && matches[0]?.staticCallSites === 0 && matches[0]?.rankBoost === 0,
+  },
+  {
+    name: "division after a keyword-named property or postfix operator is not a regex",
+    source: `export function divider(): void { for (const x of xs) allowed.includes(x); }\nconst q = obj.in / obj.out;\nlet n = 0; const r = n++ / 2;`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "divider" && matches[0]?.staticCallSites === 0,
+  },
+  {
+    name: "calls followed by a colon in ternaries and case labels still count",
+    source: `export function shared(): void { for (const x of xs) allowed.includes(x); }\nconst y = c ? shared() : 0;\nswitch (n) { case shared(): break; }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "shared" && matches[0]?.staticCallSites === 2 && matches[0]?.rankBoost === 1,
+  },
+  {
+    name: "escaped bracket regex does not hide later findings",
+    source: `const re = /\\[/g;\nexport function esc(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "esc",
+  },
+  {
+    name: "division after string and template literals is not a regex",
+    source: "export function strDiv(): void { for (const x of xs) allowed.includes(x); }\nconst q = \"x\" / 2;\nconst t = `x` / 2;",
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "strDiv",
+  },
+  {
+    name: "division after a non-null assertion is not a regex",
+    source: `export function nonNull(): void { for (const x of xs) allowed.includes(x); }\nconst q = a! / 2;`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "nonNull",
+  },
+  {
+    name: "class field ternary calls are counted",
+    source: `export function shared(): void { for (const x of xs) allowed.includes(x); }\nclass A { x = c ? shared() : 0; }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.staticCallSites === 1 && matches[0]?.rankBoost === 1,
+  },
+  {
+    name: "wrapped and intersected object type aliases are not call sites",
+    source: `export function render(): void { for (const x of xs) allowed.includes(x); }\ntype T = Readonly<{ render(): void }>;\ntype U = A & { render(): void };`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.staticCallSites === 0 && matches[0]?.rankBoost === 0,
+  },
+  {
+    name: "division after a block or object literal is not a regex",
+    source: `const y = { a: 1 } / 2; export function blockDiv(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "blockDiv",
+  },
+  {
+    name: "object types inside interface heritage generics are not call sites",
+    source: `interface I extends A<{ z: number }> { render(): void }\nexport function render(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.staticCallSites === 0 && matches[0]?.rankBoost === 0,
+  },
+  {
+    name: "class type parameters do not defeat overload signature detection",
+    source: `class C<T> { compute(a: string): void; compute(a: number): void; compute(a: unknown): void { for (const x of xs) allowed.includes(x); } }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "compute" && matches[0]?.staticCallSites === 0,
+  },
+  {
+    name: "a keyword inside a line comment does not turn a following division into a regex",
+    source: `const q = a // return\n/ 2; export function f(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "f",
+  },
+  {
+    name: "division after a generic type assertion is not a regex",
+    source: `const q = a as T<U> / 2; export function g(): void { for (const x of xs) allowed.includes(x); }`,
+    kind: "repeated-linear-membership",
+    count: 1,
+    check: (matches) => matches[0]?.enclosingFunction === "g",
+  },
 ];
 
 const failures = [
@@ -273,9 +392,14 @@ const secondScan = scan([repeatedPath]);
 failures.push([new Set(firstScan.map((finding) => finding.id)).size === firstScan.length, "finding IDs are not unique"]);
 failures.push([JSON.stringify(firstScan.map((finding) => finding.id)) === JSON.stringify(secondScan.map((finding) => finding.id)), "finding IDs are not deterministic"]);
 
+const crossA = write("cross-a.ts", `export function shared(): void { for (const x of xs) allowed.includes(x); }`);
+const crossB = write("cross-b.ts", `shared();\nshared();\nshared();`);
+const sharedFinding = scan([crossA, crossB]).find((finding) => finding.enclosingFunction === "shared");
+failures.push([sharedFinding?.staticCallSites === 3 && sharedFinding?.rankBoost === 2, `cross-file call sites not counted across files: ${sharedFinding?.staticCallSites}/${sharedFinding?.rankBoost}`]);
+
 const actualFailures = failures.filter(([ok]) => !ok);
 if (actualFailures.length) {
   for (const [, message] of actualFailures) console.error(message);
   process.exit(1);
 }
-console.log(`static audit test: all ${cases.length + 12} cases pass`);
+console.log(`static audit test: all ${cases.length + 13} cases pass`);

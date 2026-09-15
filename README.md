@@ -194,6 +194,7 @@ study/
   PROTOCOL.md                    the study frame and rubric
   RESULTS.md                     verified results, corrections, and skill changes
   static-audit-solid-pr.md       static-audit evaluation against a real Solid PR
+  static-audit-cross-file/       multi-file TypeScript fixture for the call-site census
   t3code-static-audit-harvest/   measured before/after pairs for scanner candidates
   t3code-qr-eval/                packed-grid QR evaluation and its decision
   reports/                       raw worker, verifier, and judge reports
