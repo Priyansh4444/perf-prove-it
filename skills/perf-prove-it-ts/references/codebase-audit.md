@@ -37,6 +37,17 @@ For each top candidate:
 
 If runtime execution is unavailable, stop at a static audit. State what was inspected and excluded, which claims remain unmeasured, and the exact probe needed next.
 
+## Database and RPC await loops
+
+`loop-await` and related rules model JS await latency. For database, RPC, and remote-storage calls, restructuring the awaits changes nothing: the cost is the read/write unit the remote performs per row, and the loop shape does not reduce it. Before promoting such a finding, produce an op-count model instead of an await rewrite:
+
+1. Count remote reads and writes per call as a function of the input shape (N rows, P postings, U unique terms).
+2. Check for in-process dedupe the code already does, and for duplicate work in the actual payloads, not hypothetical ones.
+3. Look for a real batch primitive on the platform (multi-get, bulk insert, batched upsert, index-prefix read). If none exists, per-row is the floor for that schema and the candidate is the schema, not the loop.
+4. If a bulk path exists, the verdict must state exact before/after op counts and which contract (idempotency, atomicity, retry semantics) each side preserves.
+
+An await loop whose removal changes no read/write count is a false positive. Adding a second remote read to replace two local awaits in one call is a regression, not a win — verify the replacement actually removes the per-row call from the patch's result.
+
 ## Scanner interpretation
 
 Each rule returns a process record: syntax evidence, a symbolic current-work model, a candidate floor, and the next proof needed. It does not guess a speedup.

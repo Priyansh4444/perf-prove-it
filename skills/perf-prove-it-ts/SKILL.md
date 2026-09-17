@@ -80,6 +80,9 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 - No retained-memory claim without a forced-GC snapshot.
 - No tier claim from a forced compile request. Require a completed optimization line or the `npx perf-prove-it tier` check in the shipped runtime (Maglev/TurboFan on V8, DFG/FTL on JavaScriptCore).
 - No win without its measured benefit, its readability, cold-start, and memory price, and a revert path.
+- No reported patch that fails `git apply --check` and the repo's test/typecheck suite. Verify the patch before the report, not after.
+- No report of a replaced site while the replaced work is still in the patch's result. If a diff replaces work (a point read, a full scan), the removed lines must appear as `-` lines in the patch; replacement-only diffs must be labeled as additions.
+- No wall-clock-only verdict on a loaded or power-throttled machine. Instruction and allocation counters (perf, `perf stat`, counting allocators) outrank timing there; record the governor and load with the machine fingerprint and report the A/A noise band.
 
 ## Commands
 
