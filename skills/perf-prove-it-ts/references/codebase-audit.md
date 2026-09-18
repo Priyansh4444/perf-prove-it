@@ -46,7 +46,7 @@ If runtime execution is unavailable, stop at a static audit. State what was insp
 3. Look for a real batch primitive on the platform (multi-get, bulk insert, batched upsert, index-prefix read). If none exists, per-row is the floor for that schema and the candidate is the schema, not the loop.
 4. If a bulk path exists, the verdict must state exact before/after op counts and which contract (idempotency, atomicity, retry semantics) each side preserves.
 
-An await loop whose removal changes no read/write count is a false positive. Adding a second remote read to replace two local awaits in one call is a regression, not a win — verify the replacement actually removes the per-row call from the patch's result.
+An await loop whose removal changes no read/write count is a false positive. Adding a second remote read to replace two local awaits in one call is a regression, not a win; verify the replacement actually removes the per-row call from the patch's result.
 
 ## Scanner interpretation
 

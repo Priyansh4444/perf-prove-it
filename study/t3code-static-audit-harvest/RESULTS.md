@@ -90,10 +90,10 @@ call site actually sees, which the scanner cannot know:
 
 | site | callers | realistic input | material |
 | --- | --- | --- | --- |
-| `collectLimitPools` (`orderWindow`, `sortedMembers`) | web `UsageLimitsPooled.tsx`, mobile usage widgets | accounts per driver, typically 1–5 | no — ~1 µs/render |
-| `collectProviderUsageLimits` (`hubCredits`) | web `ChatView.tsx` (memoized), mobile thread/composer | `key` filters to ~1 hub account | no — sort is over ~1 element |
-| `selectRunningSubprocessTerminalIds` | web `terminalSessions.ts` | open terminals, small | no — ~0.1 µs |
-| `retainMessagesAfterRevert` | `threadReducer.ts:612` on `thread.reverted` | messages per thread can be large | **maybe** — see below |
+| `collectLimitPools` (`orderWindow`, `sortedMembers`) | web `UsageLimitsPooled.tsx`, mobile usage widgets | accounts per driver, typically 1–5 | no, ~1 µs/render |
+| `collectProviderUsageLimits` (`hubCredits`) | web `ChatView.tsx` (memoized), mobile thread/composer | `key` filters to ~1 hub account | no, sort is over ~1 element |
+| `selectRunningSubprocessTerminalIds` | web `terminalSessions.ts` | open terminals, small | no, ~0.1 µs |
+| `retainMessagesAfterRevert` | `threadReducer.ts:612` on `thread.reverted` | messages per thread can be large | **maybe**, see below |
 
 **Harvest:** four of the five are correct but immaterial at production input
 sizes; shipping them is optional cleanup. The one worth a PR is
@@ -120,7 +120,7 @@ shipped win.
 ## Skill gap this harvest exposed
 
 The scanner surfaced every site, but the repeated expensive work *inside a
-comparator* — `Date.parse`, `.find`, `parseTimestamp` — is not named by any
+comparator* (`Date.parse`, `.find`, `parseTimestamp`) is not named by any
 rule. `sortedMembers` only gets the generic advisory `sort-callback`;
 `retainMessages` gets `sort-callback` + the new `full-sort-then-take`. Those
 two cases are the largest wins in the study (4.7×–22.7×). A

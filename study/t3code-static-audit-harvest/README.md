@@ -22,15 +22,15 @@ sources were read, never edited; `.repos/` is a read-only vendored checkout.
 
 ## Method
 
-1. `verify.mjs` — differential equivalence. The rewrite must match the
+1. `verify.mjs`: differential equivalence. The rewrite must match the
    extracted original on randomized inputs across both profiles and on
    hand-built edges (empty inputs, `undefined` order window, `null` key,
    missing/invalid dates, ties, count-vs-existence). A real ordering bug in the
    first `retainMessages` rewrite was caught here, not in timing.
-2. `arm.mjs` — one implementation per process. Builds a deterministic workload,
+2. `arm.mjs`: one implementation per process. Builds a deterministic workload,
    masks compile cost, auto-calibrates iterations to run long enough to clear
    the timer.
-3. `bench.mjs` — paired A/B. Per trial it spawns, in separate Node processes,
+3. `bench.mjs`: paired A/B. Per trial it spawns, in separate Node processes,
    the before arm, the after arm, and an A/A control (before twice). Order
    alternates. The headline is the median of the per-trial ratios; a delta
    inside the A/A band is rejected as noise.
