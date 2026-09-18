@@ -18,7 +18,7 @@ interface CommandResult {
 }
 
 function runCommands(args: readonly string[], execArgv: readonly string[] = []): CommandResult {
-  const result = spawnSync(process.execPath, [...execArgv, "--experimental-transform-types", commandsMain, ...args], {
+  const result = spawnSync(process.execPath, [...execArgv, "--import", "tsx", commandsMain, ...args], {
     encoding: "utf8",
   });
   return { status: result.status, stdout: result.stdout, stderr: result.stderr };
@@ -28,7 +28,7 @@ function writeCensusRunner(dir: string): string {
   const runner = join(dir, "census-runner.mjs");
   const lines = [
     'import { spawnSync } from "node:child_process";',
-    `const args = ["--experimental-transform-types", ${JSON.stringify(commandsMain)}, "census", ...process.argv.slice(2)];`,
+    `const args = ["--import", "tsx", ${JSON.stringify(commandsMain)}, "census", ...process.argv.slice(2)];`,
     "const result = spawnSync(process.execPath, args, { stdio: \"inherit\" });",
     "if (result.error) throw result.error;",
     "process.exit(result.status ?? 1);",
@@ -43,7 +43,7 @@ function writeCompiledShim(dir: string): string {
   const lines = [
     'import { spawnSync } from "node:child_process";',
     "export function auditCompiled(root, terms = []) {",
-    `  const args = ["--experimental-transform-types", ${JSON.stringify(commandsMain)}, "compiled", root, ...terms];`,
+    `  const args = ["--import", "tsx", ${JSON.stringify(commandsMain)}, "compiled", root, ...terms];`,
     '  const result = spawnSync(process.execPath, args, { encoding: "utf8" });',
     "  if (result.status !== 0) throw new Error(result.stderr);",
     '  return result.stdout.split("\\n").filter((line) => line !== "").map((line) => JSON.parse(line));',
@@ -57,7 +57,7 @@ function writeCompiledShim(dir: string): string {
 function runLegacyTest(source: string, dir: string, filename: string): CommandResult {
   const file = join(dir, filename);
   writeFileSync(file, source);
-  const result = spawnSync(process.execPath, ["--experimental-transform-types", file], {
+  const result = spawnSync(process.execPath, ["--import", "tsx", file], {
     encoding: "utf8",
     maxBuffer: 64 * 1024 * 1024,
   });

@@ -2,9 +2,9 @@
 // Parse V8 --print-bytecode output into a per-function allocation census.
 //
 //   node --allow-natives-syntax --print-bytecode --print-bytecode-filter='rerank' harness.cjs \
-//     | node --experimental-transform-types src/commands-main.mts census
+//     | node --import tsx src/commands-main.mts census
 //
-// Or pass dump files: node --experimental-transform-types src/commands-main.mts census before.txt after.txt
+// Or pass dump files: node --import tsx src/commands-main.mts census before.txt after.txt
 // Add --json for machine-readable output to gate in CI.
 // Add --classes to print a second table with cost classes, protocol ops, and
 // loop-site counts. --diff before.txt after.txt prints per-function class-count

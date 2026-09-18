@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Print the machine header that belongs at the top of every performance report.
-// Usage: node --experimental-transform-types src/commands-main.mts machine
+// Usage: node --import tsx src/commands-main.mts machine
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Run: node --allow-natives-syntax --experimental-transform-types src/commands-main.mts tier
+// Run: node --allow-natives-syntax --import tsx src/commands-main.mts tier
 //
 // Confirms that this V8 build tiers a hot function to TurboFan. The skill's
 // tier claims come from --trace-opt lines; this is the one-command check that

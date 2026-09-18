@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build && node --experimental-transform-types --test test/*.test.mts",
+    "test": "npm run build && node --import tsx --test test/*.test.mts",
     "prepack": "npm run build"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "@oxc-project/types": "^0.150.0",
     "@types/node": "^24.0.0",
     "tsdown": "^0.23.0",
+    "tsx": "^4.23.13",
     "typescript": "^5.9.3"
   },
   "license": "Apache-2.0",

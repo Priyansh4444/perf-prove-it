@@ -7,7 +7,7 @@ import { run as runCompiled } from "./compiled.mts";
 import { run as runMachine } from "./machine.mts";
 import { run as runTier } from "./tier.mts";
 
-const USAGE = "usage: node --experimental-transform-types src/commands-main.mts <census|compiled|tier|machine> [args...]";
+const USAGE = "usage: node --import tsx src/commands-main.mts <census|compiled|tier|machine> [args...]";
 
 export async function main(argv: readonly string[]): Promise<number> {
   const [name, ...rest] = argv;

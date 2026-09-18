@@ -19,7 +19,7 @@ test("legacy static-audit suite passes against the new CLI", () => {
   const dir = mkdtempSync(join(tmpdir(), "ppit-parity-"));
   const file = join(dir, "legacy-parity.mjs");
   writeFileSync(file, rewritten);
-  const output = execFileSync(process.execPath, ["--experimental-transform-types", file], {
+  const output = execFileSync(process.execPath, ["--import", "tsx", file], {
     cwd: root,
     encoding: "utf8",
     maxBuffer: 256 * 1024 * 1024,
