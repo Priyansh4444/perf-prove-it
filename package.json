@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Static performance audit for TypeScript and JavaScript. Parses with oxc, lowers files to facts, ranks candidates, and ships the agent skill.",
   "bin": {
-    "perf-prove-it": "./dist/cli.mjs"
+    "perf-prove-it": "dist/cli.mjs"
   },
   "exports": {
     ".": {
@@ -44,7 +44,7 @@
   "author": "Priyansh Shah",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Priyansh4444/perf-prove-it.git"
+    "url": "git+https://github.com/Priyansh4444/perf-prove-it.git"
   },
   "homepage": "https://github.com/Priyansh4444/perf-prove-it#readme",
   "bugs": {
