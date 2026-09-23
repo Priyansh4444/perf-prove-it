@@ -33,6 +33,7 @@ Read only the matching reference.
 - Bytecode, tiers, deopts, or object shapes and inline caches: `references/v8-evidence.md`.
 - Bun or Safari (JavaScriptCore) tiers, shapes, or memory: `references/jsc-evidence.md`.
 - Benchmark or A/B requested: `references/benchmark-protocol.md`.
+- Keeping a win won, or a CI performance gate: `references/ratchets.md`.
 - Allocation, GC, retention, or leaks: `references/memory-and-heap.md`.
 - Measured outcomes and surprises from the recorded runs: `references/findings.md`.
 - Multiple agents or battle testing: `references/swarm.md`.
@@ -46,7 +47,7 @@ Read only the matching reference.
 2. Count current traversals, calls, allocations, data movement, and boundaries; derive the permitted floor. Record allocation rate and GC cost next to the timing.
 3. Establish only the evidence needed for the claim.
 4. Predict one change's term-by-term effect, make it, and repeat behavior/mechanism/impact checks, timing and memory both.
-5. Keep results unchanged: win, zero, or regression. Include costs and revert path.
+5. Keep results unchanged: win, zero, or regression. Include costs, a revert path, and a ratchet when a deterministic count exists (`references/ratchets.md`).
 
 Evidence ascends: static candidate → reachability → frequency → mechanism → impact. Stop at the supported rung.
 
@@ -83,6 +84,8 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 - No reported patch that fails `git apply --check` and the repo's test/typecheck suite. Verify the patch before the report, not after.
 - No report of a replaced site while the replaced work is still in the patch's result. If a diff replaces work (a point read, a full scan), the removed lines must appear as `-` lines in the patch; replacement-only diffs must be labeled as additions.
 - No wall-clock-only verdict on a loaded or power-throttled machine. Instruction and allocation counters (perf, `perf stat`, counting allocators) outrank timing there; record the governor and load with the machine fingerprint and report the A/A noise band.
+- No production speed claim from a determinism or reduced-work config (`--predictable`, `--predictable-gc-schedule`, `--jitless`, `--no-opt`, forced optimization). Name the flag and configuration in the result; those configs make a mechanism repeat, not production timing.
+- No CI performance gate from an uncorrelated or flaky count. Prove the counter tracks wall clock or a field metric on the same benchmark, then check it in and let it only ratchet down (`references/ratchets.md`).
 
 ## Commands
 

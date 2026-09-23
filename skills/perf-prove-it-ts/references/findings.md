@@ -60,3 +60,14 @@ Both produce files that open in the Chrome DevTools Memory panel. Leak verdicts 
 2. Tier evidence tells you what the hot code is. Without it, any timing is suspect.
 3. GC time and peak RSS are the memory verdict. Scavenge count is context.
 4. Every win shows its price: bytecode bytes, code shape, readability. Put the price in the report and let the user pick.
+
+## External corroboration (not this project's runs)
+
+Anthropic's Aug 2026 claude.ai sprint reported the same two-gate pattern at scale: a deterministic count as a CI ratchet, wall clock as context. There, any PR that raised an instruction count failed CI, and a daily job lowered the ceiling whenever it fell. Recorded there, counts under Valgrind with `node --predictable`, timings under plain Node with the JIT warm:
+
+| hot path | rewrite | Ir | wall | speedup |
+| --- | --- | --- | --- | --- |
+| message-tree assembly | resolve each message ID once, not three times | -48% | -78% | 4.6x |
+| status-line scanner | cheap first-character check before the regex | -31% | -44% | 1.8x |
+
+Two more findings from that sprint match mechanisms already in this skill: one non-Latin-1 character in a code block promoted the string to two-byte and put every highlighting regex on the slow path (`v8-evidence.md`), and a React hook census found 6,900 hooks and 900 store subscriptions in the composer's typing path, re-rendering on every keystroke. Both are counts, not profiles. Treat these as external evidence for the method, never as numbers to quote for a local change. The ratchet workflow is in `ratchets.md`.

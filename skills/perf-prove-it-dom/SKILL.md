@@ -19,7 +19,7 @@ Prioritize by poor field Core Web Vitals (LCP, INP, CLS at p75); a trace finds t
 Read only the matching reference.
 
 - Pipeline stages, what triggers each, and the Blink source map: `references/pipeline.md`.
-- CDP harness, metrics, traces, long tasks and INP, allocation rate, forced-reflow detection, verification protocol: `references/measurement.md`.
+- CDP harness, metrics, traces, long tasks and INP, allocation rate, deterministic counters, frame budget, layout-instability mapping, forced-reflow detection, verification protocol: `references/measurement.md`.
 - Before/after patterns with measured effects and traps: `references/patterns.md`.
 - User-facing outcome metrics, field versus lab, and the INP/CLS levers: `references/web-vitals.md`.
 - Worked cases from real studies, with counters and machine reads: `examples/`.
@@ -59,6 +59,7 @@ Never call a reduced page, hand-written DOM snippet, or equivalent harness the a
 - No `innerHTML` on untrusted input.
 - No promoted-layer or `will-change` advice without counting layers and memory.
 - No "faster" verdict without the before and after trace pasted in.
+- No CI gate from a duration or a single trace. Gate on a count that repeats, and prove it tracks the field metric first (`perf-prove-it-ts`, `references/ratchets.md`).
 - No readability cost hidden. Name the added JS or CSS complexity next to the counters and let the user decide.
 
 ## Report

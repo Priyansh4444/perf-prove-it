@@ -187,7 +187,7 @@ Then it works one verified unit at a time:
 4. Force the compiler to prove what it produced (V8 `--print-bytecode` / `--trace-opt` / tier checks, `cargo asm` / `objdump` / `iai-callgrind`).
 5. Show equal outputs on equal inputs before showing any delta.
 6. Report construction counts, instruction counts, and the machine they ran on. Wall-clock only when the box is quiet and the arms ran in separate processes.
-7. Integrate one verified unit at a time and leave the remaining candidates documented for the next person.
+7. Integrate one verified unit at a time, leave a ratchet behind when a deterministic count exists, and leave the remaining candidates documented for the next person.
 
 ## What's inside
 
@@ -203,7 +203,8 @@ skills/
     references/jsc-evidence.md   JavaScriptCore tiers, shapes, and memory for Bun and Safari
     references/compiled-artifact.md  emitted JS/bundles, sourcemaps, JSX/HTML route
     references/rendering.md      React/Solid/JSX render and DOM evidence route
-    references/benchmark-protocol.md  A/A control, process isolation, timing rules
+    references/benchmark-protocol.md  A/A control, process isolation, determinism controls, timing rules
+    references/ratchets.md       deterministic counts as CI gates that only ratchet down
     references/runtime-matrix.md Node vs browser vs Bun vs Deno caveats
     references/swarm.md          multi-agent slicing and verifier requirements
     references/memory-and-heap.md  heap snapshots, GC traces, leak proof
@@ -243,6 +244,8 @@ assets/
 You do not need to write assembly. You need to read about twenty instructions and stop being scared of the truth. A function body is small. The compiler already knows what it did. Ask it.
 
 Three questions explain most machine behavior: where the data moves, how instructions flow through the branch predictor, and which execution units do the work. Answer those before opening a profiler, and most optimizations stop being mysteries.
+
+A benchmark has two jobs: move a number you control, and guard it so it only moves one way. Counts that repeat (CPU instructions, React commits, style recalculations, DOM mutations) can be checked into CI and ratcheted down; wall clock is context. Once something can be measured it can be improved, so the highest-leverage move is often not a bigger optimization but one more thing to measure.
 
 ## License
 

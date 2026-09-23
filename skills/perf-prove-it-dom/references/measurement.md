@@ -72,6 +72,22 @@ Delta two snapshots around one interaction plus two rAF ticks. Medians of three 
 
 A `LayoutCount` delta near the loop iteration count is thrashing. A `RecalcStyleCount` delta above one for a single class toggle is a widened invalidation.
 
+## Deterministic counters
+
+Durations vary; counters repeat. When an interaction must be compared or gated, prefer a count that returns the same value every run:
+
+- Style and layout: `RecalcStyleCount` and `LayoutCount` from `Performance.getMetrics`, and the `dirtyObjects`/`totalObjects` args on `UpdateLayoutTree` and `Layout` trace events.
+- DOM mutations: a `MutationObserver` over the subtree records exactly what changed, by type. Use it to prove a render shrank the DOM and to attribute a shift to a region.
+- React commits: count commits per interaction (React DevTools profiler API, or a commit counter in a test renderer), not renders. A commit is a DOM mutation batch; a render that produces no change is not one.
+- Function calls: CDP `Profiler.takePreciseCoverage` returns V8 precise coverage with per-function execution counts. It is deterministic for a fixed page and interaction and is a usable CI ratchet.
+- Allocation: `MinorGC` and `MajorGC` counts per interaction (see below).
+
+A count still needs the correlation gate: prove it tracks the field metric before gating on it (`perf-prove-it-ts`, `references/ratchets.md`). Wall clock is context, not the gate.
+
+## Frame budget and deterministic frame stepping
+
+A dropped frame is a count: did this frame's work fit its budget? At 60 Hz the budget is 16.7 ms, at 120 Hz 8.33 ms. Headless Chromium advances frames on its own schedule, so counting frames by wall clock is noisy. Step them yourself with the CDP headless `beginFrame` control, and confirm the domain and its flags on your build. One external run stepped 240 frames of 8.33 ms and advanced the page exactly 240 frames, making "did it fit the 120 Hz budget" an exact read (Anthropic, Aug 2026). Record the frame rate, the number of frames, and the budget with any smoothness claim.
+
 ## Traces
 
 ```js
@@ -115,6 +131,10 @@ new PerformanceObserver((list) => {
 Interaction latency uses the Event Timing API. Observe `event` entries, set a `durationThreshold` to control volume (default 104 ms, minimum 16 ms), and read `processingStart`, `processingEnd`, `startTime`. `durationThreshold` is silently ignored unless `type: "event"` is used; with `entryTypes` it does not throw, it just has no effect. INP is a high percentile of interaction latency, usually computed by a library such as web-vitals. Attribute a slow interaction to input delay, processing time, or presentation delay before fixing anything.
 
 Other useful entry types: `paint` (FP and FCP), `largest-contentful-paint`, `layout-shift`, `element`, `navigation`, `resource`, `mark`, `measure`. `PerformanceObserver.supportedEntryTypes` lists what the current engine supports.
+
+## Layout instability by region and phase
+
+Aggregate CLS hides jank. A page can move something after it is usable, on every load, and still score well because each shift is small: shifts of about 0.008, many of them, stay under the 0.1 threshold. Instrument the Layout Instability API directly, map each `layout-shift` entry's `sources` to a named region (sidebar, transcript, header) and a phase (before first paint, after typeable), and alert on any shift in a named region rather than on the score. An integration test can force the condition: load the page with populated data held back until after first paint, and fail on any shift. External measured case: 31% of web page loads moved something after the page was usable with no user interaction, invisible to CLS (Anthropic, Aug 2026).
 
 ## Allocation rate
 

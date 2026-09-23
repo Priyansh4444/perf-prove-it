@@ -49,7 +49,7 @@ Before: setting several inline style properties per element per state.
 
 After: one class toggle.
 
-Buys: fewer mutation calls and one invalidation entry point per element. Measured: 5 inline property writes per element over 500 elements coalesced into `RecalcStyleCount 1`, the same as the class-toggle arm; the measurable difference was script time (19 ms versus 6 ms), not the number of style passes. Traps: a class toggle can invalidate the entire dependent subtree (one ancestor class change invalidated 500 descendants in the same experiment), so prefer narrow selectors and derive the class set from state instead of hand-setting it from many call sites.
+Buys: fewer mutation calls and one invalidation entry point per element. Measured: 5 inline property writes per element over 500 elements coalesced into `RecalcStyleCount 1`, the same as the class-toggle arm; the measurable difference was script time (19 ms versus 6 ms), not the number of style passes. Traps: a class toggle can invalidate the entire dependent subtree (one ancestor class change invalidated 500 descendants in the same experiment), so prefer narrow selectors and derive the class set from state instead of hand-setting it from many call sites. A broad selector widens the blast radius: a single `:root:has()` rule added 24 ms to every DOM change in one external case (Anthropic, Aug 2026).
 
 ## 6. Compositor-only animation
 
@@ -90,3 +90,26 @@ Before: `will-change` or a 3D transform on every list item.
 After: promote only what animates, and remove the hint when idle.
 
 Buys: fewer layers, less GPU memory, less compositing work. Traps: layer promotion can make a page slower when everything is promoted because compositing cost grows with overlap and memory. Count layers and memory after the change. The "Layers" panel and CDP trace both expose them.
+
+## 11. Static shell, then hand off
+
+Before: the page shows nothing until the framework's first render, so time to typeable is bundle download plus initialization.
+
+After: serve an HTML copy of the composer and above-the-fold chrome, generated from the real component, let the user type into it immediately, then let the framework render on top and take over.
+
+Buys: the user can type during initialization instead of waiting for it. It is brittle by design: the static markup and the component must not drift by a pixel, or the handoff is visible. Guardrails, each a count or an exact comparison:
+
+- Generate the static markup by rendering the real component in jsdom, and test that the two never drift.
+- Compare the static page against the framework render across viewport sizes and assert alignment within 1 px.
+- Type through the handoff and fail on any lost or reordered keystroke.
+- Report the handoff shift to the field, per event, and open a case for any nonzero movement.
+
+Traps: the static copy duplicates DOM and CSS, so it is a maintenance and payload cost, not a free win. Earlier first paint can expose latent layout work that only mattered once the page painted that fast, such as a browser UI resize or a late font. Measure the handoff and the first interaction after it, not just the static paint.
+
+## 12. Stream in chunks, not per message length
+
+Before: each streamed chunk re-processes the whole message (parse, highlight, re-layout), so per-chunk work is O(message length) and grows as the reply does.
+
+After: make per-chunk work O(chunk). Memoize finished blocks and never re-tokenize them, move tokenization of a growing code fence off the main thread, and reveal a large table cell by cell instead of all at once.
+
+Buys: a steady frame budget instead of a degrading one. External measured case: long replies blocked the main thread about 750 ms in total; after memoizing finished blocks, moving fence tokenization to a worker, and revealing tables incrementally, total blocking fell to about 200 ms, CPU to about a third, and the stream held 120 fps (Anthropic, Aug 2026). Traps: memoizing blocks changes nothing visible only if block boundaries are stable; a fence that reopens changes earlier blocks, so key the cache on block identity, not the message. Measure per-frame work with the frame-budget harness (`references/measurement.md`), and verify the final rendered text equals the non-streamed render.

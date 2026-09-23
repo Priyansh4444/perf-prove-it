@@ -20,3 +20,7 @@ If the project cannot build, report **compiled-artifact evidence unavailable**. 
 Trace one user-visible update from state change to DOM commit. Separate reducer/projection work, component reconciliation, Markdown/HTML parsing and sanitization, highlighting/layout measurement, DOM mutation, and paint. For `D` streamed updates with response lengths `Lᵢ`, record parser work as `Σ parse(Lᵢ)` unless artifact/runtime evidence demonstrates prefix reuse. Do not infer DOM work from React source or bytecode alone; use a browser profile or DOM mutation counter.
 
 Bytecode proves emitted interpreter instructions and static construction sites. It does not prove TurboFan execution, dynamic allocation, or browser DOM commits. Pair it with tier/deopt, heap, or browser evidence as the claim requires.
+
+## Cold start and code cache
+
+Recompiling a large main process or server bundle from source on every start is startup work that no per-call benchmark sees. Precompile a V8 code cache and ship it. Node has `NODE_COMPILE_CACHE=dir` (add `NODE_COMPILE_CACHE_PORTABLE=1` to move the cache between machines); an embedder such as Electron exposes the same V8 code-cache API for its main process. Measure cold start with and without the cache and ratchet it separately from steady-state work. The cache trades disk and a version-fragile artifact for startup time, and a V8 or Node upgrade invalidates it, so re-verify after either.

@@ -54,6 +54,8 @@ Layout shift comes from media without dimensions, late-loading content, and font
 - Fonts: `font-display: swap` plus `size-adjust` / `ascent-override` to match the fallback metrics, or preload the LCP font.
 - View Transitions snapshot the old and new states without a layout shift, so they do not count toward CLS.
 
+Aggregate CLS hides jank: many small shifts, each around 0.008, can still score "good" while the page visibly moves after it is usable. Instrument the Layout Instability API per region and phase and alert on any shift, not on the score (`references/measurement.md`).
+
 ## LCP loading levers (adjacent to this skill)
 
 LCP is a loading-path metric. When the trace shows the LCP element discovered late or the document blocked, hand off to the loading checklist rather than the pipeline:

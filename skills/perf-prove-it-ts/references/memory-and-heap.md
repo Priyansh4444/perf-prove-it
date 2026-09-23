@@ -67,6 +67,8 @@ new PerformanceObserver((list) => {
 
 Disable the observer for speed measurements; it adds work per collection.
 
+For A/B GC comparison, remove GC concurrency with `--predictable` (single-threaded GC, deterministic seed) and hold it constant across arms. `--predictable-gc-schedule` fixes the semi-space size, which is what makes scavenge counts comparable at all, but it changes the bytes-per-scavenge denominator, so apply it to every arm and say so. Neither is the shipped configuration; they make a mechanism repeat, not a production GC claim.
+
 ## Allocation profiles
 
 ```sh
