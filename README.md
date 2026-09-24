@@ -201,7 +201,7 @@ skills/
     references/discovery.md      the work ledger: hidden-work passes, probes, identity domains
     references/v8-evidence.md    harness, traps, opcode/source lookups, deopt reasons, shapes
     references/jsc-evidence.md   JavaScriptCore tiers, shapes, and memory for Bun and Safari
-    references/compiled-artifact.md  emitted JS/bundles, sourcemaps, JSX/HTML route
+    references/compiled-artifact.md  emitted JS/bundles, sourcemaps, JSX/HTML route, cold-start code cache
     references/rendering.md      React/Solid/JSX render and DOM evidence route
     references/benchmark-protocol.md  A/A control, process isolation, determinism controls, timing rules
     references/ratchets.md       deterministic counts as CI gates that only ratchet down

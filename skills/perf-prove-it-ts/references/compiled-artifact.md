@@ -23,4 +23,11 @@ Bytecode proves emitted interpreter instructions and static construction sites. 
 
 ## Cold start and code cache
 
-Recompiling a large main process or server bundle from source on every start is startup work that no per-call benchmark sees. Precompile a V8 code cache and ship it. Node has `NODE_COMPILE_CACHE=dir` (add `NODE_COMPILE_CACHE_PORTABLE=1` to move the cache between machines); an embedder such as Electron exposes the same V8 code-cache API for its main process. Measure cold start with and without the cache and ratchet it separately from steady-state work. The cache trades disk and a version-fragile artifact for startup time, and a V8 or Node upgrade invalidates it, so re-verify after either.
+Recompiling a large main process or server bundle from source on every start is startup work that no per-call benchmark sees. Precompile a V8 code cache and ship it. Node has `NODE_COMPILE_CACHE=dir` (add `NODE_COMPILE_CACHE_PORTABLE=1` to move the cache between machines) or `module.enableCompileCache()`; when the cache is served, the module graph is deserialized instead of parsed and compiled. Measure cold start with and without the cache and ratchet it separately from steady-state work.
+
+Desktop apps have two cache domains, one per engine. In Electron:
+
+- Main process (Node): the module compile cache above, for the shell's own CommonJS/ESM modules. Confirm the API on your Electron version, because it bundles its own Node.
+- Renderer (Blink): the session's V8 code cache, stored under `Code Cache` in the user data folder by default and settable with `ses.setCodeCachePath(path)`. Code cache is enabled only for `http(s)` URLs by default; register a custom protocol with `codeCache: true` and `standard: true` to cache its scripts. This caches the app's and V8's own script compilation, not the main-process shell.
+
+Both caches are keyed on the V8 build and flags and are invalidated by an Electron, Chromium, or Node upgrade, so re-verify after one and expect a slower first start. The cache trades disk and a version-fragile artifact for startup time. Report cold start as its own journey, separate from per-call work.
