@@ -36,6 +36,14 @@ Loops OSR at every boundary: LLInt loops enter Baseline on-stack (`_llint_loop_o
 
 Traps: `thresholdForFTLOptimizeAfterWarmUp` moved 100000 → 60000 → 64000 across WebKit history, so a warm-up recipe from a blog is stale by default. `Options::jitPolicyScale` and `forceEagerCompilation` move every threshold at once. Quote the option values from the tree you measured, the way you would quote V8 flag defaults.
 
+## Bun compiled executables: embedded bytecode and startup JIT policy
+
+`bun build --compile --bytecode` runs JSC's parser and build-time optimization passes at bundle time and embeds the resulting bytecode in the executable, so startup only decodes it. `--bytecode-order` is profile-guided layout: run the binary once with `BUN_BYTECODE_ORDER_OUT=<file>`, rebuild with `--bytecode-order=<file>`, and Bun groups the bytecode the run touched at the front of the file. Matching is by a hash of each function's syntax, so a recorded profile survives edits elsewhere, works for every `--target`, and keeps builds reproducible; changed functions land just after the recorded set. Several profiles cover several startup paths, `%p` in the output path becomes the process id, and Worker threads are recorded too. `bytecodeOrderStats()` from `bun:jsc` reports `hot` versus `cold` coverage.
+
+`--compile-jit-policy <n>` multiplies the tier-up thresholds above at startup (default `1`), so startup-only code stays in LLInt/Baseline instead of compiling into DFG/FTL it will not reuse; `Bun.unsafe.setJITPolicy(1)` restores the normal policy once the app is interactive. `--bytecode-depth N` limits how deep compilation goes, trading executable size against parsing nested functions at first call.
+
+The embedded bytecode is a frozen JSC artifact, so V8 tooling (`--print-bytecode`, `npx perf-prove-it census`) does not read it. Score a startup change with `bytecodeOrderStats()` coverage and a cold-page-cache timing of the shipped binary, not a warm in-process run. Full recipe: `compiled-artifact.md`.
+
 ## Adding a property that was not there at initialization
 
 This is the JSC answer to the classic hidden-class question, and it is the same shape as V8's with different names:

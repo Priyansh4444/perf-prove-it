@@ -6,4 +6,6 @@ Node and Chromium use V8 but different builds and tier policies. Bun uses JavaSc
 
 A desktop app compounds this: Electron is Chromium plus a Node main process in one binary, so it has two engines, two cold starts, and two code-cache domains, the renderer's Blink code cache and the main process's Node module compile cache (`compiled-artifact.md`). A Node probe describes the main process, never renderer startup.
 
+Bun's startup story is a compiled artifact, not a cache: `bun build --compile` embeds JSC bytecode and `--bytecode-order` lays that bytecode out by a recorded profile (`compiled-artifact.md`). Node's `NODE_COMPILE_CACHE` has no direct Bun analogue, and a Node cold-start result is not a Bun one.
+
 Engine names and tier behavior: `v8-evidence.md`, `jsc-evidence.md`.

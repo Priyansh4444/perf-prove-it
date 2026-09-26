@@ -28,7 +28,7 @@ Read only the matching reference.
 
 - Repository or unknown hot code: `references/codebase-audit.md`; run `npx perf-prove-it audit`.
 - Named function or measured bottleneck: `references/discovery.md`.
-- JSX/HTML, bundles, or source maps: `references/compiled-artifact.md`.
+- JSX/HTML, bundles, source maps, or Bun compiled-executable cold start: `references/compiled-artifact.md`.
 - Rendering/reconciliation/DOM: `references/rendering.md`.
 - Bytecode, tiers, deopts, or object shapes and inline caches: `references/v8-evidence.md`.
 - Bun or Safari (JavaScriptCore) tiers, shapes, or memory: `references/jsc-evidence.md`.
@@ -84,6 +84,7 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 - No reported patch that fails `git apply --check` and the repo's test/typecheck suite. Verify the patch before the report, not after.
 - No report of a replaced site while the replaced work is still in the patch's result. If a diff replaces work (a point read, a full scan), the removed lines must appear as `-` lines in the patch; replacement-only diffs must be labeled as additions.
 - No wall-clock-only verdict on a loaded or power-throttled machine. Instruction and allocation counters (perf, `perf stat`, counting allocators) outrank timing there; record the governor and load with the machine fingerprint and report the A/A noise band.
+- No cold-start claim from a warm run or an in-process check. Name the shipped artifact and hash it, cold the page cache, and state the cache state (`NODE_COMPILE_CACHE` served or not) or the bytecode profile's coverage (Bun `bytecodeOrderStats()`); measure startup as its own journey (`references/compiled-artifact.md`).
 - No production speed claim from a determinism or reduced-work config (`--predictable`, `--predictable-gc-schedule`, `--jitless`, `--no-opt`, forced optimization). Name the flag and configuration in the result; those configs make a mechanism repeat, not production timing.
 - No CI performance gate from an uncorrelated or flaky count. Prove the counter tracks wall clock or a field metric on the same benchmark, then check it in and let it only ratchet down (`references/ratchets.md`).
 
