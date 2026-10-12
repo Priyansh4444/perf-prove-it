@@ -80,7 +80,8 @@ Durations vary; counters repeat. When an interaction must be compared or gated, 
 - DOM mutations: a `MutationObserver` over the subtree records exactly what changed, by type. Use it to prove a render shrank the DOM and to attribute a shift to a region.
 - React commits: count commits per interaction (React DevTools profiler API, or a commit counter in a test renderer), not renders. A commit is a DOM mutation batch; a render that produces no change is not one.
 - Function calls: CDP `Profiler.takePreciseCoverage` returns V8 precise coverage with per-function execution counts. It is deterministic for a fixed page and interaction and is a usable CI ratchet.
-- Allocation: `MinorGC` and `MajorGC` counts per interaction (see below).
+
+GC counts are not deterministic counters or exact allocation rates. Use them as churn context alongside the memory measurements below.
 
 A count still needs the correlation gate: prove it tracks the field metric before gating on it (`perf-prove-it-ts`, `references/ratchets.md`). Wall clock is context, not the gate.
 
@@ -147,7 +148,7 @@ await client.send("Tracing.end");
 // count MinorGC and MajorGC events by name
 ```
 
-Chromium traces emit `MinorGC` and `MajorGC` as top-level events in the `v8` category (verify the names on your build; they move). Verified: a loop allocating 2 million small objects produced 11 `MinorGC` and 1 `MajorGC`. Scavenges track bytes allocated into young space, so their count per interaction is the allocation rate to compare between arms.
+Chromium traces emit `MinorGC` and `MajorGC` as top-level events in the `v8` category (verify the names on your build; they move). Verified: a loop allocating 2 million small objects produced 11 `MinorGC` and 1 `MajorGC`. Collection counts per interaction are a churn proxy, not bytes allocated. Heap sizing, survivors, and scheduling affect them; major-GC counts are context for old-generation pressure. Pair counts with GC durations, main-thread pauses, sampled allocation bytes, and post-GC retained growth across repeated cycles. Do not sum overlapping background GC events as main-thread pause time.
 
 For allocation sites and sampled bytes, use CDP sampling:
 
@@ -174,7 +175,7 @@ Geometry reads include `offsetWidth/Height/Top/Left`, `clientWidth/Height/Top/Le
 
 1. Lock behavior: capture the rendered DOM shape, text, ARIA attributes, and a screenshot for the interaction.
 2. Run three rounds per arm, alternating fresh pages. Report every round and the medians for counters and trace durations.
-3. Compare counters (`Nodes`, `JSEventListeners`), allocation rate (`MinorGC` and `MajorGC` counts per interaction), stage counts (`LayoutCount`, `RecalcStyleCount`), and trace event counts and durations for the stages that ran (`Layout`, `UpdateLayoutTree`, `Paint`, layer-stage events). Use medians; durations vary run to run while counters usually repeat exactly.
+3. Compare counters (`Nodes`, `JSEventListeners`), sampled allocations and GC counts/durations per interaction, stage counts (`LayoutCount`, `RecalcStyleCount`), and trace event counts and durations for the stages that ran (`Layout`, `UpdateLayoutTree`, `Paint`, layer-stage events). Use medians; durations vary run to run while counters usually repeat exactly.
 4. Compare the screenshot and a11y tree for parity. Raw PNG hashes differ between identical runs (volatile text, capture timing), so run a real pixel diff against a fixed clip, mask known-volatile regions, and report the bounding box and maximum delta, not just equality. To compare content skipped by containment, force-render the skipped subtree before the diff. Antialias-only differences from text-run merges are expected when a fix changes text node structure; zero geometry change plus a small max delta is parity, a hash mismatch is not automatically a failure.
 5. Report the Chromium version, viewport, and page state. Counters move with viewport size, fonts, and zoom, so a viewport change invalidates a comparison.
 

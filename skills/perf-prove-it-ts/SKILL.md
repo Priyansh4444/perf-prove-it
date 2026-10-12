@@ -12,7 +12,7 @@ Write down the mathematically smallest sequence of steps the function must perfo
 
 JavaScript compiles through several optimization tiers depending on how often the code actually runs. Re-benchmark at the tier the code reaches before calling a change a win; see `npx perf-prove-it tier` for how to check the tier.
 
-Measure both sides of every change: runtime speed and memory behavior. Time the code at the tier it actually runs at, and separately record allocation rate (collections per unit of work, or bytes from `--heap-prof`), GC time, pause, promotion, and peak RSS. A change can win one and lose the other; a heap-used snapshot alone is not an allocation measurement. Report both verdicts together, and call out any allocation-rate win that shows up as a GC-cost loss.
+Measure both sides of every change: runtime speed and memory behavior. Time the code at the tier it actually runs at, and separately record sampled allocation bytes per unit of work (`--heap-prof`) and collection counts as a churn proxy, GC time, pause, promotion, and peak RSS. A change can win one and lose the other; a heap-used snapshot alone is not an allocation measurement. Report both verdicts together, and call out any allocation-rate win that shows up as a GC-cost loss.
 
 Profiles are for discovery, never for the target. They find local minima and cannot tell you what should be possible. The target comes from counting the work the problem requires. Establish what the hardware could theoretically do, then do not stop until the gap is closed or explained.
 
@@ -77,7 +77,7 @@ For JSX/HTML, inspect emitted JavaScript and use a browser trace for DOM/layout/
 - No behavior, schema, ordering, error, or public-API change hidden in a performance patch.
 - No static candidate called a hot path. `audit` output is a ranked queue, not a verdict.
 - No timing claim without isolated processes, load context, an A/A control, and at least five runs per arm.
-- No allocation claim from syntax alone. Label `audit` and `census` counts as **static sites**; use `--heap-prof` or GC counts for dynamic allocation.
+- No allocation claim from syntax alone. Label `audit` and `census` counts as **static sites**; use `--heap-prof` for sampled dynamic allocations and GC counts only as a churn proxy.
 - No retained-memory claim without a forced-GC snapshot.
 - No tier claim from a forced compile request. Require a completed optimization line or the `npx perf-prove-it tier` check in the shipped runtime (Maglev/TurboFan on V8, DFG/FTL on JavaScriptCore).
 - No win without its measured benefit, its readability, cold-start, and memory price, and a revert path.

@@ -18,15 +18,15 @@ Scavenging is bad when:
 - Objects that should die young get promoted to old space, causing major GCs later.
 - The count is high only because the code allocates garbage it does not need.
 
-The count of scavenges tracks how many bytes were allocated into the young semi-space, not how healthy the program is. The `rerank` run recorded in `patterns.md` is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the cost, and the scavenge count as the allocation rate, with its unit. A single heap-used reading is not evidence.
+The count of scavenges is a proxy for young-generation churn, not an exact byte count or a health verdict. The `rerank` run recorded in `patterns.md` is the proof: removing six closures per call raised scavenges from 687 to 1410 per 100k calls while total GC time stayed flat at ~58 ms and peak RSS fell 21%. That is neutral behavior, not a regression. Report GC time and peak RSS as the cost, and the scavenge count as a churn proxy, with its unit. A single heap-used reading is not evidence.
 
-The cost model behind that: young allocation is a bump-pointer store, so short-lived objects are nearly free. V8 pays for survivors (copied by the scavenger) and promotions (major GC), plus a write barrier on every old-to-young pointer store. Scavenge count tracks bytes allocated only while the semi-space size is fixed; `--max-semi-space-size` trades RSS for fewer scavenges. Chromium schedules V8's incremental marking into idle time between tasks; Node's platform exposes no idle-task source, so those incremental steps run around normal tasks instead. Concurrent marking and sweeping still run on worker threads in both.
+The cost model behind that: young allocation is a bump-pointer store, so short-lived objects are nearly free. V8 pays for survivors (copied by the scavenger) and promotions (major GC), plus a write barrier on every old-to-young pointer store. Even with fixed semi-space sizing, survivors and scheduling affect scavenge counts; `--max-semi-space-size` trades RSS for fewer scavenges. Chromium schedules V8's incremental marking into idle time between tasks; Node's platform exposes no idle-task source, so those incremental steps run around normal tasks instead. Concurrent marking and sweeping still run on worker threads in both.
 
 ## Allocation rate
 
-Allocation rate is bytes allocated per unit of work. The cheap, stable proxy is the young-generation collection count: V8 scavenges when the semi-space fills, so scavenges over a fixed workload track bytes allocated.
+Allocation rate is bytes allocated per unit of work. Young-generation collection counts are a churn proxy, not an exact or deterministic allocation rate. Heap sizing, survivors, and scheduling affect them. Pair counts with GC time, pauses, sampled allocation bytes, and post-GC retained growth across repeated cycles.
 
-Report it as a rate with the unit: scavenges per 1M calls, minor GCs per 160 browser deltas, bytes per request from `--heap-prof`. Compare rates between arms, never raw heap sizes.
+Report collection counts and sampled allocation bytes separately, with workload units: scavenges per 1M calls, minor GCs per 160 browser deltas, sampled bytes per request from `--heap-prof`. Compare rates between arms, never raw heap sizes.
 
 `process.memoryUsage().heapUsed` depends on when the last GC ran. Two arms with identical allocation can differ several times over at a random moment, so a heap-used delta before a forced GC is churn, not a result. Heap size only counts after `global.gc()` twice, and only for retained growth.
 
@@ -35,7 +35,7 @@ Report it as a rate with the unit: scavenges per 1M calls, minor GCs per 160 bro
 
 | Metric | How to read it | Source |
 | --- | --- | --- |
-| Allocation rate | Churn, the number to compare between arms | `--trace-gc` scavenge count and `PerformanceObserver` `kind === 1`, per unit of work |
+| Collection count per unit of work | Churn proxy, affected by heap sizing, survivors, and scheduling | `--trace-gc` scavenge count and `PerformanceObserver` `kind === 1`, per unit of work |
 | Sampled bytes per site | Who allocates, from a sampled profile | `--heap-prof`, `HeapProfiler.startSampling` in the browser |
 | Total GC time | The real cost of churn | `--trace-gc`, PerformanceObserver |
 | Max pause | Latency risk | `--trace-gc`, PerformanceObserver |
@@ -51,7 +51,7 @@ node --trace-gc app.mjs
 node --trace-gc-nvp app.mjs   # one JSON object per collection after "GC: "
 ```
 
-Count collections by kind: `Scavenge` lines are minor GCs, `Mark-Compact` lines are major. Divide the scavenge count by the workload unit to get the allocation rate. Keep the workload fixed between arms. A GC observer gives the same numbers without parsing:
+Count collections by kind: `Scavenge` lines are minor GCs, `Mark-Compact` lines are major. Divide the scavenge count by the workload unit to report the churn proxy. Keep the workload fixed between arms. A GC observer gives the same numbers without parsing:
 
 ```js
 const { PerformanceObserver } = require('node:perf_hooks');
