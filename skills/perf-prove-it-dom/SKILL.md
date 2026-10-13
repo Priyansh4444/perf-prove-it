@@ -33,6 +33,13 @@ Read only the matching reference.
 5. Close the gap by the stage that pays. Make one change and re-measure; containment and virtualization defer work, so also measure the first scroll that reveals it.
 6. Prove behavior, metric, cycle, trace, and memory parity, then report the trade and the revert.
 
+For relevant checks, collect before/after evidence and explain skips:
+
+- Check microtask starvation; `await Promise.resolve()` does not yield to a new task. Verify that task yielding lets rendering and input progress.
+- Use `performance.mark()` and `performance.measure()` to label work; synchronous render timing excludes deferred commits and paint.
+- Collect resource and navigation timings with `PerformanceObserver`; compare equivalent load/cache conditions before and after.
+- Use DevTools Paint flashing and Layout shift regions to locate visual work; confirm with traces, since layout shifts do not count reflows.
+
 ## Read the implementation when the pipeline surprises you
 
 The source is public. When a cost does not match the docs, read Blink itself. These paths are inside the Chromium tree, not files in this skill.
