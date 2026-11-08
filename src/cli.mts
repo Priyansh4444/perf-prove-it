@@ -2,7 +2,8 @@
 import { createRequire } from "node:module";
 import { Effect, Option } from "effect";
 import { Argument, Command, Flag } from "effect/unstable/cli";
-import { NodeRuntime, NodeServices } from "@effect/platform-node";
+import * as NodeRuntime from "@effect/platform-node/NodeRuntime";
+import * as NodeServices from "@effect/platform-node/NodeServices";
 import { scan, type ScanResult } from "./index.mts";
 import { cleanupLedger, dismissedIds, dismiss, pruneLedgers } from "./scan/ledger.mts";
 import { run as runCensus } from "./census.mts";

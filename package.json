@@ -26,6 +26,7 @@
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && node --import tsx --test test/*.test.mts",
+    "test:package": "npm run build && node --test test/package-smoke.mjs",
     "prepack": "npm run build"
   },
   "dependencies": {
