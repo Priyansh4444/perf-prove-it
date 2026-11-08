@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,11 +13,13 @@ test("packed CLI works with freshly resolved consumer dependencies", async (t) =
   assert.ok(npm, "Run this test with npm run test:package");
   const dir = mkdtempSync(join(tmpdir(), "ppit-package-"));
   try {
-    const packed = execFileSync(process.execPath, [npm, "pack", "--json", "--ignore-scripts", "--pack-destination", dir], {
+    execFileSync(process.execPath, [npm, "pack", "--ignore-scripts", "--pack-destination", dir], {
       cwd: root,
       encoding: "utf8",
     });
-    const tarball = join(dir, JSON.parse(packed)[0].filename);
+    const tarballs = readdirSync(dir).filter((file) => file.endsWith(".tgz"));
+    assert.equal(tarballs.length, 1, "expected exactly one packed tarball");
+    const tarball = join(dir, tarballs[0]);
     const consumer = join(dir, "consumer");
     mkdirSync(consumer);
     writeFileSync(join(consumer, "package.json"), JSON.stringify({ name: "ppit-consumer", private: true }));
