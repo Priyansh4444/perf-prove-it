@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const legacyTest = join(root, "test", "legacy", "static-audit.test.mjs");
@@ -14,7 +14,7 @@ const cli = join(root, "dist", "cli.mjs");
 test("legacy static-audit suite passes against the new CLI", () => {
   execFileSync("npx", ["tsdown"], { cwd: root, stdio: "ignore" });
   const source = readFileSync(legacyTest, "utf8");
-  const rewritten = source.replace('import { scan } from "./static-audit.mjs";', `import { scan } from ${JSON.stringify(shim)};`);
+  const rewritten = source.replace('import { scan } from "./static-audit.mjs";', `import { scan } from ${JSON.stringify(pathToFileURL(shim).href)};`);
   assert.notEqual(rewritten, source, "legacy test import was not rewritten");
   const dir = mkdtempSync(join(tmpdir(), "ppit-parity-"));
   const file = join(dir, "legacy-parity.mjs");
