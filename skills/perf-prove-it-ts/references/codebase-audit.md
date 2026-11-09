@@ -12,6 +12,8 @@ Partition candidates by workload because frequency is not comparable across them
 
 Run `npx perf-prove-it audit <source roots...>`. Review high-scoring hits in source. Delete false positives caused by cold code, bounded collections, build-time execution, or unreachable paths. Merge hits from one enclosing function. Add manually found algorithmic work the scanner cannot recognize: repeated database calls, N+1 RPCs, serialization boundaries, redundant parsing, bad query indexes, and inappropriate data structures.
 
+For React code, optionally add React Doctor as a second static candidate source: `npx react-doctor@0.9.22 <root> --category Performance --scope changed --base <ref> --json --no-score --no-supply-chain --blocking none -y` (omit `--scope` and `--base` for a full scan). `<ref>` must be a branch or SHA, not `HEAD~1`; `ok: false` means the scan failed, not that it found nothing. Keep each `rule`, `filePath`, and `line`, review hits like any audit candidate, and never treat its health score as a performance metric.
+
 ## Rank reviewed candidates
 
 Use ordinal evidence, not invented precision:
